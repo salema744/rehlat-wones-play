@@ -1,0 +1,646 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script data-goatcounter="https://rehlatwones.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+<title>رحلة التلخيص</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=Noto+Naskh+Arabic:wght@400;600&display=swap">
+<style>
+body{margin:0}img{max-width:100%}[hidden]{display:none!important}
+/* Layout: a journey map of 7 stations; each station is one focused working card, text panels set in Naskh for reading */
+:root{
+  --bg:#FBF8F1; --surface:#FFFFFF; --ink:#2A2A1C; --muted:#6B6A52; --line:#E3DECB;
+  --olive:#64663A; --olive-soft:#ECEDDC; --terra:#C97735; --terra-soft:#F8E7D6;
+  --good:#3B7A4C; --good-soft:#E1F0E3; --bad:#B4452F; --bad-soft:#F7E0DA; --warn:#9A6E12; --warn-soft:#F6EBCF;
+  --hl:#F5DC86; --on-accent:#FFFFFF;
+  --f-display:"Reem Kufi","IBM Plex Sans Arabic",Tahoma,sans-serif;
+  --f-ui:"IBM Plex Sans Arabic",Tahoma,"Segoe UI",sans-serif;
+  --f-read:"Noto Naskh Arabic","Amiri","Traditional Arabic",serif;
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#1A1B13; --surface:#24251B; --ink:#EEEBDC; --muted:#AAA88E; --line:#393A2B;
+  --olive:#AEB274; --olive-soft:#31331F; --terra:#E4975E; --terra-soft:#3D2A1A;
+  --good:#80C492; --good-soft:#1E3224; --bad:#EE8B76; --bad-soft:#3D221C; --warn:#E3BA5E; --warn-soft:#382F18;
+  --hl:#6A5A1C; --on-accent:#1A1B13; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#1A1B13; --surface:#24251B; --ink:#EEEBDC; --muted:#AAA88E; --line:#393A2B;
+  --olive:#AEB274; --olive-soft:#31331F; --terra:#E4975E; --terra-soft:#3D2A1A;
+  --good:#80C492; --good-soft:#1E3224; --bad:#EE8B76; --bad-soft:#3D221C; --warn:#E3BA5E; --warn-soft:#382F18;
+  --hl:#6A5A1C; --on-accent:#1A1B13; color-scheme:dark }
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-ui);font-size:16px;line-height:1.7}
+.wrap{max-width:860px;margin:0 auto;padding-block:20px 40px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);font-weight:700;text-wrap:balance;margin:0;line-height:1.35}
+h1{font-size:clamp(2rem,6vw,2.9rem);color:var(--olive)}
+h2{font-size:1.55rem;color:var(--olive)}
+h3{font-size:1.15rem}
+p{margin:0}
+button{font-family:inherit;font-size:inherit;color:inherit}
+button:focus-visible,textarea:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--terra);outline-offset:2px}
+
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:22px;flex-wrap:wrap}
+.brand{font-family:var(--f-display);color:var(--olive);font-size:1.05rem;display:flex;align-items:center;gap:8px}
+.brand i{width:10px;height:10px;border-radius:50%;background:var(--terra);display:inline-block}
+.credit-top{font-size:.8rem;color:var(--muted)}
+.back{background:none;border:1px solid var(--line);border-radius:999px;padding:6px 14px;cursor:pointer;color:var(--olive);font-weight:500}
+.back:hover{background:var(--olive-soft)}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.3fr 1fr;gap:28px;align-items:center;margin-bottom:30px}
+.hero p.lead{font-size:1.1rem;color:var(--muted);margin-top:10px;max-width:46ch}
+.squeeze{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:flex;align-items:center;gap:14px}
+.lines{flex:1;display:flex;flex-direction:column;gap:7px}
+.lines span{height:8px;border-radius:4px;background:var(--line)}
+.lines span.k{background:var(--olive)}
+.arrow{font-family:var(--f-display);color:var(--terra);font-size:1.6rem}
+.one{flex:.7;display:flex;flex-direction:column;gap:7px}
+.one span{height:8px;border-radius:4px;background:var(--terra)}
+.squeeze-cap{font-size:.8rem;color:var(--muted);margin-top:8px;text-align:center}
+
+/* map */
+.map{display:flex;flex-direction:column;gap:0;position:relative}
+.station{display:grid;grid-template-columns:56px 1fr auto;gap:14px;align-items:center;padding:14px 4px;border-bottom:1px dashed var(--line);cursor:pointer;background:none;border-left:none;border-right:none;border-top:none;text-align:right;width:100%}
+.station:hover .st-title{color:var(--terra)}
+.st-num{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-display);font-size:1.3rem;border:2px solid var(--olive);color:var(--olive);background:var(--surface)}
+.station.done .st-num{background:var(--olive);color:var(--on-accent)}
+.st-title{font-family:var(--f-display);font-size:1.15rem;transition:color .15s}
+.st-desc{color:var(--muted);font-size:.93rem}
+.stars{color:var(--terra);letter-spacing:2px;font-size:1.05rem;white-space:nowrap}
+.stars .off{color:var(--line)}
+
+/* cards & common */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px}
+.stack{display:flex;flex-direction:column;gap:16px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.eyebrow{font-size:.8rem;letter-spacing:.04em;color:var(--terra);font-weight:700}
+.muted{color:var(--muted)}
+.small{font-size:.88rem}
+.passage{font-family:var(--f-read);font-size:1.18rem;line-height:2.1;background:var(--olive-soft);border-radius:12px;padding:16px 18px}
+.btn{border:none;border-radius:999px;padding:10px 20px;cursor:pointer;font-weight:700;background:var(--olive);color:var(--on-accent)}
+.btn:hover{filter:brightness(1.07)}
+.btn.alt{background:var(--terra)}
+.btn.ghost{background:none;border:1.5px solid var(--olive);color:var(--olive)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.progress{display:flex;gap:6px}
+.progress span{flex:1;height:6px;border-radius:3px;background:var(--line)}
+.progress span.on{background:var(--olive)}
+.progress span.now{background:var(--terra)}
+
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{display:block;width:100%;text-align:right;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:12px 16px;cursor:pointer;font-family:var(--f-read);font-size:1.08rem;line-height:1.9}
+.opt:hover:not([disabled]){border-color:var(--olive)}
+.opt.right{border-color:var(--good);background:var(--good-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt[disabled]{cursor:default}
+.fb{border-radius:12px;padding:12px 16px;font-size:.98rem}
+.fb.good{background:var(--good-soft);color:var(--ink);border-inline-start:4px solid var(--good)}
+.fb.bad{background:var(--bad-soft);color:var(--ink);border-inline-start:4px solid var(--bad)}
+.fb.tip{background:var(--terra-soft);border-inline-start:4px solid var(--terra)}
+.fb b{font-weight:700}
+
+/* guide */
+.gtext span.s{transition:all .3s;border-radius:4px}
+.gtext .cut{text-decoration:line-through;text-decoration-color:var(--bad);text-decoration-thickness:2px;opacity:.45}
+.gtext .hl{background:var(--hl);padding:0 2px}
+.gtext .mg{background:var(--terra-soft);box-shadow:0 0 0 2px var(--terra-soft)}
+.gtext ins{text-decoration:none;background:var(--good-soft);color:var(--good);font-weight:600;padding:0 4px;border-radius:4px}
+.steps{display:flex;gap:6px;flex-wrap:wrap}
+.steps button{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px;cursor:pointer;font-size:.9rem}
+.steps button.on{background:var(--olive);border-color:var(--olive);color:var(--on-accent)}
+.rule{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start}
+.rule .tag{font-family:var(--f-display);background:var(--terra);color:var(--on-accent);border-radius:8px;padding:4px 10px;white-space:nowrap}
+.final{border:2px solid var(--olive);border-radius:12px;padding:14px 18px;font-family:var(--f-read);font-size:1.15rem;line-height:2}
+.meta{display:flex;gap:18px;flex-wrap:wrap;font-size:.9rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.meta b{color:var(--ink)}
+
+/* trim */
+.trimtext{font-family:var(--f-read);font-size:1.15rem;line-height:2.25}
+.sent{cursor:pointer;border-radius:5px;padding:1px 2px;transition:background .15s}
+.sent:hover{background:var(--olive-soft)}
+.sent.del{text-decoration:line-through;text-decoration-color:var(--bad);text-decoration-thickness:2px;color:var(--muted)}
+.sent.ok{box-shadow:inset 0 -3px 0 var(--good)}
+.sent.no{box-shadow:inset 0 -3px 0 var(--bad);background:var(--bad-soft)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.88rem;color:var(--muted)}
+.reasons{display:flex;flex-direction:column;gap:8px;padding:0;margin:0;list-style:none}
+.reasons li{display:grid;grid-template-columns:22px 1fr;gap:8px;font-size:.95rem}
+.mark-ok{color:var(--good);font-weight:700}
+.mark-no{color:var(--bad);font-weight:700}
+
+/* diagnose */
+.sumcard{border:1.5px solid var(--line);border-radius:12px;padding:12px 16px;display:flex;flex-direction:column;gap:10px}
+.sumcard .txt{font-family:var(--f-read);font-size:1.06rem;line-height:1.95}
+.sumcard.pick{cursor:pointer}
+.sumcard.pick:hover{border-color:var(--olive)}
+.sumcard.best{border-color:var(--good);background:var(--good-soft)}
+.sumcard.wrongpick{border-color:var(--bad);background:var(--bad-soft)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 12px;cursor:pointer;font-size:.88rem}
+.chip.sel{border-color:var(--terra);background:var(--terra-soft)}
+.chip.right{border-color:var(--good);background:var(--good-soft)}
+.chip.wrong{border-color:var(--bad);background:var(--bad-soft)}
+
+/* write */
+.tabs{display:flex;gap:8px;flex-wrap:wrap}
+.tab{border:1.5px solid var(--line);background:var(--surface);border-radius:12px;padding:8px 14px;cursor:pointer;text-align:right}
+.tab b{display:block;font-family:var(--f-display);font-weight:500}
+.tab small{color:var(--muted)}
+.tab.on{border-color:var(--olive);background:var(--olive-soft)}
+.wtext .sent.hlt{background:var(--hl)}
+.ideas{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ideas input{width:100%;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);border-radius:10px;padding:8px 12px;font-family:var(--f-ui);font-size:.95rem}
+textarea{width:100%;min-height:150px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);border-radius:12px;padding:12px 14px;font-family:var(--f-read);font-size:1.12rem;line-height:2;resize:vertical}
+.meters{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.meter{border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.meter .lbl{font-size:.8rem;color:var(--muted)}
+.meter .val{font-family:var(--f-display);font-size:1.35rem;font-variant-numeric:tabular-nums}
+.meter .note{font-size:.8rem}
+.meter.good{border-color:var(--good);background:var(--good-soft)}
+.meter.warn{border-color:var(--warn);background:var(--warn-soft)}
+.meter.bad{border-color:var(--bad);background:var(--bad-soft)}
+.lenbar{position:relative;height:10px;border-radius:5px;background:var(--line);margin-top:4px}
+.lenbar .band{position:absolute;top:0;bottom:0;background:var(--olive);opacity:.35;border-radius:5px}
+.lenbar .pin{position:absolute;top:-4px;width:4px;height:18px;border-radius:2px;background:var(--terra);transition:right .2s}
+.check{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+.check li{display:grid;grid-template-columns:24px 1fr;gap:8px}
+.copied{background:var(--bad-soft);border-radius:4px;padding:0 3px}
+
+.result{text-align:center;display:flex;flex-direction:column;gap:12px;align-items:center}
+.result .big{font-size:2.4rem;color:var(--terra);letter-spacing:6px}
+footer{margin-top:36px;padding-top:14px;border-top:1px solid var(--line);font-size:.82rem;color:var(--muted);text-align:center}
+
+@media (max-width:640px){
+  .hero{grid-template-columns:1fr}
+  .meters{grid-template-columns:1fr 1fr}
+  .ideas{grid-template-columns:1fr}
+  .station{grid-template-columns:44px 1fr;}
+  .station .stars{grid-column:2}
+  .st-num{width:40px;height:40px;font-size:1.1rem}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+</head>
+<body>
+<div class="wrap" dir="rtl" lang="ar">
+  <div class="topbar">
+    <a class="brand" href="https://salema744.github.io/rehlat-wones-play/" style="text-decoration:none"><i></i>رحلة مع ونس</a>
+    <div id="nav"></div>
+  </div>
+  <main id="app"></main>
+  <footer>إعداد: رحلة ونس - أ. سالمة سيد</footer>
+</div>
+
+<script>
+document.documentElement.lang='ar';document.documentElement.dir='rtl';
+const AR=n=>String(n).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);
+const $=s=>document.querySelector(s);
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+
+/* ---------- storage ---------- */
+const KEY='rw-takhlees-v1';
+let store={stars:{},drafts:{}};
+try{const s=JSON.parse(localStorage.getItem(KEY));if(s)store=Object.assign(store,s)}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+function setStars(id,n){if((store.stars[id]||0)<n){store.stars[id]=n;save()}}
+const starStr=n=>'<span class="stars">'+[1,2,3].map(i=>i<=n?'★':'<span class="off">★</span>').join('')+'</span>';
+
+/* ---------- Arabic text tools ---------- */
+function norm(s){return s.replace(/[ً-ْٰـ]/g,'').replace(/[أإآٱ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي').replace(/[^ء-ي0-9٠-٩\s]/g,' ').replace(/\s+/g,' ').trim()}
+function toks(s){return norm(s).split(' ').filter(Boolean).map(w=>(w.length>3&&/^[وف]/.test(w))?w.slice(1):w)}
+const wc=s=>norm(s).split(' ').filter(Boolean).length;
+
+/* ---------- stations ---------- */
+const ST=[
+ {id:'guide',n:'٠',t:'قواعد التلخيص',d:'شاهد القواعد الخمس تعمل على فقرة حقيقية خطوة بخطوة.'},
+ {id:'idea',n:'١',t:'صيد الفكرة الرئيسة',d:'اختر الفكرة التي تجمع الفقرة كلها، لا جزءًا منها.'},
+ {id:'trim',n:'٢',t:'مقصّ الزوائد',d:'احذف الأمثلة والتكرار والتفاصيل، واحتفظ بالأساسي.'},
+ {id:'general',n:'٣',t:'الكلمة الجامعة',d:'حوّل القائمة الطويلة إلى كلمة واحدة تجمعها.'},
+ {id:'merge',n:'٤',t:'الدمج وإعادة الصياغة',d:'اجمع الجمل المتقاربة في جملة واحدة بكلماتك.'},
+ {id:'diagnose',n:'٥',t:'طبيب الملخّصات',d:'اختر أفضل ملخّص، ثم شخّص عيب كل ملخّص آخر.'},
+ {id:'write',n:'٦',t:'ورشة الكتابة',d:'اكتب ملخّصك بنفسك ومعك مقياس يراجعه وأنت تكتب.'}
+];
+
+/* ---------- data: station 1 ---------- */
+const IDEA=[
+ {passage:'يعمل النحل في الخلية كأنه فريق منظَّم؛ فالملكة تضع البيض، والعاملات يجمعن الرحيق وينظّفن الخلية ويرعين الصغار، أما الذكور فدورها تلقيح الملكة. ولا تستطيع نحلة واحدة أن تعيش مدة طويلة بعيدًا عن خليتها.',
+  prompt:'ما الفكرة الرئيسة للفقرة؟',
+  options:[
+   {t:'يعيش النحل في نظام جماعي يتقاسم فيه أفراده الأعمال.',ok:1,why:'أحسنت! هذه الفكرة تجمع كل ما في الفقرة: الملكة والعاملات والذكور وحاجة النحلة إلى خليتها.'},
+   {t:'تضع ملكة النحل البيض في الخلية.',ok:0,why:'هذا تفصيل صحيح، لكنه جزء صغير من الفقرة وليس الفكرة التي تجمعها كلها.'},
+   {t:'يصنع النحل عسلًا لذيذًا مفيدًا للإنسان.',ok:0,why:'الفقرة لم تتكلم عن العسل أصلًا. لا تضف إلى الملخّص ما ليس في النص.'},
+   {t:'لا تستطيع النحلة أن تعيش وحدها.',ok:0,why:'هذه جملة واحدة من الفقرة، وهي تدعم الفكرة الرئيسة ولا تمثّلها كلها.'}],
+  tip:'الفكرة الرئيسة هي «المظلة» التي تقف تحتها كل الجمل.'},
+ {passage:'للقراءة فوائد كثيرة لا تتوقف عند حدود المدرسة؛ فهي توسّع خيال القارئ، وتزيد حصيلته من الكلمات، وتعرّفه بثقافات شعوب لم يزرها. ويرى بعض الباحثين أن القراءة قبل النوم تساعد على الاسترخاء. ولذلك يحرص كثير من الناجحين على أن يقرؤوا كل يوم ولو صفحات قليلة.',
+  prompt:'ما الفكرة الرئيسة للفقرة؟',
+  options:[
+   {t:'للقراءة فوائد متعددة في حياة الإنسان.',ok:1,why:'صحيح. الجملة الأولى في الفقرة هي الجملة المحورية، وكل ما بعدها أمثلة عليها.'},
+   {t:'القراءة قبل النوم تساعد على الاسترخاء.',ok:0,why:'هذا مثال واحد من فوائد القراءة، وليس الفكرة الجامعة.'},
+   {t:'الناجحون يقرؤون كل يوم صفحات قليلة.',ok:0,why:'هذه نتيجة في آخر الفقرة، وهي تفصيل يدعم الفكرة الرئيسة.'},
+   {t:'القراءة مهمة في المدرسة فقط.',ok:0,why:'الفقرة تقول العكس: فوائد القراءة لا تتوقف عند حدود المدرسة.'}],
+  tip:'ابحث أولًا عن «الجملة المحورية»؛ كثيرًا ما تأتي في أول الفقرة.'},
+ {passage:'يستطيع الجمل أن يمشي أيامًا دون أن يشرب، وفي سنامه مخزون من الدهون يتغذى منه حين يقلّ الطعام. ورموشه الطويلة تحمي عينيه من الرمال، وخُفّه العريض يمنع قدميه من الغوص فيها.',
+  prompt:'هذه الفقرة ليس فيها جملة محورية. ما الفكرة التي تجمعها؟',
+  options:[
+   {t:'جسم الجمل مهيّأ للعيش في الصحراء.',ok:1,why:'ممتاز! الكاتب لم يكتب هذه الجملة، لكنك «بنيتها» من التفاصيل: الماء والطعام والرمال كلها من تحديات الصحراء.'},
+   {t:'يخزّن الجمل الماء في سنامه.',ok:0,why:'انتبه: النص يقول إن السنام فيه دهون لا ماء. اقرأ بدقة قبل أن تلخّص.'},
+   {t:'للجمل رموش طويلة تحمي عينيه.',ok:0,why:'هذا تفصيل واحد من أربعة تفاصيل في الفقرة.'},
+   {t:'الجمل حيوان يحبه العرب منذ القدم.',ok:0,why:'قد تكون معلومة صحيحة، لكنها ليست في الفقرة.'}],
+  tip:'إذا لم تجد جملة محورية، فاسأل: ما الذي تشترك فيه كل التفاصيل؟ ثم اصنع الجملة بنفسك.'},
+ {passage:'يظن بعض الناس أن تنظيم الوقت يعني أن يعمل الإنسان طوال اليوم بلا راحة. والحقيقة أن تنظيم الوقت يعني أن تعطي كل أمر حقّه: وقتًا للدراسة، ووقتًا للعب، ووقتًا للأسرة، ووقتًا للنوم. فالراحة جزء من الخطة، وليست ضياعًا لها.',
+  prompt:'ما الفكرة الرئيسة للفقرة؟',
+  options:[
+   {t:'تنظيم الوقت يعني التوازن بين الواجبات والراحة.',ok:1,why:'صحيح. الكاتب يصحّح فكرة خاطئة ثم يقدّم الفكرة الصحيحة، وهي التي نلخّصها.'},
+   {t:'يجب أن يعمل الإنسان طوال اليوم بلا راحة.',ok:0,why:'هذا هو الرأي الذي يرفضه الكاتب! لا تخلط بين الرأي الذي يذكره الكاتب ورأيه هو.'},
+   {t:'النوم أهم من الدراسة.',ok:0,why:'الفقرة لم تفاضل بين النوم والدراسة، بل جعلت لكلٍّ منهما وقتًا.'},
+   {t:'يحتاج الإنسان إلى وقت لأسرته.',ok:0,why:'هذا عنصر واحد من القائمة، وليس الفكرة الجامعة.'}],
+  tip:'جملة «والحقيقة أن...» إشارة قوية إلى رأي الكاتب نفسه.'}
+];
+
+/* ---------- data: station 2 ---------- */
+const TRIM=[
+ {title:'الأشجار في المدن',sents:[
+  {t:'تؤدي الأشجار في المدن دورًا مهمًّا في حياة السكان.',keep:1,why:'الجملة المحورية.'},
+  {t:'فهي تنقّي الهواء من الغبار والدخان.',keep:1,why:'فائدة أساسية أولى.'},
+  {t:'فالشجرة الكبيرة في الشارع المزدحم تحجز كمية من الغبار كل يوم.',keep:0,why:'مثال يشرح الفائدة السابقة؛ يُحذف.'},
+  {t:'كما أنها تلطّف الحرارة في أيام الصيف.',keep:1,why:'فائدة أساسية ثانية.'},
+  {t:'وقد جلستُ مرة تحت شجرة كبيرة في الحديقة فشعرتُ بالبرودة.',keep:0,why:'تجربة شخصية للكاتب؛ تُحذف.'},
+  {t:'وتمنح الأشجار المدينة جمالًا يريح النفوس.',keep:1,why:'فائدة أساسية ثالثة.'},
+  {t:'إذن، الأشجار مهمة جدًّا لحياة سكان المدن.',keep:0,why:'تكرار للجملة الأولى؛ يُحذف.'}],
+  model:'للأشجار في المدن فوائد مهمة: فهي تنقّي الهواء، وتلطّف الحرارة، وتمنح المدينة جمالًا.'},
+ {title:'النوم والطالب',sents:[
+  {t:'النوم الكافي ضرورة لصحة الطالب ونجاحه.',keep:1,why:'الجملة المحورية.'},
+  {t:'ففي أثناء النوم يرتّب الدماغ ما تعلّمه الطالب في يومه.',keep:1,why:'سبب أساسي أول.'},
+  {t:'فمثلًا، قد ينسى الطالب الذي سهر جدول الضرب الذي حفظه بالأمس.',keep:0,why:'كلمة «فمثلًا» تخبرك أنه مثال؛ يُحذف.'},
+  {t:'كما يقوّي النوم جهاز المناعة فيحمي الجسم من الأمراض.',keep:1,why:'سبب أساسي ثانٍ.'},
+  {t:'وأخي الصغير يمرض كثيرًا لأنه لا ينام مبكرًا.',keep:0,why:'حكاية شخصية؛ تُحذف.'},
+  {t:'فالنوم إذن مهم، ولا يستغني عنه أي طالب.',keep:0,why:'تكرار لما قيل؛ يُحذف.'},
+  {t:'ومن أراد نومًا جيدًا فليبتعد عن الشاشات قبل النوم بساعة.',keep:1,why:'فكرة جديدة (نصيحة)؛ تبقى.'}],
+  model:'النوم الكافي ضروري للطالب؛ لأنه يرتّب ما تعلّمه ويقوّي مناعته، ويساعد على ذلك الابتعاد عن الشاشات قبل النوم.'}
+];
+
+/* ---------- data: station 3 ---------- */
+const GEN=[
+ {passage:'اشترت أمي التفاح والموز والبرتقال والعنب.',prompt:'اختر الجملة التي تعمّم القائمة:',options:[
+  {t:'اشترت أمي فواكه متنوعة.',ok:1,why:'«فواكه» كلمة تجمع الأربعة.'},
+  {t:'اشترت أمي التفاح.',ok:0,why:'هذا حذف لا تعميم؛ ضاعت بقية القائمة.'},
+  {t:'اشترت أمي خضروات.',ok:0,why:'التفاح والموز ليست خضروات.'},
+  {t:'اشترت أمي أشياء.',ok:0,why:'«أشياء» عامة جدًا؛ لا تخبر القارئ بشيء. اختر أقرب كلمة جامعة.'}]},
+ {passage:'زار أحمد مصر والأردن والمغرب وتونس.',prompt:'اختر التعميم الدقيق:',options:[
+  {t:'زار أحمد عددًا من الدول العربية.',ok:1,why:'الدول الأربع كلها عربية.'},
+  {t:'زار أحمد عددًا من الدول الإفريقية.',ok:0,why:'فخ! الأردن ليست في إفريقيا. التعميم يجب أن يصدق على كل العناصر.'},
+  {t:'زار أحمد عددًا من المدن.',ok:0,why:'هذه دول وليست مدنًا.'},
+  {t:'سافر أحمد كثيرًا.',ok:0,why:'«كثيرًا» لا تُبقي المعلومة المهمة: أنها دول عربية.'}]},
+ {passage:'حمل في حقيبته الكتب والدفاتر والأقلام والمسطرة والممحاة.',prompt:'اختر التعميم المناسب:',options:[
+  {t:'حمل في حقيبته أدواته المدرسية.',ok:1,why:'تعميم دقيق يجمع العناصر الخمسة.'},
+  {t:'حمل في حقيبته كتبًا.',ok:0,why:'جزء واحد فقط من القائمة.'},
+  {t:'حمل في حقيبته أدوات الرسم.',ok:0,why:'الكتب والدفاتر ليست أدوات رسم.'},
+  {t:'كانت حقيبته ثقيلة.',ok:0,why:'استنتاج لم يذكره النص.'}]},
+ {passage:'استيقظ مبكرًا، ورتّب سريره، وغسل وجهه، وصلّى الفجر، وتناول فطوره.',prompt:'التعميم قد يكون لأفعال أيضًا. اختر:',options:[
+  {t:'بدأ يومه مبكرًا بعاداته الصباحية.',ok:1,why:'جمعتَ خمسة أفعال في عبارة واحدة.'},
+  {t:'استيقظ مبكرًا وتناول فطوره.',ok:0,why:'اخترتَ فعلين وتركتَ الباقي؛ هذا حذف ناقص.'},
+  {t:'كان ولدًا مرتّبًا.',ok:0,why:'هذا حكم على الشخصية، والنص يصف أفعالًا.'},
+  {t:'ذهب إلى المدرسة.',ok:0,why:'النص لم يذكر المدرسة.'}]},
+ {passage:'صرخ الطفل، وبكى، وضرب الأرض بقدميه، ورمى ألعابه بعيدًا.',prompt:'ما الكلمة التي تجمع هذه الأفعال؟',options:[
+  {t:'غضب الطفل غضبًا شديدًا.',ok:1,why:'ممتاز! عمّمتَ أفعالًا ظاهرة في شعور واحد يفسّرها.'},
+  {t:'لعب الطفل بألعابه.',ok:0,why:'رمي الألعاب هنا ليس لعبًا.'},
+  {t:'كان الطفل متعبًا.',ok:0,why:'التعب لا يفسّر الصراخ وضرب الأرض.'},
+  {t:'صرخ الطفل.',ok:0,why:'فعل واحد من أربعة.'}]},
+ {passage:'في الحديقة عصافير وحمام وببغاوات وبطّ.',prompt:'اختر التعميم:',options:[
+  {t:'في الحديقة أنواع من الطيور.',ok:1,why:'كلها طيور.'},
+  {t:'في الحديقة حيوانات أليفة.',ok:0,why:'عامة جدًا، وليست كلها أليفة بالضرورة.'},
+  {t:'في الحديقة طيور تسبح.',ok:0,why:'البط وحده يسبح.'},
+  {t:'في الحديقة عصافير.',ok:0,why:'جزء من القائمة فقط.'}]}
+];
+
+/* ---------- data: station 4 ---------- */
+const MERGE=[
+ {passage:'الفيل أكبر الحيوانات البرية. الفيل يعيش في إفريقيا وآسيا. الفيل يتغذى على النباتات.',prompt:'اختر أفضل دمج للجمل الثلاث:',options:[
+  {t:'الفيل أكبر حيوان برّي، يعيش في إفريقيا وآسيا ويتغذى على النباتات.',ok:1,why:'جملة واحدة، بلا تكرار لكلمة «الفيل»، ولم تضِع أي معلومة.'},
+  {t:'الفيل أكبر الحيوانات البرية والفيل يعيش في إفريقيا وآسيا والفيل يتغذى على النباتات.',ok:0,why:'هذا لصق بحرف «و» وليس دمجًا؛ التكرار باقٍ.'},
+  {t:'الفيل حيوان كبير.',ok:0,why:'قصير جدًا؛ ضاعت معلومتان مهمتان.'},
+  {t:'الفيل أجمل الحيوانات وأكبرها، ويعيش في إفريقيا وآسيا.',ok:0,why:'أضاف رأيًا («أجمل») وحذف معلومة الغذاء.'}]},
+ {passage:'انقطعت الكهرباء في القرية. ظل الناس في الظلام ساعات. لم يستطع الطلاب المذاكرة. توقفت الورش عن العمل.',prompt:'اختر أفضل صياغة مختصرة:',options:[
+  {t:'تسبّب انقطاع الكهرباء في القرية في تعطيل حياة أهلها ساعات.',ok:1,why:'دمجتَ وعمّمتَ معًا: «تعطيل حياة أهلها» تجمع المذاكرة والعمل والظلام.'},
+  {t:'انقطعت الكهرباء في القرية.',ok:0,why:'ذكرتَ السبب وحذفتَ كل النتائج.'},
+  {t:'لم يستطع الطلاب المذاكرة لأن الكهرباء انقطعت.',ok:0,why:'ركّزتَ على نتيجة واحدة ونسيتَ الباقي.'},
+  {t:'انقطعت الكهرباء وكان ذلك أمرًا سيئًا جدًا ومزعجًا.',ok:0,why:'وصف عام ورأي، بلا معلومات.'}]},
+ {passage:'تحب سارة الرسم. تقضي سارة ساعات كل يوم في الرسم. فازت سارة بالجائزة الأولى في مسابقة الرسم بالمدرسة.',prompt:'اختر أفضل إعادة صياغة:',options:[
+  {t:'سارة شغوفة بالرسم، وقد فازت بالجائزة الأولى في مسابقة مدرستها.',ok:1,why:'«شغوفة» كلمة واحدة جمعت الحب وقضاء الساعات، وبقيت المعلومة المهمة.'},
+  {t:'تحب سارة الرسم وتقضي ساعات كل يوم في الرسم.',ok:0,why:'نسختَ جملتين وحذفتَ أهم خبر: الفوز.'},
+  {t:'فازت سارة بجائزة.',ok:0,why:'جائزة في ماذا؟ حذفتَ ما يجعل الخبر مفهومًا.'},
+  {t:'سارة أفضل رسّامة في العالم.',ok:0,why:'مبالغة لا يقولها النص.'}]},
+ {passage:'يرى بعض الطلاب أن الامتحانات تقيس ما حفظوه فقط. ويرى المعلمون أن الامتحانات الجيدة تقيس الفهم والتفكير أيضًا. ويتفق الطرفان على أن الامتحان ليس كل شيء.',prompt:'اختر الصياغة الأدق:',options:[
+  {t:'يختلف الطلاب والمعلمون فيما تقيسه الامتحانات، لكنهم يتفقون على أنها ليست كل شيء.',ok:1,why:'حافظتَ على الخلاف ونقطة الاتفاق معًا في جملة واحدة.'},
+  {t:'الامتحانات تقيس الحفظ فقط.',ok:0,why:'نقلتَ رأي طرف واحد وكأنه حقيقة.'},
+  {t:'أنا أرى أن الامتحانات صعبة ولا فائدة منها.',ok:0,why:'رأيك الشخصي لا مكان له في الملخّص.'},
+  {t:'المعلمون على حق دائمًا.',ok:0,why:'النص لم يحكم لطرف على آخر.'}]}
+];
+
+/* ---------- data: station 5 ---------- */
+const FLAWS=['ناقص','منسوخ وطويل','فيه رأي شخصي','فيه معلومة خاطئة'];
+const DIAG=[
+ {title:'الشعاب المرجانية',passage:'تبدو الشعاب المرجانية للناظر صخورًا ملوّنة في قاع البحر، لكنها في الحقيقة كائنات حية صغيرة تعيش في جماعات ضخمة. وتُعدّ هذه الشعاب بيتًا لنحو ربع الكائنات البحرية، ففيها تختبئ الأسماك وتضع بيضها وتجد غذاءها. كما أنها تحمي الشواطئ من قوة الأمواج. غير أن الشعاب تواجه اليوم خطرًا كبيرًا؛ فارتفاع حرارة مياه البحار يُفقدها ألوانها وقد يُميتها، ويزيد التلوث والصيد الجائر الأمرَ سوءًا. ولذلك يدعو العلماء إلى حمايتها؛ لأن موتها يعني خسارة جزء عظيم من الحياة في البحار.',
+  sums:[
+   {t:'الشعاب المرجانية كائنات حية تؤوي كثيرًا من الكائنات البحرية وتحمي الشواطئ، لكنها مهددة بارتفاع حرارة المياه والتلوث والصيد الجائر، لذا يجب حمايتها.',flaw:null,why:'غطّى الأفكار الثلاث: ما هي الشعاب، وأهميتها، والخطر عليها، بكلمات جديدة.'},
+   {t:'الشعاب المرجانية كائنات حية وليست صخورًا، وتعيش في قاع البحر في جماعات ضخمة.',flaw:'ناقص',why:'لخّص الجملة الأولى فقط، ونسي الأهمية والخطر.'},
+   {t:'الشعاب المرجانية أجمل ما في البحر، وأنا أتمنى أن أغوص لأراها، وهي مهددة ويجب حمايتها.',flaw:'فيه رأي شخصي',why:'«أجمل» و«أنا أتمنى» رأي الكاتب لا رأي النص.'},
+   {t:'تبدو الشعاب المرجانية للناظر صخورًا ملوّنة في قاع البحر، لكنها في الحقيقة كائنات حية صغيرة تعيش في جماعات ضخمة، وتُعدّ هذه الشعاب بيتًا لنحو ربع الكائنات البحرية.',flaw:'منسوخ وطويل',why:'نسخ الجمل كما هي، ولم يصل إلى الخطر والحماية.'},
+   {t:'الشعاب المرجانية صخور ملوّنة تحمي الشواطئ، وتموت بسبب برودة المياه.',flaw:'فيه معلومة خاطئة',why:'الشعاب ليست صخورًا، والخطر من ارتفاع الحرارة لا البرودة.'}]},
+ {title:'هجرة الطيور',passage:'مع اقتراب الشتاء تبدأ ملايين الطيور رحلة طويلة من الشمال البارد إلى الجنوب الدافئ، وقد يقطع بعضها آلاف الكيلومترات دون أن يضلّ طريقه. وقد حيّر هذا الأمر العلماء زمنًا طويلًا، ثم اكتشفوا أن الطيور تستعين بأكثر من وسيلة لتعرف اتجاهها؛ فهي تهتدي بموقع الشمس في النهار وبالنجوم في الليل، ويحسّ بعضها بمغناطيسية الأرض كأن في داخله بوصلة. كما تتذكر الطيور معالم الطريق كالجبال والأنهار والسواحل. وحين يعود الربيع ترجع إلى موطنها الأول لتبني أعشاشها.',
+  sums:[
+   {t:'تهاجر الطيور كل شتاء مسافات طويلة إلى الجنوب الدافئ ثم تعود في الربيع، وتهتدي في رحلتها بالشمس والنجوم ومغناطيسية الأرض ومعالم الطريق.',flaw:null,why:'جمع الرحلة والعودة ووسائل الاهتداء كلها في جملة واحدة.'},
+   {t:'تهاجر الطيور في الشتاء من الشمال إلى الجنوب.',flaw:'ناقص',why:'أهمل أهم ما في النص: كيف تعرف الطيور طريقها.'},
+   {t:'رحلة الطيور أروع رحلة في الطبيعة، وأظن أن الطيور أذكى من الإنسان لأنها لا تضل الطريق.',flaw:'فيه رأي شخصي',why:'«أروع» و«أظن» أحكام شخصية لم يقلها النص.'},
+   {t:'تهاجر الطيور في الصيف، وتعتمد على النجوم وحدها في معرفة الطريق.',flaw:'فيه معلومة خاطئة',why:'الهجرة مع اقتراب الشتاء، والطيور تستعين بأكثر من وسيلة.'},
+   {t:'مع اقتراب الشتاء تبدأ ملايين الطيور رحلة طويلة من الشمال البارد إلى الجنوب الدافئ، وقد يقطع بعضها آلاف الكيلومترات دون أن يضل طريقه، وقد حيّر هذا الأمر العلماء زمنًا طويلًا.',flaw:'منسوخ وطويل',why:'نقل أول جملتين حرفيًا تقريبًا.'}]}
+];
+
+/* ---------- data: station 6 ---------- */
+const TEXTS=[
+ {id:'paper',title:'قصة الورق',kind:'نص معلوماتي',tip:'في النص المعلوماتي لخّص: الموضوع، ومراحله أو أقسامه، وأثره.',
+  text:'قبل اختراع الورق كتب الناس على مواد كثيرة؛ فقد كتب المصريون القدماء على أوراق البردي، وكتب غيرهم على الجلود والعظام والحجارة. وكانت هذه المواد إما ثقيلة يصعب حملها، وإما غالية لا يقدر عليها إلا القليل. ثم ظهر الورق في الصين، وانتقلت صناعته إلى بلاد المسلمين، فأُنشئ في بغداد مصنع للورق في أواخر القرن الثاني الهجري، ومنها انتشرت الصناعة إلى دمشق والقاهرة ثم إلى الأندلس وأوروبا. وقد ساعد الورق الرخيص الخفيف على انتشار الكتب والمكتبات، فصار العلم في متناول عدد أكبر من الناس.',
+  ideas:[
+   {name:'الكتابة قبل الورق كانت على مواد ثقيلة أو غالية',k:['بردي','جلود','جلد','حجار','عظام','ثقيل','غالي','مكلف','صعب']},
+   {name:'ظهر الورق في الصين',k:['صين']},
+   {name:'انتقلت صناعته إلى بلاد المسلمين ثم أوروبا',k:['بغداد','مسلم','انتقل','نقل','انتشرت','اندلس','اوروب','العرب']},
+   {name:'أثره: انتشار الكتب والعلم',k:['الكتب','الكتاب','مكتب','العلم','المعرف','الثقاف','التعليم','القراء']}],
+  model:'كان الناس قبل الورق يكتبون على مواد ثقيلة أو غالية، ثم عُرف الورق أولًا في الصين، ونقل المسلمون صناعته إلى بغداد ومنها إلى أوروبا، فكثرت الكتب وأصبح العلم متاحًا لعدد أكبر من الناس.'},
+ {id:'marwan',title:'كأس مروان',kind:'نص قصصي',tip:'في القصة لخّص: الشخصية، والمشكلة، ونقطة التحوّل، والنهاية. ولا تنقل الحوار.',
+  text:'كان مروان أسرع لاعب في فريق المدرسة، وكان يرى أنه يستطيع أن يفوز وحده. وفي المباراة النهائية رفض أن يمرّر الكرة لزملائه، وظل يراوغ ويسدّد حتى ضاعت منه فرص كثيرة، وتقدّم الفريق المنافس بهدف. وفي الاستراحة جلس المدرب بجانبه وقال له بهدوء: «السرعة موهبة، لكن الفريق هو الذي يفوز». عاد مروان إلى الملعب وقد تغيّر، فصار يمرّر الكرة ويتحرك ليفتح المساحات لزملائه، فسجّل الفريق هدفين وفاز بالكأس. وحين رفع اللاعبون الكأس، قال مروان لزملائه: «هذه الكأس لنا جميعًا».',
+  ideas:[
+   {name:'مروان لاعب سريع يلعب وحده',k:['وحد','انان','رفض','فردي','بمفرد','يحتكر','لا يمرر']},
+   {name:'تأخّر الفريق في المباراة',k:['تقدم','خسر','ضاع','ضيع','تاخر','متاخر','المنافس']},
+   {name:'نصيحة المدرب',k:['مدرب','نصح','نصيح']},
+   {name:'تعاون مع زملائه ففاز الفريق',k:['فاز','فوز','الكاس','انتصر','تعاون','جماع','زملا']}],
+  model:'كان مروان لاعبًا سريعًا يلعب وحده، فتأخّر فريقه في المباراة النهائية، لكن نصيحة المدرب جعلته يتعاون مع زملائه، ففاز الفريق بالكأس وأدرك مروان أن النجاح جماعي.'},
+ {id:'screens',title:'الأطفال والشاشات',kind:'نص حِجاجي',tip:'في نص الرأي لخّص: القضية، ورأي كل فريق، ورأي الكاتب وحلّه. ورأي الكاتب يبقى، أما رأيك أنت فلا.',
+  text:'يقضي كثير من الأطفال اليوم ساعات طويلة أمام الشاشات، وينقسم الناس في ذلك فريقين. فيرى فريق أن الشاشات نافذة على المعرفة؛ إذ يتعلم منها الطفل لغات ومهارات جديدة، ويتواصل بها مع أقاربه البعيدين. ويرى فريق آخر أنها تسرق وقت الطفل من اللعب والحركة والقراءة، وتؤثر في نومه وتركيزه. والرأي الأقرب إلى الصواب أن المشكلة ليست في الشاشة نفسها، بل في طريقة استخدامها؛ فإذا حدّد الطفل وقتًا معقولًا، واختار ما ينفعه بمساعدة أسرته، صارت الشاشة أداة مفيدة لا عادة ضارة.',
+  ideas:[
+   {name:'فريق يرى أن الشاشات تفيد في التعلم والتواصل',k:['فائد','يفيد','تفيد','معرف','يتعلم','تعلم','مهار','تواصل','نافذ']},
+   {name:'فريق يرى أنها تضر بالنوم والحركة والتركيز',k:['ضرر','اضرار','تضر','يضر','تسرق','نوم','تركيز','الحرك','اللعب']},
+   {name:'رأي الكاتب: المشكلة في طريقة الاستخدام',k:['طريق','استخدام','استعمال']},
+   {name:'الحل: تحديد الوقت واختيار النافع بمساعدة الأسرة',k:['تحديد','يحدد','حدد','تنظيم','ينظم','اختيار','يختار','اسر','المحتوي','وقت معقول']}],
+  model:'يختلف الناس في الشاشات؛ فبعضهم يرى أنها تفيد الطفل في التعلم والتواصل، وبعضهم يرى أنها تضر بنومه وحركته وتركيزه، والصواب أن العبرة بطريقة استخدامها، فتنظيم الوقت واختيار المحتوى النافع يجعلانها مفيدة.'}
+];
+const OPINION=new Set(['انا','اعتقد','رايي','برايي','اظن','اري','اتمني','احب','نظري','اشعر','اعجبني','رائع','رائعه','اروع','اجمل','افضل']);
+
+/* ---------- router ---------- */
+function go(id){location.hash=id?'#'+id:'#home'}
+function route(){
+  const id=(location.hash||'').slice(1)||'home';
+  const st=ST.find(s=>s.id===id);
+  $('#nav').innerHTML=st?'<button class="back" id="homeBtn">→ خريطة الرحلة</button>':'<span class="credit-top">مهارة التلخيص · مستوى متقدم</span>';
+  if(st)$('#homeBtn').onclick=()=>go('home');
+  const app=$('#app');app.innerHTML='';
+  ({home:vHome,guide:vGuide,idea:()=>vQuiz('idea',IDEA),trim:vTrim,general:()=>vQuiz('general',GEN),merge:()=>vQuiz('merge',MERGE),diagnose:vDiag,write:vWrite}[id]||vHome)(app);
+  window.scrollTo(0,0);
+}
+window.addEventListener('hashchange',route);
+
+function stationHead(id){const s=ST.find(x=>x.id===id);return `<div class="stack" style="gap:6px;margin-bottom:18px"><div class="eyebrow">المحطة ${s.n}</div><h2>${s.t}</h2><p class="muted">${s.d}</p></div>`}
+function nextId(id){const i=ST.findIndex(s=>s.id===id);return ST[i+1]?ST[i+1].id:null}
+function resultCard(el,id,score,total,extra){
+  const pct=score/total, stars=pct>=.9?3:pct>=.6?2:1; setStars(id,stars);
+  const nx=nextId(id);
+  el.innerHTML=stationHead(id)+`<div class="card result"><div class="big">${'★'.repeat(stars)}${'☆'.repeat(3-stars)}</div>
+   <h3>أنهيت المحطة: ${AR(score)} من ${AR(total)}</h3><p class="muted">${stars===3?'أداء ممتاز! أنت جاهز للمحطة التالية.':stars===2?'جيد جدًا. راجع الأخطاء ثم جرّب مرة أخرى لتحصل على ثلاث نجوم.':'لا بأس، المهارة تُبنى بالتكرار. أعد المحطة وركّز على تفسير كل إجابة.'}</p>${extra||''}
+   <div class="row" style="justify-content:center"><button class="btn ghost" id="again">أعد المحطة</button>${nx?`<button class="btn" id="nx">المحطة التالية ←</button>`:`<button class="btn" id="nx">خريطة الرحلة</button>`}</div></div>`;
+  $('#again').onclick=route; $('#nx').onclick=()=>go(nx||'home');
+}
+
+/* ---------- home ---------- */
+function vHome(el){
+  el.innerHTML=`<section class="hero"><div class="stack" style="gap:6px"><div class="eyebrow">مهارة التلخيص</div><h1>رحلة التلخيص</h1>
+   <p class="lead">التلخيص ليس نقل الجمل المهمة، بل إعادة بناء النص في كلمات أقل بلغتك أنت. سبع محطات تأخذك من فهم القواعد إلى كتابة ملخّص كامل يُراجَع لحظة بلحظة.</p></div>
+   <div><div class="squeeze" aria-hidden="true"><div class="lines"><span></span><span class="k"></span><span></span><span></span><span class="k"></span><span style="width:70%"></span></div><div class="arrow">←</div><div class="one"><span></span><span style="width:60%"></span></div></div><p class="squeeze-cap">نص طويل ← أفكاره الأساسية ← ملخّص بربع حجمه تقريبًا</p></div></section>
+   <nav class="map">${ST.map(s=>`<button class="station ${store.stars[s.id]?'done':''}" data-id="${s.id}"><span class="st-num">${s.n}</span><span><div class="st-title">${s.t}</div><div class="st-desc">${s.d}</div></span>${starStr(store.stars[s.id]||0)}</button>`).join('')}</nav>`;
+  el.querySelectorAll('.station').forEach(b=>b.onclick=()=>go(b.dataset.id));
+}
+
+/* ---------- guide ---------- */
+function vGuide(el){
+  const STEPS=[
+   {tag:'النص',txt:'اقرأ الفقرة كاملة أولًا، ولا تبدأ التلخيص قبل أن تفهمها. ثم اضغط «التالي» لترى القواعد تعمل.'},
+   {tag:'الحذف',txt:'نحذف التفاصيل التي لا يتغيّر المعنى بدونها: قصة البحث الطويل تفصيل جانبي.'},
+   {tag:'التعميم',txt:'خمسة أشياء في قائمة واحدة؟ نستبدل بها كلمة جامعة: «كنوزها».'},
+   {tag:'الاختيار',txt:'نبحث عن الجملة المحورية التي تحمل خلاصة الفقرة. هنا جاءت في آخرها.'},
+   {tag:'الدمج',txt:'جملتان تشرحان معًا سبب أهمية الاكتشاف: وُجدت المقبرة كاملة، بينما سُرقت المقابر الأخرى. ندمجهما.'},
+   {tag:'الصياغة',txt:'نكتب الملخّص بكلماتنا، بترتيب منطقي، بلا رأي شخصي.'}];
+  const FINAL='اكتشف هوارد كارتر عام ١٩٢٢ مقبرة توت عنخ آمون كاملة بكنوزها، على خلاف معظم المقابر الملكية التي سُرقت، فكان ذلك من أعظم الاكتشافات الأثرية.';
+  const ORIG='في عام ١٩٢٢ اكتشف عالم الآثار البريطاني هوارد كارتر مقبرة الملك توت عنخ آمون في وادي الملوك بالأقصر. وكان كارتر قد بحث عنها سنوات طويلة حتى كاد يفقد الأمل. وقد وجد المقبرة كاملة تقريبًا، ففيها التماثيل والعربات والأسرّة والمجوهرات والقناع الذهبي الشهير. وكانت معظم مقابر الملوك قد سُرقت قبل ذلك بقرون. ولهذا يُعدّ هذا الاكتشاف من أعظم الاكتشافات الأثرية في التاريخ.';
+  let k=0;
+  function draw(){
+    const s=STEPS[k];
+    const list=k>=2?`<s class="cut">التماثيل والعربات والأسرّة والمجوهرات والقناع الذهبي الشهير</s> <ins>كنوزها</ins>`:`<span class="s">التماثيل والعربات والأسرّة والمجوهرات والقناع الذهبي الشهير</span>`;
+    el.innerHTML=stationHead('guide')+`<div class="card stack">
+     <div class="steps">${STEPS.map((x,i)=>`<button class="${i===k?'on':''}" data-i="${i}">${AR(i)} ${x.tag}</button>`).join('')}</div>
+     <div class="passage gtext">
+      <span class="s">في عام ١٩٢٢ اكتشف عالم الآثار البريطاني هوارد كارتر مقبرة الملك توت عنخ آمون في وادي الملوك بالأقصر.</span>
+      <span class="s ${k>=1?'cut':''}">وكان كارتر قد بحث عنها سنوات طويلة حتى كاد يفقد الأمل.</span>
+      <span class="s ${k>=4?'mg':''}">وقد وجد المقبرة كاملة تقريبًا، ففيها ${list}.</span>
+      <span class="s ${k>=4?'mg':''}">وكانت معظم مقابر الملوك قد سُرقت قبل ذلك بقرون.</span>
+      <span class="s ${k>=3?'hl':''}">ولهذا يُعدّ هذا الاكتشاف من أعظم الاكتشافات الأثرية في التاريخ.</span>
+     </div>
+     <div class="rule"><span class="tag">${s.tag}</span><p>${s.txt}</p></div>
+     ${k===5?`<div class="final">${FINAL}</div><div class="meta"><span>النص: <b>${AR(wc(ORIG))}</b> كلمة</span><span>الملخّص: <b>${AR(wc(FINAL))}</b> كلمة</span><span>النسبة: <b>${AR(Math.round(wc(FINAL)/wc(ORIG)*100))}٪</b></span></div>`:''}
+     <div class="row" style="justify-content:space-between"><button class="btn ghost" id="pv" ${k===0?'disabled':''}>→ السابق</button>
+      ${k<5?'<button class="btn" id="nx">التالي ←</button>':'<button class="btn alt" id="done">فهمت القواعد ←</button>'}</div></div>
+     <div class="card stack" style="margin-top:16px"><h3>القواعد الخمس في سطر</h3><ul class="check">
+      <li><span class="mark-ok">١</span><span><b>احذف</b> الأمثلة والتكرار والتفاصيل الجانبية.</span></li>
+      <li><span class="mark-ok">٢</span><span><b>عمّم</b> القائمة بكلمة تجمعها كلها.</span></li>
+      <li><span class="mark-ok">٣</span><span><b>اختر</b> الجملة المحورية إن وُجدت.</span></li>
+      <li><span class="mark-ok">٤</span><span><b>ابنِ</b> الفكرة بنفسك إن لم توجد، و<b>ادمج</b> المتقارب.</span></li>
+      <li><span class="mark-ok">٥</span><span><b>أعد الصياغة</b> بكلماتك، بلا رأي شخصي، في ربع النص أو ثلثه تقريبًا.</span></li></ul></div>`;
+    el.querySelectorAll('.steps button').forEach(b=>b.onclick=()=>{k=+b.dataset.i;draw()});
+    $('#pv').onclick=()=>{if(k>0){k--;draw()}};
+    if($('#nx'))$('#nx').onclick=()=>{k++;draw()};
+    if($('#done'))$('#done').onclick=()=>{setStars('guide',3);go('idea')};
+  }
+  draw();
+}
+
+/* ---------- generic quiz ---------- */
+function vQuiz(id,items){
+  const el=$('#app'); const order=shuffle(items); let i=0,score=0;
+  function draw(){
+    const it=order[i]; let tried=false,done=false;
+    const opts=shuffle(it.options);
+    el.innerHTML=stationHead(id)+`<div class="card stack">
+     <div class="progress">${order.map((_,j)=>`<span class="${j<i?'on':j===i?'now':''}"></span>`).join('')}</div>
+     <div class="passage">${it.passage}</div><h3>${it.prompt}</h3>
+     <div class="opts">${opts.map((o,j)=>`<button class="opt" data-j="${j}">${o.t}</button>`).join('')}</div>
+     <div id="fb" class="stack" style="gap:10px"></div>
+     <div class="row" style="justify-content:flex-end"><button class="btn" id="nx" hidden>${i<order.length-1?'التالي ←':'النتيجة ←'}</button></div></div>`;
+    el.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      if(done)return; const o=opts[+b.dataset.j];
+      if(o.ok){done=true;if(!tried)score++;b.classList.add('right');
+        el.querySelectorAll('.opt').forEach(x=>x.disabled=true);
+        $('#fb').innerHTML=`<div class="fb good"><b>${tried?'صحيح الآن.':'إجابة صحيحة!'}</b> ${o.why}</div>`+(it.tip?`<div class="fb tip"><b>قاعدة:</b> ${it.tip}</div>`:'');
+        $('#nx').hidden=false;$('#nx').focus();
+      }else{tried=true;b.classList.add('wrong');b.disabled=true;
+        $('#fb').innerHTML=`<div class="fb bad"><b>ليست هذه.</b> ${o.why} جرّب مرة أخرى.</div>`}
+    });
+    $('#nx').onclick=()=>{i++; if(i<order.length)draw(); else resultCard(el,id,score,order.length)};
+  }
+  draw();
+}
+
+/* ---------- trim ---------- */
+function vTrim(el){
+  let p=0,total=0,score=0;
+  function draw(){
+    const P=TRIM[p]; const del=P.sents.map(()=>false); let checked=false;
+    el.innerHTML=stationHead('trim')+`<div class="card stack">
+     <div class="progress">${TRIM.map((_,j)=>`<span class="${j<p?'on':j===p?'now':''}"></span>`).join('')}</div>
+     <h3>${P.title}</h3><p class="muted small">اضغط على كل جملة يمكن حذفها من الملخّص. اضغط مرة أخرى لإرجاعها.</p>
+     <div class="trimtext passage" id="tt">${P.sents.map((s,j)=>`<span class="sent" data-j="${j}" role="button" tabindex="0">${s.t}</span>`).join(' ')}</div>
+     <div class="legend"><span>الجملة المشطوبة = محذوفة</span><span>خط أخضر = قرار صحيح</span><span>خط أحمر = راجعه</span></div>
+     <div id="out" class="stack" style="gap:12px"></div>
+     <div class="row" style="justify-content:flex-end"><button class="btn" id="ck">تحقّق</button><button class="btn" id="nx" hidden>${p<TRIM.length-1?'الفقرة التالية ←':'النتيجة ←'}</button></div></div>`;
+    const toggle=sp=>{if(checked)return;const j=+sp.dataset.j;del[j]=!del[j];sp.classList.toggle('del',del[j])};
+    el.querySelectorAll('.sent').forEach(sp=>{sp.onclick=()=>toggle(sp);sp.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle(sp)}}});
+    $('#ck').onclick=()=>{
+      checked=true;let right=0;
+      el.querySelectorAll('.sent').forEach(sp=>{const j=+sp.dataset.j;const ok=(!del[j])===!!P.sents[j].keep;if(ok)right++;sp.classList.add(ok?'ok':'no');sp.style.cursor='default'});
+      total+=P.sents.length;score+=right;
+      $('#out').innerHTML=`<div class="fb ${right===P.sents.length?'good':'tip'}"><b>${AR(right)} من ${AR(P.sents.length)} قرارات صحيحة.</b></div>
+       <ul class="reasons">${P.sents.map((s,j)=>{const ok=(!del[j])===!!s.keep;return `<li><span class="${ok?'mark-ok':'mark-no'}">${ok?'✓':'✗'}</span><span><b>${s.keep?'تبقى':'تُحذف'}:</b> ${s.why}</span></li>`}).join('')}</ul>
+       <div class="stack" style="gap:6px"><div class="eyebrow">بعد الحذف وإعادة الصياغة</div><div class="final">${P.model}</div></div>`;
+      $('#ck').hidden=true;$('#nx').hidden=false;
+    };
+    $('#nx').onclick=()=>{p++;if(p<TRIM.length)draw();else resultCard(el,'trim',score,total)};
+  }
+  draw();
+}
+
+/* ---------- diagnose ---------- */
+function vDiag(el){
+  let p=0,score=0,total=0;
+  function draw(){
+    const D=DIAG[p]; const sums=shuffle(D.sums); let phase=1; const picks={};
+    el.innerHTML=stationHead('diagnose')+`<div class="card stack">
+     <div class="progress">${DIAG.map((_,j)=>`<span class="${j<p?'on':j===p?'now':''}"></span>`).join('')}</div>
+     <h3>${D.title}</h3><div class="passage">${D.passage}</div>
+     <div class="meta"><span>طول النص: <b>${AR(wc(D.passage))}</b> كلمة</span></div>
+     <h3 id="q">الخطوة الأولى: أي الملخّصات هو الأفضل؟</h3>
+     <div class="stack" id="list" style="gap:10px">${sums.map((s,j)=>`<div class="sumcard pick" data-j="${j}" role="button" tabindex="0"><div class="txt">${s.t}</div><div class="meta"><span>${AR(wc(s.t))} كلمة</span></div><div class="slot"></div></div>`).join('')}</div>
+     <div id="fb"></div>
+     <div class="row" style="justify-content:flex-end"><button class="btn" id="ck" hidden>تحقّق من التشخيص</button><button class="btn" id="nx" hidden>${p<DIAG.length-1?'النص التالي ←':'النتيجة ←'}</button></div></div>`;
+    const cards=[...el.querySelectorAll('.sumcard')];
+    const pick=c=>{
+      if(phase!==1)return; const s=sums[+c.dataset.j]; total++;
+      if(!s.flaw){score++;c.classList.add('best');$('#fb').innerHTML=`<div class="fb good"><b>اختيار صحيح!</b> ${s.why}</div>`}
+      else{c.classList.add('wrongpick');const b=cards.find(x=>!sums[+x.dataset.j].flaw);b.classList.add('best');
+        $('#fb').innerHTML=`<div class="fb bad"><b>ليس الأفضل.</b> عيبه: ${s.flaw}. الملخّص الأخضر هو الأفضل: ${sums.find(x=>!x.flaw).why}</div>`}
+      phase=2; $('#q').textContent='الخطوة الثانية: شخّص عيب كل ملخّص آخر.';
+      cards.forEach(x=>{x.classList.remove('pick');const s2=sums[+x.dataset.j];if(s2.flaw){
+        x.querySelector('.slot').innerHTML=`<div class="chips">${FLAWS.map(f=>`<button class="chip" data-f="${f}">${f}</button>`).join('')}</div>`;
+        x.querySelectorAll('.chip').forEach(ch=>ch.onclick=()=>{if(phase!==2)return;picks[x.dataset.j]=ch.dataset.f;x.querySelectorAll('.chip').forEach(y=>y.classList.toggle('sel',y===ch));$('#ck').hidden=Object.keys(picks).length<sums.length-1});
+      }});
+    };
+    cards.forEach(c=>{c.onclick=()=>pick(c);c.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();pick(c)}}});
+    $('#ck').onclick=()=>{
+      phase=3;let r=0;
+      cards.forEach(x=>{const s=sums[+x.dataset.j];if(!s.flaw)return;total++;
+        const ok=picks[x.dataset.j]===s.flaw;if(ok){r++;score++}
+        x.querySelectorAll('.chip').forEach(ch=>{ch.disabled=true;if(ch.dataset.f===s.flaw)ch.classList.add('right');else if(ch.classList.contains('sel'))ch.classList.add('wrong')});
+        x.querySelector('.slot').insertAdjacentHTML('beforeend',`<p class="small" style="margin-top:6px"><span class="${ok?'mark-ok':'mark-no'}">${ok?'✓':'✗'}</span> ${s.why}</p>`)});
+      $('#fb').insertAdjacentHTML('beforeend',`<div class="fb ${r===sums.length-1?'good':'tip'}" style="margin-top:10px"><b>شخّصت ${AR(r)} من ${AR(sums.length-1)} تشخيصًا صحيحًا.</b></div>`);
+      $('#ck').hidden=true;$('#nx').hidden=false;
+    };
+    $('#nx').onclick=()=>{p++;if(p<DIAG.length)draw();else resultCard(el,'diagnose',score,total)};
+  }
+  draw();
+}
+
+/* ---------- write workshop ---------- */
+function analyze(T,sum){
+  const ow=toks(T.text), sw=toks(sum), n=sw.length, on=ow.length;
+  const minW=Math.round(on*.2), maxW=Math.round(on*.4);
+  const grams=new Set(); for(let i=0;i+2<ow.length;i++)grams.add(ow[i]+' '+ow[i+1]+' '+ow[i+2]);
+  let g=0,hit=0; for(let i=0;i+2<sw.length;i++){g++;if(grams.has(sw[i]+' '+sw[i+1]+' '+sw[i+2]))hit++}
+  const copy=g?Math.round(hit/g*100):0;
+  const oj=' '+ow.join(' ')+' '; let best=0,bestI=0;
+  for(let i=0;i<n;i++){let j=i;while(j<n&&oj.includes(' '+sw.slice(i,j+1).join(' ')+' '))j++;if(j-i>best){best=j-i;bestI=i}}
+  const run=sw.slice(bestI,bestI+best).join(' ');
+  const ns=' '+norm(sum)+' ';
+  const ideas=T.ideas.map(d=>d.k.some(k=>ns.includes(norm(k))));
+  const opin=[...new Set(norm(sum).split(' ').map(w=>w.replace(/^[وف]/,'')).filter(w=>OPINION.has(w)||OPINION.has('ا'+w)))];
+  return {n,on,minW,maxW,copy,best,run,ideas,cov:ideas.filter(Boolean).length,opin};
+}
+function vWrite(el){
+  let cur=TEXTS[0].id;
+  function draw(){
+    const T=TEXTS.find(t=>t.id===cur); const d=store.drafts[cur]||{sum:'',ideas:['','','',''],hl:[]};
+    const sents=T.text.match(/[^.!؟]+[.!؟»]*\s*/g);
+    el.innerHTML=stationHead('write')+`<div class="stack">
+     <div class="tabs">${TEXTS.map(t=>`<button class="tab ${t.id===cur?'on':''}" data-id="${t.id}"><b>${t.title}</b><small>${t.kind}</small></button>`).join('')}</div>
+     <div class="card stack">
+      <div class="row" style="justify-content:space-between"><div class="eyebrow">١ · اقرأ وظلّل</div><span class="muted small">${AR(wc(T.text))} كلمة</span></div>
+      <p class="muted small">اضغط على الجمل التي تحمل أفكارًا أساسية لتظليلها.</p>
+      <div class="passage trimtext wtext">${sents.map((s,j)=>`<span class="sent ${d.hl.includes(j)?'hlt':''}" data-j="${j}" role="button" tabindex="0">${s.trim()}</span>`).join(' ')}</div>
+      <div class="fb tip">${T.tip}</div></div>
+     <div class="card stack">
+      <div class="eyebrow">٢ · دوّن الأفكار الرئيسة بكلماتك (كلمات قليلة لكل فكرة)</div>
+      <div class="ideas">${[0,1,2,3].map(j=>`<input id="idea-${cur}-${j}" placeholder="الفكرة ${AR(j+1)}" value="${(d.ideas[j]||'').replace(/"/g,'&quot;')}">`).join('')}</div></div>
+     <div class="card stack">
+      <div class="eyebrow">٣ · اكتب ملخّصك</div>
+      <textarea id="sum-${cur}" placeholder="اكتب الملخّص هنا بأسلوبك، في جملتين أو ثلاث...">${d.sum}</textarea>
+      <div class="meters" id="meters"></div>
+      <div class="row" style="justify-content:flex-end"><button class="btn ghost" id="cp">انسخ ملخّصي</button><button class="btn" id="rv">راجع ملخّصي</button></div>
+      <div id="report" class="stack"></div></div></div>`;
+    el.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{cur=b.dataset.id;draw()});
+    const persist=()=>{store.drafts[cur]=d;save()};
+    el.querySelectorAll('.wtext .sent').forEach(sp=>{const t=()=>{const j=+sp.dataset.j;const k=d.hl.indexOf(j);if(k>-1)d.hl.splice(k,1);else d.hl.push(j);sp.classList.toggle('hlt');persist()};sp.onclick=t;sp.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();t()}}});
+    el.querySelectorAll('.ideas input').forEach((inp,j)=>inp.oninput=()=>{d.ideas[j]=inp.value;persist()});
+    const ta=$('#sum-'+cur);
+    const live=()=>{
+      const a=analyze(T,ta.value); const scale=Math.round(a.on*.6);
+      const pos=v=>Math.min(100,v/scale*100);
+      const lenCls=a.n===0?'':a.n<a.minW?'warn':a.n<=a.maxW?'good':'bad';
+      const cpCls=a.n<6?'':a.copy<=30&&a.best<7?'good':a.copy<=55?'warn':'bad';
+      const opCls=a.n<3?'':a.opin.length?'bad':'good';
+      const cvCls=a.n<6?'':a.cov>=4?'good':a.cov>=3?'warn':'bad';
+      $('#meters').innerHTML=`
+       <div class="meter ${lenCls}"><span class="lbl">الطول</span><span class="val">${AR(a.n)}</span><div class="lenbar"><div class="band" style="right:${pos(a.minW)}%;width:${pos(a.maxW)-pos(a.minW)}%"></div><div class="pin" style="right:calc(${pos(a.n)}% - 2px)"></div></div><span class="note">المناسب ${AR(a.minW)}–${AR(a.maxW)} كلمة</span></div>
+       <div class="meter ${cpCls}"><span class="lbl">النسخ الحرفي</span><span class="val">${AR(a.copy)}٪</span><span class="note">${a.best>=5?`أطول عبارة منسوخة: ${AR(a.best)} كلمات`:'كلماتك أنت'}</span></div>
+       <div class="meter ${opCls}"><span class="lbl">الرأي الشخصي</span><span class="val">${a.opin.length?'موجود':'لا يوجد'}</span><span class="note">${a.opin.length?'احذف: '+a.opin.join('، '):'ممتاز'}</span></div>
+       <div class="meter ${cvCls}"><span class="lbl">الأفكار المغطاة</span><span class="val">${AR(a.cov)} / ${AR(T.ideas.length)}</span><span class="note">تقدير آلي</span></div>`;
+      d.sum=ta.value;persist();return a;
+    };
+    ta.oninput=()=>{live();$('#report').innerHTML=''};
+    live();
+    $('#cp').onclick=()=>{const done=()=>{$('#cp').textContent='نُسخ ✓';setTimeout(()=>$('#cp')&&($('#cp').textContent='انسخ ملخّصي'),1500)};
+      try{navigator.clipboard.writeText(ta.value).then(done,()=>{ta.select();})}catch(e){ta.select()}};
+    $('#rv').onclick=()=>{
+      const a=live(); if(a.n<5){$('#report').innerHTML='<div class="fb bad">اكتب ملخّصك أولًا (جملة كاملة على الأقل).</div>';return}
+      const c=[
+       {ok:a.n>=a.minW&&a.n<=a.maxW,t:a.n<a.minW?`ملخّصك قصير (${AR(a.n)} كلمة)؛ ربما حذفت فكرة أساسية.`:a.n>a.maxW?`ملخّصك طويل (${AR(a.n)} كلمة)؛ احذف التفاصيل وعمّم القوائم.`:'الطول مناسب: بين ربع النص وثلثه تقريبًا.'},
+       {ok:a.copy<=30&&a.best<7,t:a.copy<=30&&a.best<7?'صغت الملخّص بكلماتك.':`نسخت عبارات كما هي من النص${a.best>=5?`، مثل: <span class="copied">${a.run}</span>`:''}. أعد صياغتها بأسلوبك.`},
+       {ok:!a.opin.length,t:a.opin.length?`فيه كلمات تعبّر عن رأيك (${a.opin.join('، ')}). الملخّص ينقل النص لا رأيك.`:'لا يوجد رأي شخصي.'},
+       {ok:a.cov>=T.ideas.length-0,t:a.cov>=T.ideas.length?'غطّيت كل الأفكار الرئيسة.':`غطّيت ${AR(a.cov)} من ${AR(T.ideas.length)} أفكار. راجع القائمة بالأسفل.`}];
+      const met=c.filter(x=>x.ok).length, stars=met===4?3:met===3?2:1; setStars('write',stars);
+      $('#report').innerHTML=`<div class="card stack" style="background:var(--bg)"><div class="row" style="justify-content:space-between"><h3>تقرير المراجعة</h3>${starStr(stars)}</div>
+       <ul class="check">${c.map(x=>`<li><span class="${x.ok?'mark-ok':'mark-no'}">${x.ok?'✓':'✗'}</span><span>${x.t}</span></li>`).join('')}</ul>
+       <div class="eyebrow">الأفكار الرئيسة في النص</div>
+       <ul class="check">${T.ideas.map((d2,j)=>`<li><span class="${a.ideas[j]?'mark-ok':'mark-no'}">${a.ideas[j]?'✓':'○'}</span><span>${d2.name}</span></li>`).join('')}</ul>
+       <p class="muted small">المقياس الآلي يبحث عن كلمات مفتاحية، فقد يخطئ أحيانًا. الحكم الأخير لمعلّمك.</p>
+       <button class="btn ghost" id="sm">اعرض الملخّص النموذجي</button><div id="mdl"></div></div>`;
+      $('#sm').onclick=()=>{$('#mdl').innerHTML=`<div class="stack" style="gap:6px"><div class="final">${T.model}</div><div class="meta"><span><b>${AR(wc(T.model))}</b> كلمة</span><span>قارن: ماذا حذف؟ ماذا عمّم؟ كيف دمج؟</span></div></div>`;$('#sm').hidden=true};
+      $('#report').scrollIntoView({behavior:'smooth',block:'start'});
+    };
+  }
+  draw();
+}
+
+route();
+</script>
+
+</body>
+</html>
