@@ -1,0 +1,721 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>رحلة الرسالة</title>
+<script data-goatcounter="https://rehlatwones.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=Noto+Naskh+Arabic:wght@400;600&display=swap">
+<style>
+body{margin:0}img{max-width:100%}[hidden]{display:none!important}
+
+/* Layout: a journey map of 7 stations; each station is one focused working card, text panels set in Naskh for reading */
+:root{
+  --bg:#FBF8F1; --surface:#FFFFFF; --ink:#2A2A1C; --muted:#6B6A52; --line:#E3DECB;
+  --olive:#64663A; --olive-soft:#ECEDDC; --terra:#C97735; --terra-soft:#F8E7D6;
+  --good:#3B7A4C; --good-soft:#E1F0E3; --bad:#B4452F; --bad-soft:#F7E0DA; --warn:#9A6E12; --warn-soft:#F6EBCF;
+  --hl:#F5DC86; --on-accent:#FFFFFF;
+  --f-display:"Reem Kufi","IBM Plex Sans Arabic",Tahoma,sans-serif;
+  --f-ui:"IBM Plex Sans Arabic",Tahoma,"Segoe UI",sans-serif;
+  --f-read:"Noto Naskh Arabic","Amiri","Traditional Arabic",serif;
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#1A1B13; --surface:#24251B; --ink:#EEEBDC; --muted:#AAA88E; --line:#393A2B;
+  --olive:#AEB274; --olive-soft:#31331F; --terra:#E4975E; --terra-soft:#3D2A1A;
+  --good:#80C492; --good-soft:#1E3224; --bad:#EE8B76; --bad-soft:#3D221C; --warn:#E3BA5E; --warn-soft:#382F18;
+  --hl:#6A5A1C; --on-accent:#1A1B13; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#1A1B13; --surface:#24251B; --ink:#EEEBDC; --muted:#AAA88E; --line:#393A2B;
+  --olive:#AEB274; --olive-soft:#31331F; --terra:#E4975E; --terra-soft:#3D2A1A;
+  --good:#80C492; --good-soft:#1E3224; --bad:#EE8B76; --bad-soft:#3D221C; --warn:#E3BA5E; --warn-soft:#382F18;
+  --hl:#6A5A1C; --on-accent:#1A1B13; color-scheme:dark }
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-ui);font-size:16px;line-height:1.7}
+.wrap{max-width:860px;margin:0 auto;padding-block:20px 40px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);font-weight:700;text-wrap:balance;margin:0;line-height:1.35}
+h1{font-size:clamp(2rem,6vw,2.9rem);color:var(--olive)}
+h2{font-size:1.55rem;color:var(--olive)}
+h3{font-size:1.15rem}
+p{margin:0}
+button{font-family:inherit;font-size:inherit;color:inherit}
+button:focus-visible,textarea:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--terra);outline-offset:2px}
+
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:22px;flex-wrap:wrap}
+.brand{font-family:var(--f-display);color:var(--olive);font-size:1.05rem;display:flex;align-items:center;gap:8px}
+.brand i{width:10px;height:10px;border-radius:50%;background:var(--terra);display:inline-block}
+.credit-top{font-size:.8rem;color:var(--muted)}
+.back{background:none;border:1px solid var(--line);border-radius:999px;padding:6px 14px;cursor:pointer;color:var(--olive);font-weight:500}
+.back:hover{background:var(--olive-soft)}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.3fr 1fr;gap:28px;align-items:center;margin-bottom:30px}
+.hero p.lead{font-size:1.1rem;color:var(--muted);margin-top:10px;max-width:46ch}
+.squeeze{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:flex;align-items:center;gap:14px}
+.lines{flex:1;display:flex;flex-direction:column;gap:7px}
+.lines span{height:8px;border-radius:4px;background:var(--line)}
+.lines span.k{background:var(--olive)}
+.arrow{font-family:var(--f-display);color:var(--terra);font-size:1.6rem}
+.one{flex:.7;display:flex;flex-direction:column;gap:7px}
+.one span{height:8px;border-radius:4px;background:var(--terra)}
+.squeeze-cap{font-size:.8rem;color:var(--muted);margin-top:8px;text-align:center}
+
+/* map */
+.map{display:flex;flex-direction:column;gap:0;position:relative}
+.station{display:grid;grid-template-columns:56px 1fr auto;gap:14px;align-items:center;padding:14px 4px;border-bottom:1px dashed var(--line);cursor:pointer;background:none;border-left:none;border-right:none;border-top:none;text-align:right;width:100%}
+.station:hover .st-title{color:var(--terra)}
+.st-num{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-display);font-size:1.3rem;border:2px solid var(--olive);color:var(--olive);background:var(--surface)}
+.station.done .st-num{background:var(--olive);color:var(--on-accent)}
+.st-title{font-family:var(--f-display);font-size:1.15rem;transition:color .15s}
+.st-desc{color:var(--muted);font-size:.93rem}
+.stars{color:var(--terra);letter-spacing:2px;font-size:1.05rem;white-space:nowrap}
+.stars .off{color:var(--line)}
+
+/* cards & common */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px}
+.stack{display:flex;flex-direction:column;gap:16px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.eyebrow{font-size:.8rem;letter-spacing:.04em;color:var(--terra);font-weight:700}
+.muted{color:var(--muted)}
+.small{font-size:.88rem}
+.passage{font-family:var(--f-read);font-size:1.18rem;line-height:2.1;background:var(--olive-soft);border-radius:12px;padding:16px 18px}
+.btn{border:none;border-radius:999px;padding:10px 20px;cursor:pointer;font-weight:700;background:var(--olive);color:var(--on-accent)}
+.btn:hover{filter:brightness(1.07)}
+.btn.alt{background:var(--terra)}
+.btn.ghost{background:none;border:1.5px solid var(--olive);color:var(--olive)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.progress{display:flex;gap:6px}
+.progress span{flex:1;height:6px;border-radius:3px;background:var(--line)}
+.progress span.on{background:var(--olive)}
+.progress span.now{background:var(--terra)}
+
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{display:block;width:100%;text-align:right;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:12px 16px;cursor:pointer;font-family:var(--f-read);font-size:1.08rem;line-height:1.9}
+.opt:hover:not([disabled]){border-color:var(--olive)}
+.opt.right{border-color:var(--good);background:var(--good-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt[disabled]{cursor:default}
+.fb{border-radius:12px;padding:12px 16px;font-size:.98rem}
+.fb.good{background:var(--good-soft);color:var(--ink);border-inline-start:4px solid var(--good)}
+.fb.bad{background:var(--bad-soft);color:var(--ink);border-inline-start:4px solid var(--bad)}
+.fb.tip{background:var(--terra-soft);border-inline-start:4px solid var(--terra)}
+.fb b{font-weight:700}
+
+/* guide */
+.gtext span.s{transition:all .3s;border-radius:4px}
+.gtext .cut{text-decoration:line-through;text-decoration-color:var(--bad);text-decoration-thickness:2px;opacity:.45}
+.gtext .hl{background:var(--hl);padding:0 2px}
+.gtext .mg{background:var(--terra-soft);box-shadow:0 0 0 2px var(--terra-soft)}
+.gtext ins{text-decoration:none;background:var(--good-soft);color:var(--good);font-weight:600;padding:0 4px;border-radius:4px}
+.steps{display:flex;gap:6px;flex-wrap:wrap}
+.steps button{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px;cursor:pointer;font-size:.9rem}
+.steps button.on{background:var(--olive);border-color:var(--olive);color:var(--on-accent)}
+.rule{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start}
+.rule .tag{font-family:var(--f-display);background:var(--terra);color:var(--on-accent);border-radius:8px;padding:4px 10px;white-space:nowrap}
+.final{border:2px solid var(--olive);border-radius:12px;padding:14px 18px;font-family:var(--f-read);font-size:1.15rem;line-height:2}
+.meta{display:flex;gap:18px;flex-wrap:wrap;font-size:.9rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.meta b{color:var(--ink)}
+
+/* trim */
+.trimtext{font-family:var(--f-read);font-size:1.15rem;line-height:2.25}
+.sent{cursor:pointer;border-radius:5px;padding:1px 2px;transition:background .15s}
+.sent:hover{background:var(--olive-soft)}
+.sent.del{text-decoration:line-through;text-decoration-color:var(--bad);text-decoration-thickness:2px;color:var(--muted)}
+.sent.ok{box-shadow:inset 0 -3px 0 var(--good)}
+.sent.no{box-shadow:inset 0 -3px 0 var(--bad);background:var(--bad-soft)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.88rem;color:var(--muted)}
+.reasons{display:flex;flex-direction:column;gap:8px;padding:0;margin:0;list-style:none}
+.reasons li{display:grid;grid-template-columns:22px 1fr;gap:8px;font-size:.95rem}
+.mark-ok{color:var(--good);font-weight:700}
+.mark-no{color:var(--bad);font-weight:700}
+
+/* diagnose */
+.sumcard{border:1.5px solid var(--line);border-radius:12px;padding:12px 16px;display:flex;flex-direction:column;gap:10px}
+.sumcard .txt{font-family:var(--f-read);font-size:1.06rem;line-height:1.95}
+.sumcard.pick{cursor:pointer}
+.sumcard.pick:hover{border-color:var(--olive)}
+.sumcard.best{border-color:var(--good);background:var(--good-soft)}
+.sumcard.wrongpick{border-color:var(--bad);background:var(--bad-soft)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 12px;cursor:pointer;font-size:.88rem}
+.chip.sel{border-color:var(--terra);background:var(--terra-soft)}
+.chip.right{border-color:var(--good);background:var(--good-soft)}
+.chip.wrong{border-color:var(--bad);background:var(--bad-soft)}
+
+/* write */
+.tabs{display:flex;gap:8px;flex-wrap:wrap}
+.tab{border:1.5px solid var(--line);background:var(--surface);border-radius:12px;padding:8px 14px;cursor:pointer;text-align:right}
+.tab b{display:block;font-family:var(--f-display);font-weight:500}
+.tab small{color:var(--muted)}
+.tab.on{border-color:var(--olive);background:var(--olive-soft)}
+.wtext .sent.hlt{background:var(--hl)}
+.ideas{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ideas input{width:100%;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);border-radius:10px;padding:8px 12px;font-family:var(--f-ui);font-size:.95rem}
+textarea{width:100%;min-height:150px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);border-radius:12px;padding:12px 14px;font-family:var(--f-read);font-size:1.12rem;line-height:2;resize:vertical}
+.meters{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.meter{border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.meter .lbl{font-size:.8rem;color:var(--muted)}
+.meter .val{font-family:var(--f-display);font-size:1.35rem;font-variant-numeric:tabular-nums}
+.meter .note{font-size:.8rem}
+.meter.good{border-color:var(--good);background:var(--good-soft)}
+.meter.warn{border-color:var(--warn);background:var(--warn-soft)}
+.meter.bad{border-color:var(--bad);background:var(--bad-soft)}
+.lenbar{position:relative;height:10px;border-radius:5px;background:var(--line);margin-top:4px}
+.lenbar .band{position:absolute;top:0;bottom:0;background:var(--olive);opacity:.35;border-radius:5px}
+.lenbar .pin{position:absolute;top:-4px;width:4px;height:18px;border-radius:2px;background:var(--terra);transition:right .2s}
+.check{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+.check li{display:grid;grid-template-columns:24px 1fr;gap:8px}
+.copied{background:var(--bad-soft);border-radius:4px;padding:0 3px}
+
+.result{text-align:center;display:flex;flex-direction:column;gap:12px;align-items:center}
+.result .big{font-size:2.4rem;color:var(--terra);letter-spacing:6px}
+footer{margin-top:36px;padding-top:14px;border-top:1px solid var(--line);font-size:.82rem;color:var(--muted);text-align:center}
+
+@media (max-width:640px){
+  .hero{grid-template-columns:1fr}
+  .meters{grid-template-columns:1fr 1fr}
+  .ideas{grid-template-columns:1fr}
+  .station{grid-template-columns:44px 1fr;}
+  .station .stars{grid-column:2}
+  .st-num{width:40px;height:40px;font-size:1.1rem}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+
+:root{--c-intro:#C97735;--c-body:#64663A;--c-end:#3D6B86;--c-intro-soft:#F8E7D6;--c-body-soft:#ECEDDC;--c-end-soft:#DFEBF2}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--c-intro:#E4975E;--c-body:#AEB274;--c-end:#83B4D2;--c-intro-soft:#3D2A1A;--c-body-soft:#31331F;--c-end-soft:#1C2E3A}}
+:root[data-theme="dark"]{--c-intro:#E4975E;--c-body:#AEB274;--c-end:#83B4D2;--c-intro-soft:#3D2A1A;--c-body-soft:#31331F;--c-end-soft:#1C2E3A}
+.essay{display:flex;flex-direction:column;gap:10px;font-family:var(--f-read);font-size:1.12rem;line-height:2.05}
+.essay .ttl{font-family:var(--f-display);text-align:center;font-size:1.3rem;color:var(--olive)}
+.para{border-radius:12px;padding:10px 14px;border-inline-start:5px solid var(--line);transition:all .3s}
+.para.intro.on{border-color:var(--c-intro);background:var(--c-intro-soft)}
+.para.body.on{border-color:var(--c-body);background:var(--c-body-soft)}
+.para.end.on{border-color:var(--c-end);background:var(--c-end-soft)}
+.essay .k{transition:all .3s;border-radius:4px}
+.essay.show-topic .k.topic{background:var(--hl);padding:0 2px}
+.essay.show-hook .k.hook{background:var(--hl);padding:0 2px}
+.essay.show-thesis .k.thesis{background:var(--hl);padding:0 2px}
+.essay.show-ex .k.ex{text-decoration:underline wavy var(--terra);text-underline-offset:6px}
+.essay.show-conn .k.conn{background:var(--terra);color:var(--on-accent);padding:0 4px}
+.essay.show-close .k.close{background:var(--hl);padding:0 2px}
+.essay .ttl.on{background:var(--hl);border-radius:8px}
+.sandwich{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;text-align:center;font-size:.9rem}
+.sandwich div{border-radius:10px;padding:8px 6px}
+.sandwich .a{background:var(--c-intro-soft);border:2px solid var(--c-intro)}
+.sandwich .b{background:var(--c-body-soft);border:2px solid var(--c-body)}
+.sandwich .c{background:var(--c-end-soft);border:2px solid var(--c-end)}
+.sandwich b{display:block;font-family:var(--f-display);font-weight:500}
+/* order */
+.slots{display:flex;flex-direction:column;gap:8px;counter-reset:s}
+.slot{display:grid;grid-template-columns:32px 1fr;gap:10px;align-items:start;border:1.5px dashed var(--line);border-radius:12px;padding:8px 12px;min-height:46px;font-family:var(--f-read);font-size:1.04rem;line-height:1.9;background:var(--surface);text-align:right;width:100%}
+.slot .no{font-family:var(--f-display);color:var(--olive);font-size:1.1rem}
+.slot.filled{border-style:solid;cursor:pointer}
+.slot.right{border-color:var(--good);background:var(--good-soft)}
+.slot.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.pool{display:flex;flex-direction:column;gap:8px}
+.card-pick{border:1.5px solid var(--line);background:var(--olive-soft);border-radius:12px;padding:8px 14px;cursor:pointer;font-family:var(--f-read);font-size:1.04rem;line-height:1.9;text-align:right;width:100%}
+.card-pick:hover{border-color:var(--olive)}
+.blank{display:inline-block;min-width:4.5em;border-bottom:2.5px solid var(--terra);text-align:center;color:var(--terra);font-weight:600}
+.blank.filled{border-color:var(--good);color:var(--good)}
+/* workshop */
+.plan{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.plan label,.wbox label{font-size:.85rem;color:var(--muted);display:block;margin-bottom:4px}
+.plan input,.wbox input{width:100%;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);border-radius:10px;padding:8px 12px;font-family:var(--f-ui);font-size:.95rem}
+.plan .full{grid-column:1/-1}
+.wbox{border-inline-start:5px solid var(--line);padding-inline-start:12px;display:flex;flex-direction:column;gap:6px}
+.wbox.intro{border-color:var(--c-intro)}.wbox.body{border-color:var(--c-body)}.wbox.end{border-color:var(--c-end)}
+.wbox textarea{min-height:110px}
+.wbox .hint{font-size:.85rem;color:var(--muted)}
+.wbox .cnt{font-size:.8rem;color:var(--muted);font-variant-numeric:tabular-nums;align-self:flex-end}
+.conns{display:flex;gap:6px;flex-wrap:wrap}
+.conns span{border-radius:999px;padding:2px 10px;font-size:.85rem;background:var(--good-soft);border:1px solid var(--good)}
+.outline{display:flex;flex-direction:column;gap:6px;font-size:.98rem}
+.outline div{display:grid;grid-template-columns:auto 1fr;gap:10px}
+.outline b{font-family:var(--f-display);font-weight:500;color:var(--terra);white-space:nowrap}
+@media (max-width:640px){.plan{grid-template-columns:1fr}.sandwich{grid-template-columns:1fr}}
+
+
+:root{--formal:#3D6B86;--formal-soft:#DFEBF2;--personal:#C97735;--personal-soft:#F8E7D6;--paper:#FFFDF8;--paper-line:#E8E1CE}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--formal:#83B4D2;--formal-soft:#1C2E3A;--personal:#E4975E;--personal-soft:#3D2A1A;--paper:#26271C;--paper-line:#3B3C2D}}
+:root[data-theme="dark"]{--formal:#83B4D2;--formal-soft:#1C2E3A;--personal:#E4975E;--personal-soft:#3D2A1A;--paper:#26271C;--paper-line:#3B3C2D}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.paper{background:var(--paper);border:1px solid var(--paper-line);border-radius:6px;padding:18px 18px 22px;font-family:var(--f-read);font-size:1.02rem;line-height:1.95;display:flex;flex-direction:column;gap:6px;box-shadow:0 2px 0 var(--paper-line);position:relative;min-width:0}
+.paper::before{content:"";position:absolute;inset:0 0 auto;height:5px;border-radius:6px 6px 0 0}
+.paper.formal::before{background:var(--formal)}.paper.personal::before{background:var(--personal)}
+.paper .tagline{font-family:var(--f-ui);font-size:.78rem;font-weight:700;letter-spacing:.03em}
+.paper.formal .tagline{color:var(--formal)}.paper.personal .tagline{color:var(--personal)}
+.ln{border-radius:6px;padding:0 4px;transition:background .25s,box-shadow .25s;overflow-wrap:anywhere}
+.ln.date{text-align:left;font-size:.95rem}
+.ln.to{font-weight:600}
+.ln.subj{text-align:center;font-weight:600;text-decoration:underline;text-underline-offset:6px}
+.ln.p{text-indent:1.5em}
+.ln.close,.ln.sign{text-align:left}
+.ln.sign{font-weight:600}
+.ln.lit{background:var(--hl);box-shadow:0 0 0 2px var(--hl)}
+.ln.ghost{color:var(--muted);font-style:italic;font-family:var(--f-ui);font-size:.88rem}
+.cmp{width:100%;border-collapse:collapse;font-size:.95rem}
+.cmp th,.cmp td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:right;vertical-align:top}
+.cmp th{font-family:var(--f-display);font-weight:500}
+.cmp th.f{color:var(--formal)}.cmp th.p{color:var(--personal)}
+.cmp td:first-child{font-weight:700;color:var(--muted);white-space:nowrap}
+.tblwrap{overflow-x:auto}
+.sorter{display:flex;gap:10px;flex-wrap:wrap}
+.sorter button{flex:1;min-width:140px;border-radius:14px;padding:14px;font-family:var(--f-display);font-size:1.15rem;cursor:pointer;border:2px solid}
+.sorter .f{border-color:var(--formal);background:var(--formal-soft);color:var(--ink)}
+.sorter .p{border-color:var(--personal);background:var(--personal-soft);color:var(--ink)}
+.sorter button.right{outline:3px solid var(--good);outline-offset:2px}
+.sorter button.wrong{opacity:.5}
+.sorter button[disabled]{cursor:default}
+.doc .ln{cursor:pointer;padding:2px 6px}
+.doc .ln:hover{background:var(--olive-soft)}
+.doc .ln.flag{background:var(--bad-soft);box-shadow:inset 0 0 0 1.5px var(--bad)}
+.doc .ln.ok{box-shadow:inset -4px 0 0 var(--good)}
+.doc .ln.miss{box-shadow:inset -4px 0 0 var(--bad);background:var(--bad-soft)}
+.doc .fix{display:block;font-family:var(--f-ui);font-size:.85rem;color:var(--good);text-indent:0;text-align:right;font-style:normal}
+.workgrid{display:grid;grid-template-columns:1.1fr 1fr;gap:16px;align-items:start}
+.workgrid .paper{position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px)}
+.fld{display:flex;flex-direction:column;gap:4px}
+.fld label{font-size:.85rem;color:var(--muted)}
+.fld input{width:100%;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);border-radius:10px;padding:8px 12px;font-family:var(--f-read);font-size:1rem}
+.fld textarea{min-height:90px}
+.fld .hint{font-size:.8rem;color:var(--muted)}
+.typebadge{display:inline-block;border-radius:999px;padding:2px 10px;font-size:.8rem;font-weight:700}
+.typebadge.formal{background:var(--formal-soft);color:var(--formal)}
+.typebadge.personal{background:var(--personal-soft);color:var(--personal)}
+@media (max-width:720px){.pair,.workgrid{grid-template-columns:1fr}.workgrid .paper{position:static}}
+
+</style>
+</head>
+<body>
+<div class="wrap" dir="rtl" lang="ar">
+  <div class="topbar">
+    <a class="brand" href="https://salema744.github.io/rehlat-wones-play/" style="text-decoration:none"><i></i>رحلة مع ونس</a>
+    <div id="nav"></div>
+  </div>
+  <main id="app"></main>
+  <footer>إعداد: رحلة ونس - أ. سالمة سيد</footer>
+</div>
+<script>
+document.documentElement.lang='ar';document.documentElement.dir='rtl';
+const AR=n=>String(n).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);
+const $=s=>document.querySelector(s);
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+const KEY='rw-risala-v1';
+let store={stars:{},drafts:{}};
+try{const s=JSON.parse(localStorage.getItem(KEY));if(s)store=Object.assign(store,s)}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+function setStars(id,n){if((store.stars[id]||0)<n){store.stars[id]=n;save()}}
+const starStr=n=>'<span class="stars">'+[1,2,3].map(i=>i<=n?'★':'<span class="off">★</span>').join('')+'</span>';
+
+function norm(s){return s.replace(/[\u064B-\u0652\u0670\u0640]/g,'').replace(/[أإآٱ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي').replace(/[^\u0621-\u064A0-9\u0660-\u0669\s]/g,' ').replace(/\s+/g,' ').trim()}
+const wc=s=>{const t=norm(s||'');return t?t.split(' ').length:0};
+const has=(s,list)=>{const n=' '+norm(s||'')+' ';return list.filter(w=>{const k=norm(w);return n.includes(' '+k)||n.includes(' و'+k)||n.includes(' ب'+k)||n.includes(' ل'+k)||n.includes(' ف'+k)})};
+const hasWord=(s,list)=>{const ws=norm(s||'').split(' ').map(w=>w.replace(/^[وف]/,''));return list.filter(w=>ws.includes(norm(w)))};
+
+const ST=[
+ {id:'guide',n:'٠',t:'رسالتان متقابلتان',d:'رسالة رسمية وأخرى شخصية جنبًا إلى جنب، وأجزاؤهما تُضاء معًا.'},
+ {id:'sort',n:'١',t:'رسمية أم شخصية؟',d:'صنّف المواقف والعبارات، واعرف السبب.'},
+ {id:'order',n:'٢',t:'رتّب الرسالة',d:'أعد بناء رسالة رسمية وأخرى شخصية من أجزائهما.'},
+ {id:'phrase',n:'٣',t:'العبارة المناسبة',d:'اختر التحية والختام والطلب المناسب لكل مقام.'},
+ {id:'tone',n:'٤',t:'اضبط النبرة',d:'أصلح جملًا كُتبت بنبرة لا تناسب نوع الرسالة.'},
+ {id:'doctor',n:'٥',t:'طبيب الرسائل',d:'حدّد الأسطر الخاطئة في رسالتين، واعرف تصحيحها.'},
+ {id:'write',n:'٦',t:'ورشة الرسالة',d:'اكتب رسالتك وشاهدها على الورق، ومعك مراجِع آلي.'}
+];
+
+/* ---------- guide letters ---------- */
+const PARTS=[
+ {k:'date',tag:'المكان والتاريخ',txt:'في <b>كلتيهما</b> يُكتب المكان والتاريخ في أعلى الرسالة على اليسار.'},
+ {k:'to',tag:'المرسل إليه والتحية',txt:'<b>الرسمية:</b> لقب وصفة ثم «المحترم»، وتحية ثابتة. <b>الشخصية:</b> نداء ودّي باسم الشخص أو صلة القرابة.'},
+ {k:'subj',tag:'الموضوع',txt:'<b>الرسمية فقط</b> لها سطر «الموضوع» يلخّص الغرض في كلمات، ويأتي بعد التحية أو قبلها. <b>الشخصية</b> بلا موضوع.'},
+ {k:'intro',tag:'المقدمة',txt:'<b>الرسمية:</b> تعريف بالنفس وبالغرض مباشرة. <b>الشخصية:</b> أشواق وسؤال عن الحال قبل الدخول في الموضوع.'},
+ {k:'body',tag:'العرض',txt:'<b>الرسمية:</b> عرض مختصر ومنظّم بلغة رسمية وأسباب واضحة. <b>الشخصية:</b> أخبار ومشاعر بأسلوب دافئ قريب.'},
+ {k:'end',tag:'الخاتمة',txt:'<b>الرسمية:</b> طلب مهذّب وشكر. <b>الشخصية:</b> سلام للأهل، وأمنيات، وانتظار الرد.'},
+ {k:'close',tag:'الختام والتوقيع',txt:'<b>الرسمية:</b> «وتفضلوا بقبول فائق الاحترام» ثم الصفة والاسم. <b>الشخصية:</b> «دمتَ بخير» ثم «صديقك المخلص» والاسم.'}];
+const FORMAL=[['date','date','الإسكندرية في: ١٥ / ١٠ / ٢٠٢٦'],['to','to','السيد الأستاذ/ مدير مدرسة النور الإعدادية المحترم'],['to','to','تحية طيبة وبعد،'],['subj','subj','الموضوع: طلب إنشاء نادٍ للقراءة'],
+ ['intro','p','أتقدم إلى سيادتكم أنا الطالب/ يوسف أحمد، بالصف الثاني الإعدادي، بهذا الطلب نيابةً عن مجموعة من زملائي.'],
+ ['body','p','نرغب في إنشاء نادٍ للقراءة يجتمع في مكتبة المدرسة مرة كل أسبوع بعد انتهاء اليوم الدراسي، نتبادل فيه الكتب ونناقش ما قرأناه، بإشراف أحد معلمي اللغة العربية. ونرى أن هذا النادي سيشجع الطلاب على القراءة، وينمّي مهاراتهم في الحوار.'],
+ ['end','p','لذا نرجو من سيادتكم التكرم بالموافقة على طلبنا، ولكم جزيل الشكر.'],['close','close','وتفضلوا بقبول فائق الاحترام والتقدير،'],['close','sign','مقدّم الطلب/ يوسف أحمد']];
+const PERSONAL=[['date','date','الإسكندرية في: ١٨ / ١٠ / ٢٠٢٦'],['to','to','عزيزي عمر،'],['to','to','السلام عليكم ورحمة الله وبركاته، وبعد:'],['subj','ghost','(لا يوجد سطر للموضوع)'],
+ ['intro','p','فقد اشتقت إليك كثيرًا يا صديقي منذ سافرت إلى كندا. كيف حالك؟ وكيف حال مدرستك الجديدة؟ أرجو أن تكون قد كوّنت أصدقاء جددًا.'],
+ ['body','p','أحمل إليك خبرًا سيفرحك: لقد وافق مدير المدرسة على إنشاء نادي القراءة الذي كنا نحلم به! نجتمع كل خميس في المكتبة، وقد قرأنا في أول لقاء قصة جميلة تذكّرتك فيها؛ لأنك كنت تحب هذا النوع من القصص.'],
+ ['end','p','بلّغ سلامي إلى والديك وأخيك الصغير، وأرجو أن تكتب لي قريبًا وتخبرني بأخبارك كلها.'],['close','close','دمتَ بخير،'],['close','sign','صديقك المخلص/ يوسف']];
+
+/* ---------- station 1 ---------- */
+const SORT=[
+ {t:'تكتب إلى جدّتك تخبرها بنجاحك.',a:'p',why:'المرسل إليه من الأهل، والغرض مشاركة فرحة.'},
+ {t:'تكتب إلى مدير المدرسة تطلب إذنًا بالغياب يومًا لظرف عائلي.',a:'f',why:'جهة رسمية وطلب رسمي.'},
+ {t:'تكتب إلى شركة الإنترنت تشكو من انقطاع الخدمة.',a:'f',why:'شكوى إلى مؤسسة لا تعرف أصحابها شخصيًا.'},
+ {t:'«وتفضلوا بقبول فائق الاحترام والتقدير»',a:'f',why:'عبارة ختام رسمية ثابتة.'},
+ {t:'«اشتقت إليك كثيرًا يا صديقي»',a:'p',why:'تعبير عن المشاعر، ومكانه الرسالة الشخصية.'},
+ {t:'تكتب إلى رئيس الحي تقترح زراعة أشجار في شارعك.',a:'f',why:'مخاطبة مسؤول بصفته الرسمية.'},
+ {t:'«الموضوع: طلب إجازة»',a:'f',why:'سطر «الموضوع» من علامات الرسالة الرسمية.'},
+ {t:'«بلّغ سلامي إلى الجميع»',a:'p',why:'ختام ودّي لا يُكتب لجهة رسمية.'},
+ {t:'تكتب إلى عمّك، وهو مدير مدرستك، تطلب إذنًا رسميًا بالغياب.',a:'f',why:'فخ! العبرة بالغرض والصفة: أنت تخاطبه بصفته مديرًا وتقدّم طلبًا رسميًا، لا بصفته عمّك.'},
+ {t:'تكتب إلى خالك المسافر تشكره على هدية العيد.',a:'p',why:'شكر شخصي لأحد الأقارب.'},
+ {t:'«السيد الأستاذ/ مدير المدرسة المحترم»',a:'f',why:'لقب وصفة و«المحترم»: تحية رسمية.'},
+ {t:'«في انتظار رسالتك بشوق»',a:'p',why:'الشوق وانتظار الرد من سمات الرسالة الشخصية.'}];
+
+/* ---------- station 2 ---------- */
+const ORDER=[
+ {title:'رسالة رسمية: شكوى إلى رئيس الحي',kind:'formal',items:[
+  'القاهرة في: ٣ / ١١ / ٢٠٢٦',
+  'السيد الأستاذ/ رئيس حي مدينة نصر المحترم — تحية طيبة وبعد،',
+  'الموضوع: شكوى من تراكم القمامة أمام مدرسة النصر',
+  'أتقدم إلى سيادتكم بهذه الشكوى نيابةً عن سكان شارع النصر؛ فقد تراكمت القمامة أمام المدرسة منذ أسبوعين، وانتشرت الحشرات والروائح الكريهة، مما يعرّض صحة التلاميذ للخطر.',
+  'لذا نرجو من سيادتكم التوجيه برفع القمامة، وتخصيص صناديق مغلقة في الشارع.',
+  'وتفضلوا بقبول فائق الاحترام،',
+  'مقدّمو الشكوى/ سكان شارع النصر'],
+  why:'المكان والتاريخ ← المرسل إليه والتحية ← الموضوع ← عرض المشكلة ← الطلب ← عبارة الختام ← التوقيع.'},
+ {title:'رسالة شخصية: إلى الجدة',kind:'personal',items:[
+  'نيويورك في: ١٠ / ١١ / ٢٠٢٦',
+  'جدتي الحبيبة، السلام عليكم ورحمة الله وبركاته، وبعد:',
+  'فقد اشتقت إليكِ وإلى حكاياتك الجميلة يا جدتي. كيف صحتك؟ أرجو أن تكوني بخير.',
+  'أكتب إليكِ لأبشّرك بأنني حصلت على المركز الأول في مسابقة الخط العربي في مدرستي، وقد كتبت فيها آية تعلّمتها منكِ في الصيف الماضي.',
+  'أنتظر رسالتك بشوق، وبلّغي سلامي إلى خالتي وأولادها.',
+  'حفيدك المحب/ آدم'],
+  why:'المكان والتاريخ ← التحية الودّية ← الأشواق والسؤال عن الحال ← الخبر ← السلام وانتظار الرد ← التوقيع بصلة القرابة.'}];
+
+/* ---------- station 3 ---------- */
+const PHRASE=[
+ {passage:'رسالة رسمية إلى وزير التربية والتعليم',prompt:'اختر سطر المرسل إليه المناسب:',options:[
+  {t:'معالي الأستاذ الدكتور/ وزير التربية والتعليم المحترم',ok:1,why:'لقب مناسب للمنصب (معالي)، ثم الصفة، ثم «المحترم».'},
+  {t:'عزيزي الوزير،',ok:0,why:'«عزيزي» نداء ودّي يناسب الأصدقاء والأقارب.'},
+  {t:'أهلًا يا معالي الوزير،',ok:0,why:'«أهلًا يا» تحية حديث شفهي، لا تُكتب في رسالة رسمية.'},
+  {t:'إلى الوزير،',ok:0,why:'جافّة وتخلو من اللقب والاحترام.'}],tip:'الألقاب: «السيد» للعموم، و«سيادة» للمسؤولين، و«معالي» للوزراء.'},
+ {passage:'رسالة شخصية إلى صديقك',prompt:'اختر التوقيع المناسب:',options:[
+  {t:'صديقك المخلص/ يوسف',ok:1,why:'يذكر العلاقة بدفء، ثم الاسم.'},
+  {t:'وتفضلوا بقبول فائق الاحترام، يوسف',ok:0,why:'ختام رسمي بارد لا يناسب صديقًا.'},
+  {t:'مقدّم الطلب/ يوسف',ok:0,why:'صفة رسمية من رسائل الطلبات.'},
+  {t:'انتهت الرسالة.',ok:0,why:'ليست توقيعًا أصلًا.'}],tip:'في الشخصية نوقّع بالعلاقة: صديقك، أخوك، حفيدك، ابنك المحب...'},
+ {passage:'رسالة رسمية إلى مدير المدرسة تطلب تنظيم رحلة',prompt:'اختر أفضل صياغة للطلب:',options:[
+  {t:'أرجو التكرم بالموافقة على تنظيم رحلة علمية إلى المتحف المصري.',ok:1,why:'«أرجو التكرم» صيغة مهذّبة، والطلب محدد.'},
+  {t:'لازم توافقوا على الرحلة.',ok:0,why:'عامية، وصيغة أمر لا طلب.'},
+  {t:'وافقوا بسرعة من فضلكم.',ok:0,why:'استعجال غير لائق في رسالة رسمية.'},
+  {t:'أتمنى توافقوا عشان خاطري.',ok:0,why:'عامية، والرسالة الرسمية لا تُبنى على المجاملة الشخصية.'}],tip:'صيغ الطلب الرسمية: أرجو التكرم بـ، نأمل من سيادتكم، ألتمس الموافقة على.'},
+ {passage:'رسالة شخصية إلى صديقك',prompt:'اختر أفضل بداية للمقدمة:',options:[
+  {t:'كيف حالك يا صديقي؟ أرجو أن تكون في أتم صحة وسعادة.',ok:1,why:'سؤال عن الحال وأمنية طيبة: بداية دافئة.'},
+  {t:'أتشرف بأن أرفع إلى سيادتكم ما يلي:',ok:0,why:'رسمية جدًا؛ صديقك سيضحك منها!'},
+  {t:'الموضوع: السؤال عن الحال.',ok:0,why:'لا يوجد سطر «الموضوع» في الرسالة الشخصية.'},
+  {t:'أكتب إليك لطلب ما يلي:',ok:0,why:'دخول مباشر في الطلب دون سلام أو سؤال عن الحال.'}],tip:'في الشخصية نسأل عن المرسل إليه أولًا، ثم ندخل في الموضوع.'},
+ {passage:'رسالة رسمية إلى شركة',prompt:'اختر الجملة التي تسبق عبارة الختام:',options:[
+  {t:'شاكرين لكم حسن تعاونكم.',ok:1,why:'شكر مهذّب يختم الطلب.'},
+  {t:'يلا سلام.',ok:0,why:'عامية ووداع شفهي.'},
+  {t:'أشتاق إليكم كثيرًا.',ok:0,why:'تعبير عاطفي لا يُكتب لشركة.'},
+  {t:'ومعلش على الإزعاج.',ok:0,why:'عامية. وإن أردت الاعتذار فقل: «ونعتذر عن الإطالة».'}],tip:'قبل الختام: شاكرين لكم حسن تعاونكم، ولكم جزيل الشكر.'},
+ {passage:'رسالة شخصية إلى أمك المسافرة',prompt:'اختر التحية المناسبة:',options:[
+  {t:'أمي الحبيبة،',ok:1,why:'نداء دافئ يعبّر عن العلاقة.'},
+  {t:'السيدة الفاضلة/ والدتي المحترمة،',ok:0,why:'رسمية لا تليق بمخاطبة الأم.'},
+  {t:'إلى من يهمه الأمر،',ok:0,why:'تُكتب في الشهادات الرسمية لجهة غير محددة.'},
+  {t:'سيادة الأم،',ok:0,why:'لقب رسمي في غير مكانه.'}],tip:'كلما قربت العلاقة كانت التحية أدفأ وأبسط.'}];
+
+/* ---------- station 4 ---------- */
+const TONE=[
+ {passage:'في رسالة <b>رسمية</b> إلى مدير المدرسة: «إحنا عايزين ملعب جديد علشان القديم بايظ.»',prompt:'اختر الصياغة المناسبة:',options:[
+  {t:'نرجو من سيادتكم التكرم بإصلاح ملعب المدرسة؛ فقد تلفت كثير من أجزائه.',ok:1,why:'فصحى، وطلب مهذّب، وسبب واضح.'},
+  {t:'عايزين ملعب جديد لو سمحت.',ok:0,why:'ما زالت عامية.'},
+  {t:'الملعب سيئ جدًا وأنتم لا تهتمون بنا.',ok:0,why:'فصحى لكنها اتهام يُغضب القارئ ولا يقنعه.'},
+  {t:'نرجو ملعبًا.',ok:0,why:'ناقصة؛ لا سبب ولا تحديد.'}],tip:'الرسالة الرسمية: فصحى + طلب مهذّب + سبب.'},
+ {passage:'في رسالة <b>رسمية</b> إلى شركة الإنترنت: «انتم أسوأ شركة في الدنيا، النت فاصل كل يوم!»',prompt:'اختر الصياغة المناسبة:',options:[
+  {t:'أودّ أن ألفت انتباهكم إلى انقطاع خدمة الإنترنت يوميًا منذ أسبوع، وأرجو سرعة حل المشكلة.',ok:1,why:'تصف المشكلة بدقة (المدة والتكرار) وتطلب الحل بأدب. الشكوى المهذبة أقوى أثرًا.'},
+  {t:'أنتم شركة سيئة جدًا، والإنترنت ينقطع.',ok:0,why:'فصحى، لكن الإهانة لا تحل المشكلة.'},
+  {t:'النت فاصل، شوفوا الموضوع.',ok:0,why:'عامية وأمر.'},
+  {t:'أرجو منكم الاهتمام.',ok:0,why:'مهذبة لكنها لا تذكر المشكلة أصلًا.'}],tip:'الشكوى الجيدة: ما المشكلة؟ متى بدأت؟ ماذا تطلب؟'},
+ {passage:'في رسالة <b>شخصية</b> إلى صديقك: «أحيطكم علمًا بأنني نجحت في الامتحان بتقدير ممتاز.»',prompt:'هذه الجملة رسمية أكثر من اللازم. اختر الأنسب:',options:[
+  {t:'عندي لك خبر رائع يا صديقي: لقد نجحت في الامتحان بتقدير ممتاز!',ok:1,why:'دافئة، وتشرك الصديق في الفرحة، وما زالت فصحى.'},
+  {t:'الموضوع: النجاح في الامتحان.',ok:0,why:'لا «موضوع» في الرسالة الشخصية.'},
+  {t:'نجحت.',ok:0,why:'جافة ومقتضبة.'},
+  {t:'يسعدني أن أرفع إلى سيادتكم خبر نجاحي.',ok:0,why:'أشد رسمية من الأصل!'}],tip:'الشخصية فصحى أيضًا، لكنها فصحى قريبة دافئة.'},
+ {passage:'في رسالة <b>رسمية</b> لطلب إجازة: «سلام عليكم، أنا يوسف، معلش ممكن إجازة بكرة؟»',prompt:'اختر الصياغة المناسبة:',options:[
+  {t:'أرجو التكرم بالموافقة على منحي إجازة يوم الخميس الموافق ٢٢ / ١٠ / ٢٠٢٦؛ لظرف عائلي طارئ.',ok:1,why:'طلب مهذّب، ويوم محدد بتاريخه، وسبب مختصر.'},
+  {t:'أريد إجازة غدًا.',ok:0,why:'فصحى، لكنها خالية من الأدب والسبب، و«غدًا» غير محدد بتاريخ.'},
+  {t:'ممكن إجازة بكرة لو سمحتم؟',ok:0,why:'عامية.'},
+  {t:'سأغيب غدًا.',ok:0,why:'إخبار لا طلب.'}],tip:'في الرسمية حدّد الأيام بالتاريخ لا بـ«غدًا» و«بعد غد».'},
+ {passage:'في رسالة <b>شخصية</b> إلى جدتك: «نرجو من سيادتكم التكرم بإرسال صوركم الحديثة.»',prompt:'اختر الأنسب:',options:[
+  {t:'أرسلي لي صورك الجديدة يا جدتي، فقد اشتقت إلى رؤيتك!',ok:1,why:'طلب ودّي بضمير المخاطَبة المفردة، مع تعبير عن الشوق.'},
+  {t:'نرجو إرسال الصور.',ok:0,why:'جافة ورسمية.'},
+  {t:'ابعتيلي صورك يا تيتا.',ok:0,why:'دافئة لكنها عامية؛ الرسالة المكتوبة تكون بالفصحى.'},
+  {t:'أرجو من سيادتك إرسال الصور.',ok:0,why:'«سيادتك» لا تُقال للجدة.'}],tip:'لا تخاطب قريبك بضمير الجمع «سيادتكم»، بل خاطبه مباشرة.'}];
+
+/* ---------- station 5 ---------- */
+const DOC=[
+ {kind:'formal',title:'رسالة رسمية إلى مدير المدرسة',lines:[
+  {c:'date',t:'الإسكندرية في: ٢٠ / ١٠ / ٢٠٢٦'},
+  {c:'to',t:'حبيبي الأستاذ مدير المدرسة',bad:1,fix:'السيد الأستاذ/ مدير المدرسة المحترم'},
+  {c:'to',t:'تحية طيبة وبعد،'},
+  {c:'subj',t:'الموضوع: طلب نقل إلى فصل آخر'},
+  {c:'p',t:'أتقدم إلى سيادتكم بطلب نقلي من فصل ٢/٣ إلى فصل ٢/١؛ لأن أخي التوأم يدرس فيه، ونذاكر معًا في البيت.'},
+  {c:'p',t:'وبصراحة الفصل بتاعي دوشة جدًا ومش بعرف أركز.',bad:1,fix:'كما أن الهدوء في الفصل الآخر سيساعدني على التركيز.'},
+  {c:'p',t:'أرجو التكرم بالموافقة على طلبي.'},
+  {c:'close',t:'باي باي 👋',bad:1,fix:'وتفضلوا بقبول فائق الاحترام،'},
+  {c:'sign',t:'مقدّم الطلب/ مازن خالد'}]},
+ {kind:'personal',title:'رسالة شخصية إلى صديق',lines:[
+  {c:'date',t:'القاهرة في: ٥ / ١١ / ٢٠٢٦'},
+  {c:'to',t:'السيد/ أحمد علي المحترم',bad:1,fix:'عزيزي أحمد،'},
+  {c:'to',t:'السلام عليكم ورحمة الله وبركاته، وبعد:'},
+  {c:'subj',t:'الموضوع: الإجازة الصيفية',bad:1,fix:'(يُحذف: لا موضوع في الرسالة الشخصية)'},
+  {c:'p',t:'فقد اشتقت إليك كثيرًا، كيف حالك وحال أسرتك؟'},
+  {c:'p',t:'أكتب إليك لأدعوك إلى قضاء أسبوع معنا في الإسكندرية في الإجازة؛ فقد استأجر أبي شقة قريبة من البحر.'},
+  {c:'close',t:'وتفضلوا بقبول فائق الاحترام والتقدير.',bad:1,fix:'في انتظار ردّك، دمتَ بخير.'},
+  {c:'sign',t:'صديقك/ كريم'}]}];
+
+/* ---------- station 6 ---------- */
+const TASKS=[
+ {id:'friend',kind:'personal',title:'إلى صديق مسافر',task:'اكتب رسالة إلى صديق سافر إلى بلد آخر، تخبره فيها بأخبار المدرسة، وتدعوه إلى زيارتك في الإجازة.',
+  model:['القاهرة في: ٢٠ / ١٠ / ٢٠٢٦','عزيزي خالد، السلام عليكم ورحمة الله وبركاته، وبعد:','فقد اشتقت إليك كثيرًا يا صديقي، وأصبح مقعدك في الفصل فارغًا بعدك. كيف حالك؟ وكيف وجدت مدينتك الجديدة؟','أما أخبار المدرسة، فقد فاز فريقنا بكأس دوري المدارس، وبدأنا مشروعًا لزراعة حديقة صغيرة في الفناء. وأنا أعلم أنك كنت ستحب هذا المشروع كثيرًا.','وأحب أن أدعوك إلى قضاء أسبوع معنا في الإجازة الصيفية؛ فأمي وأبي يرحبان بك، وقد خططت لنزهات كثيرة سنقوم بها معًا.','بلّغ سلامي إلى والديك، وأنتظر ردك بشوق.','دمتَ بخير،','صديقك المخلص/ يوسف']},
+ {id:'grand',kind:'personal',title:'شكر للجدّ أو الجدة',task:'اكتب رسالة إلى جدّك أو جدتك تشكره أو تشكرها على هدية العيد، وتخبره أو تخبرها بما فعلت بها.',
+  model:['شيكاغو في: ٢٠ / ١٠ / ٢٠٢٦','جدّي الحبيب، السلام عليكم ورحمة الله وبركاته، وبعد:','فقد اشتقت إليك يا جدّي، وإلى جلساتنا بعد صلاة الجمعة. كيف صحتك؟ أرجو أن تكون في أتم عافية.','وصلتني هديتك في العيد، فشكرًا لك من كل قلبي. لقد اشتريت بها مجموعة من القصص العربية، وأقرأ منها قصة كل ليلة قبل النوم، فأشعر كأنك تحكيها لي.','أدعو الله أن يحفظك ويبارك في عمرك، وأن نلتقي قريبًا.','مع حبي وأشواقي،','حفيدك المحب/ آدم']},
+ {id:'trip',kind:'formal',title:'طلب رحلة علمية',task:'اكتب رسالة إلى مدير مدرستك تطلب فيها تنظيم رحلة علمية إلى متحف، وتوضّح فائدتها.',
+  model:['الإسكندرية في: ٢٠ / ١٠ / ٢٠٢٦','السيد الأستاذ/ مدير مدرسة النور الإعدادية المحترم — تحية طيبة وبعد،','الموضوع: طلب تنظيم رحلة علمية إلى المتحف المصري','أتقدم إلى سيادتكم أنا الطالب/ يوسف أحمد، بالصف الثاني الإعدادي، نيابةً عن زملائي، بطلب تنظيم رحلة علمية إلى المتحف المصري بالقاهرة.','فقد درسنا هذا العام وحدة عن الحضارة المصرية القديمة، ونرى أن مشاهدة الآثار عن قرب ستعمّق فهمنا لما درسناه، وتنمّي حبنا لتاريخ بلادنا. ونقترح أن تكون الرحلة في أحد أيام الخميس، بإشراف معلمي الدراسات الاجتماعية.','لذا نرجو من سيادتكم التكرم بالموافقة على طلبنا، شاكرين لكم حسن تعاونكم.','وتفضلوا بقبول فائق الاحترام والتقدير،','مقدّم الطلب/ يوسف أحمد']},
+ {id:'street',kind:'formal',title:'شكوى إلى رئيس الحي',task:'اكتب رسالة إلى رئيس الحي تشكو فيها من مشكلة في شارعك، وتقترح حلًّا لها.',
+  model:['القاهرة في: ٢٠ / ١٠ / ٢٠٢٦','السيد الأستاذ/ رئيس حي مصر الجديدة المحترم — تحية طيبة وبعد،','الموضوع: شكوى من ظلام شارع الأمل ليلًا','أتقدم إلى سيادتكم بهذه الشكوى نيابةً عن سكان شارع الأمل.','فمنذ شهر تقريبًا تعطلت أعمدة الإنارة في الشارع، فأصبح مظلمًا تمامًا بعد المغرب، مما يعرّض المارة لخطر السقوط، ويُقلق الأهالي على أبنائهم العائدين من الدروس.','لذا نرجو من سيادتكم التوجيه بإصلاح أعمدة الإنارة في أقرب وقت، ونقترح استخدام مصابيح موفّرة للطاقة.','وتفضلوا بقبول فائق الاحترام،','مقدّمو الشكوى/ سكان شارع الأمل']}];
+const COLLOQ=['عايز','عايزه','عاوز','عشان','علشان','ازيك','ازاي','مش','دلوقتي','كده','اوي','بتاع','بتاعي','بتاعتي','معلش','يلا','باي','اوكي','ههه','هههه','ههههه','حاجه','ده','دي','احنا','انتو','فين','ليه','بكره','النهارده','اللي','بايظ','خالص يعني'];
+const FORMAL_TO=['السيد','السيده','الاستاذ','الاستاذه','المحترم','المحترمه','سياده','معالي','الدكتور','فضيله','سعاده'];
+const WARM_TO=['حبيبي','حبيبتي','عزيزي','عزيزتي','صديقي','صديقتي','الحبيب','الحبيبه','الغالي','الغاليه','جدتي','جدي','امي','ابي','اخي','اختي','خالي','خالتي','عمي','عمتي'];
+const REQ=['ارجو','نرجو','امل','نامل','التكرم','اتقدم','نتقدم','التمس','نلتمس'];
+const F_CLOSE=['تفضلوا','الاحترام','التقدير','شاكرين','شاكرا','خالص التحيه'];
+const P_INTRO=['كيف حال','كيف صحت','اشتقت','اشتاق','شوق','اشواق','ارجو ان تكون','ارجو ان تكوني','اتمني ان تكون','اتمني ان تكوني'];
+const P_CLOSE=['دمت','دمتم','سلامي','انتظار','انتظر','امان الله','حبي','تحياتي','اشواقي','مع خالص'];
+const P_SIGN=['صديقك','صديقتك','حفيدك','حفيدتك','ابنك','ابنتك','اخوك','اختك','المخلص','المخلصه','المحب','المحبه'];
+const EMOJI=/\p{Extended_Pictographic}/u;
+
+/* ---------- router ---------- */
+function go(id){location.hash=id?'#'+id:'#home'}
+function route(){
+  const id=(location.hash||'').slice(1)||'home';
+  const st=ST.find(s=>s.id===id);
+  $('#nav').innerHTML=st?'<button class="back" id="homeBtn">→ خريطة الرحلة</button>':'<span class="credit-top">الرسالة الرسمية والشخصية</span>';
+  if(st)$('#homeBtn').onclick=()=>go('home');
+  const app=$('#app');app.innerHTML='';
+  ({home:vHome,guide:vGuide,sort:vSort,order:vOrder,phrase:()=>vQuiz('phrase',PHRASE),tone:()=>vQuiz('tone',TONE),doctor:vDoc,write:vWrite}[id]||vHome)(app);
+  window.scrollTo(0,0);
+}
+window.addEventListener('hashchange',route);
+function stationHead(id){const s=ST.find(x=>x.id===id);return `<div class="stack" style="gap:6px;margin-bottom:18px"><div class="eyebrow">المحطة ${s.n}</div><h2>${s.t}</h2><p class="muted">${s.d}</p></div>`}
+function nextId(id){const i=ST.findIndex(s=>s.id===id);return ST[i+1]?ST[i+1].id:null}
+const progBar=(n,i)=>`<div class="progress">${Array.from({length:n},(_,j)=>`<span class="${j<i?'on':j===i?'now':''}"></span>`).join('')}</div>`;
+function resultCard(el,id,score,total){
+  const pct=score/total, stars=pct>=.9?3:pct>=.6?2:1; setStars(id,stars); const nx=nextId(id);
+  el.innerHTML=stationHead(id)+`<div class="card result"><div class="big">${'★'.repeat(stars)}${'☆'.repeat(3-stars)}</div>
+   <h3>أنهيت المحطة: ${AR(score)} من ${AR(total)}</h3><p class="muted">${stars===3?'أداء ممتاز! أنت جاهز للمحطة التالية.':stars===2?'جيد جدًا. راجع الأخطاء ثم جرّب مرة أخرى لتحصل على ثلاث نجوم.':'لا بأس، المهارة تُبنى بالتكرار. أعد المحطة واقرأ تفسير كل إجابة.'}</p>
+   <div class="row" style="justify-content:center"><button class="btn ghost" id="again">أعد المحطة</button><button class="btn" id="nx">${nx?'المحطة التالية ←':'خريطة الرحلة'}</button></div></div>`;
+  $('#again').onclick=route; $('#nx').onclick=()=>go(nx||'home');
+}
+
+/* ---------- home ---------- */
+function vHome(el){
+  el.innerHTML=`<section class="hero"><div class="stack" style="gap:6px"><div class="eyebrow">مهارة الكتابة</div><h1>رحلة الرسالة</h1>
+   <p class="lead">رسالة إلى صديق ورسالة إلى مدير: البناء واحد تقريبًا، لكن اللغة والنبرة مختلفتان تمامًا. سبع محطات تعلّمك متى تكتب هذه ومتى تكتب تلك، وكيف تكتب كلًّا منهما.</p></div>
+   <div class="pair" aria-hidden="true"><div class="paper formal"><span class="tagline">رسمية</span><span class="ln to">السيد الأستاذ/ ... المحترم</span><span class="ln subj">الموضوع: ...</span><span class="ln close">وتفضلوا بقبول فائق الاحترام</span></div>
+   <div class="paper personal"><span class="tagline">شخصية</span><span class="ln to">عزيزي عمر،</span><span class="ln p">اشتقت إليك كثيرًا...</span><span class="ln close">صديقك المخلص</span></div></div></section>
+   <nav class="map">${ST.map(s=>`<button class="station ${store.stars[s.id]?'done':''}" data-id="${s.id}"><span class="st-num">${s.n}</span><span><div class="st-title">${s.t}</div><div class="st-desc">${s.d}</div></span>${starStr(store.stars[s.id]||0)}</button>`).join('')}</nav>`;
+  el.querySelectorAll('.station').forEach(b=>b.onclick=()=>go(b.dataset.id));
+}
+
+/* ---------- guide ---------- */
+const paper=(kind,lines,lit)=>`<div class="paper ${kind}"><span class="tagline">${kind==='formal'?'رسالة رسمية':'رسالة شخصية'}</span>${lines.map(([k,c,t])=>`<span class="ln ${c} ${lit===k?'lit':''}">${t}</span>`).join('')}</div>`;
+function vGuide(el){
+  let k=-1;
+  function draw(){
+    const s=PARTS[k];
+    el.innerHTML=stationHead('guide')+`<div class="card stack">
+     <div class="steps"><button class="${k<0?'on':''}" data-i="-1">الرسالتان</button>${PARTS.map((x,i)=>`<button class="${i===k?'on':''}" data-i="${i}">${AR(i+1)} ${x.tag}</button>`).join('')}</div>
+     <div class="rule"><span class="tag">${s?s.tag:'اقرأ'}</span><p>${s?s.txt:'اقرأ الرسالتين. يوسف كتب الأولى إلى مدير مدرسته، ثم كتب الثانية إلى صديقه عن الموضوع نفسه. لاحظ كم تختلفان!'}</p></div>
+     <div class="pair">${paper('formal',FORMAL,s&&s.k)}${paper('personal',PERSONAL,s&&s.k)}</div>
+     <div class="row" style="justify-content:space-between"><button class="btn ghost" id="pv" ${k<0?'disabled':''}>→ السابق</button>
+      ${k<PARTS.length-1?'<button class="btn" id="nx">التالي ←</button>':'<button class="btn alt" id="done">فهمت الفرق ←</button>'}</div></div>
+     <div class="card stack" style="margin-top:16px"><h3>الفرق بينهما في جدول</h3><div class="tblwrap"><table class="cmp">
+      <thead><tr><th></th><th class="f">الرسالة الرسمية</th><th class="p">الرسالة الشخصية</th></tr></thead><tbody>
+      <tr><td>إلى مَن؟</td><td>مسؤول أو جهة: مدير، شركة، رئيس حي</td><td>قريب أو صديق</td></tr>
+      <tr><td>الغرض</td><td>طلب، شكوى، اقتراح، شكر رسمي</td><td>أخبار، مشاعر، تهنئة، دعوة</td></tr>
+      <tr><td>اللغة</td><td>فصحى رسمية دقيقة مختصرة</td><td>فصحى بسيطة دافئة</td></tr>
+      <tr><td>التحية</td><td>السيد/ ... المحترم، تحية طيبة وبعد</td><td>عزيزي، صديقي، أمي الحبيبة</td></tr>
+      <tr><td>الموضوع</td><td>سطر «الموضوع» إلزامي</td><td>لا يوجد</td></tr>
+      <tr><td>المقدمة</td><td>تعريف بالنفس والغرض</td><td>أشواق وسؤال عن الحال</td></tr>
+      <tr><td>الختام</td><td>وتفضلوا بقبول فائق الاحترام</td><td>دمتَ بخير، في انتظار ردك</td></tr>
+      <tr><td>التوقيع</td><td>الصفة والاسم: مقدّم الطلب/</td><td>العلاقة والاسم: صديقك المخلص/</td></tr>
+      </tbody></table></div><p class="muted small">العبرة بالغرض وصفة المرسل إليه، لا بالقرابة: طلبك من عمّك المدير بصفته مديرًا رسالة رسمية.</p></div>`;
+    el.querySelectorAll('.steps button').forEach(b=>b.onclick=()=>{k=+b.dataset.i;draw()});
+    $('#pv').onclick=()=>{if(k>-1){k--;draw()}};
+    if($('#nx'))$('#nx').onclick=()=>{k++;draw()};
+    if($('#done'))$('#done').onclick=()=>{setStars('guide',3);go('sort')};
+  }
+  draw();
+}
+
+/* ---------- sort ---------- */
+function vSort(el){
+  const order=shuffle(SORT); let i=0,score=0;
+  function draw(){
+    const it=order[i]; let done=false,tried=false;
+    el.innerHTML=stationHead('sort')+`<div class="card stack">${progBar(order.length,i)}
+     <div class="passage" style="text-align:center">${it.t}</div><h3 style="text-align:center">هذه رسالة / عبارة:</h3>
+     <div class="sorter"><button class="f" data-a="f">رسمية</button><button class="p" data-a="p">شخصية</button></div>
+     <div id="fb"></div>
+     <div class="row" style="justify-content:flex-end"><button class="btn" id="nx" hidden>${i<order.length-1?'التالي ←':'النتيجة ←'}</button></div></div>`;
+    el.querySelectorAll('.sorter button').forEach(b=>b.onclick=()=>{if(done)return;
+      if(b.dataset.a===it.a){done=true;if(!tried)score++;b.classList.add('right');el.querySelectorAll('.sorter button').forEach(x=>x.disabled=true);$('#fb').innerHTML=`<div class="fb good"><b>${tried?'صحيح الآن.':'صحيح!'}</b> ${it.why}</div>`;$('#nx').hidden=false;$('#nx').focus()}
+      else{tried=true;b.classList.add('wrong');b.disabled=true;$('#fb').innerHTML=`<div class="fb bad">فكّر مرة أخرى: إلى مَن تُكتب؟ وما غرضها؟</div>`}});
+    $('#nx').onclick=()=>{i++;i<order.length?draw():resultCard(el,'sort',score,order.length)};
+  }
+  draw();
+}
+
+/* ---------- order ---------- */
+function vOrder(el){
+  let p=0,score=0;
+  function draw(){
+    const T=ORDER[p]; let pool=shuffle(T.items.map((_,i)=>i)); while(pool.every((v,i)=>v===i))pool=shuffle(pool);
+    let ans=[],first=true,locked=0;
+    function paint(state){
+      el.innerHTML=stationHead('order')+`<div class="card stack">${progBar(ORDER.length,p)}
+       <div class="row"><h3>${T.title}</h3><span class="typebadge ${T.kind}">${T.kind==='formal'?'رسمية':'شخصية'}</span></div><p class="muted small">اضغط على الجزء لتضعه في المكان التالي. اضغط على جزء موضوع لتعيده.</p>
+       <div class="slots">${T.items.map((_,i)=>{const v=ans[i];const cls=v===undefined?'':'filled'+(state&&state[i]!==undefined?(state[i]?' right':' wrong'):'');
+         return `<button class="slot ${cls}" data-i="${i}" ${v===undefined||i<locked?'disabled':''}><span class="no">${AR(i+1)}</span><span>${v===undefined?'<span class="muted small">…</span>':T.items[v]}</span></button>`}).join('')}</div>
+       ${pool.length?`<div class="eyebrow">الأجزاء</div><div class="pool">${pool.map(v=>`<button class="card-pick" data-v="${v}">${T.items[v]}</button>`).join('')}</div>`:''}
+       <div id="fb"></div>
+       <div class="row" style="justify-content:flex-end"><button class="btn" id="ck" ${pool.length?'hidden':''}>تحقّق</button><button class="btn ghost" id="rt" hidden>أعد المحاولة</button><button class="btn" id="nx" hidden>${p<ORDER.length-1?'التالي ←':'النتيجة ←'}</button></div></div>`;
+      el.querySelectorAll('.card-pick').forEach(b=>b.onclick=()=>{const v=+b.dataset.v;pool=pool.filter(x=>x!==v);ans.push(v);paint()});
+      el.querySelectorAll('.slot.filled').forEach(b=>b.onclick=()=>{if(state)return;const i=+b.dataset.i;if(i<locked)return;pool=pool.concat(ans.splice(i));paint()});
+      $('#ck').onclick=()=>{const st=ans.map((v,i)=>v===i);
+        if(st.every(Boolean)){if(first)score++;paint(st);$('#ck').hidden=true;$('#fb').innerHTML=`<div class="fb good"><b>ترتيب صحيح!</b> ${T.why}</div>`;$('#nx').hidden=false;$('#nx').onclick=()=>{p++;p<ORDER.length?draw():resultCard(el,'order',score,ORDER.length)}}
+        else{first=false;paint(st);$('#ck').hidden=true;let pre=0;while(st[pre])pre++;
+          $('#fb').innerHTML=`<div class="fb bad"><b>${AR(st.filter(Boolean).length)} من ${AR(st.length)} في مكانها الصحيح.</b> تذكّر: الرسالة تبدأ من أعلى الورقة بالمكان والتاريخ، وتنتهي بالتوقيع.</div>`;
+          $('#rt').hidden=false;$('#rt').onclick=()=>{locked=pre;pool=shuffle(ans.splice(pre));paint()}}};
+    }
+    paint();
+  }
+  draw();
+}
+
+/* ---------- quiz ---------- */
+function vQuiz(id,items){
+  const el=$('#app'); const order=shuffle(items); let i=0,score=0;
+  function draw(){
+    const it=order[i]; let tried=false,done=false; const opts=shuffle(it.options);
+    el.innerHTML=stationHead(id)+`<div class="card stack">${progBar(order.length,i)}
+     <div class="passage">${it.passage}</div><h3>${it.prompt}</h3>
+     <div class="opts">${opts.map((o,j)=>`<button class="opt" data-j="${j}">${o.t}</button>`).join('')}</div>
+     <div id="fb" class="stack" style="gap:10px"></div>
+     <div class="row" style="justify-content:flex-end"><button class="btn" id="nx" hidden>${i<order.length-1?'التالي ←':'النتيجة ←'}</button></div></div>`;
+    el.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      if(done)return; const o=opts[+b.dataset.j];
+      if(o.ok){done=true;if(!tried)score++;b.classList.add('right');el.querySelectorAll('.opt').forEach(x=>x.disabled=true);
+        $('#fb').innerHTML=`<div class="fb good"><b>${tried?'صحيح الآن.':'إجابة صحيحة!'}</b> ${o.why}</div>`+(it.tip?`<div class="fb tip"><b>قاعدة:</b> ${it.tip}</div>`:'');$('#nx').hidden=false;$('#nx').focus()}
+      else{tried=true;b.classList.add('wrong');b.disabled=true;$('#fb').innerHTML=`<div class="fb bad"><b>ليست هذه.</b> ${o.why} جرّب مرة أخرى.</div>`}});
+    $('#nx').onclick=()=>{i++;i<order.length?draw():resultCard(el,id,score,order.length)};
+  }
+  draw();
+}
+
+/* ---------- doctor ---------- */
+function vDoc(el){
+  let p=0,score=0,total=0;
+  function draw(){
+    const D=DOC[p]; const flag=D.lines.map(()=>false); let checked=false;
+    el.innerHTML=stationHead('doctor')+`<div class="card stack">${progBar(DOC.length,p)}
+     <div class="row"><h3>${D.title}</h3><span class="typebadge ${D.kind}">${D.kind==='formal'?'رسمية':'شخصية'}</span></div>
+     <p class="muted small">في هذه الرسالة أسطر لا تناسب نوعها. اضغط على كل سطر خاطئ لتعلّمه، ثم اضغط «تحقّق».</p>
+     <div class="paper ${D.kind} doc">${D.lines.map((l,j)=>`<span class="ln ${l.c}" data-j="${j}" role="button" tabindex="0">${l.t}</span>`).join('')}</div>
+     <div id="fb"></div>
+     <div class="row" style="justify-content:flex-end"><button class="btn" id="ck">تحقّق</button><button class="btn" id="nx" hidden>${p<DOC.length-1?'الرسالة التالية ←':'النتيجة ←'}</button></div></div>`;
+    const tog=sp=>{if(checked)return;const j=+sp.dataset.j;flag[j]=!flag[j];sp.classList.toggle('flag',flag[j])};
+    el.querySelectorAll('.doc .ln').forEach(sp=>{sp.onclick=()=>tog(sp);sp.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();tog(sp)}}});
+    $('#ck').onclick=()=>{checked=true;let r=0;
+      el.querySelectorAll('.doc .ln').forEach(sp=>{const j=+sp.dataset.j,L=D.lines[j],ok=!!L.bad===flag[j];if(ok)r++;sp.classList.remove('flag');sp.classList.add(ok?'ok':'miss');sp.style.cursor='default';
+        if(L.bad)sp.insertAdjacentHTML('beforeend',`<span class="fix">✎ ${L.fix}</span>`)});
+      total+=D.lines.length;score+=r;const nb=D.lines.filter(l=>l.bad).length;
+      $('#fb').innerHTML=`<div class="fb ${r===D.lines.length?'good':'tip'}"><b>${AR(r)} من ${AR(D.lines.length)} قرارات صحيحة.</b> في الرسالة ${AR(nb)} أخطاء، وتحت كل خطأ تصحيحه بالأخضر.</div>`;
+      $('#ck').hidden=true;$('#nx').hidden=false};
+    $('#nx').onclick=()=>{p++;p<DOC.length?draw():resultCard(el,'doctor',score,total)};
+  }
+  draw();
+}
+
+/* ---------- workshop ---------- */
+function checks(T,d){
+  const F=T.kind==='formal';
+  const text=[d.intro,d.body,d.end].join(' ');
+  const allTxt=[d.to,d.subj,text,d.close,d.sign].join(' ');
+  const colloq=hasWord(allTxt,COLLOQ), emoji=EMOJI.test(allTxt);
+  const bodyW=wc(text);
+  const dateOk=wc(d.date)>=2&&/[0-9٠-٩]/.test(d.date);
+  if(F)return [
+   {ok:dateOk,t:dateOk?'المكان والتاريخ مكتوبان.':'اكتب المكان والتاريخ، مثل: القاهرة في: ٢٠ / ١٠ / ٢٠٢٦.'},
+   {ok:has(d.to,FORMAL_TO).length>0&&!has(d.to,WARM_TO).length,t:has(d.to,WARM_TO).length?'التحية ودّية؛ استبدلها بلقب وصفة: «السيد الأستاذ/ ... المحترم».':has(d.to,FORMAL_TO).length?'المرسل إليه بصيغة رسمية.':'أضف لقبًا وصفة و«المحترم».'},
+   {ok:wc(d.subj)>=2,t:wc(d.subj)>=2?'سطر الموضوع واضح.':'اكتب سطر «الموضوع» بكلمات قليلة تلخّص غرضك.'},
+   {ok:!colloq.length&&!emoji,t:colloq.length?`كلمات عامية: ${colloq.join('، ')}. استخدم الفصحى.`:emoji?'احذف الرموز التعبيرية (الإيموجي)؛ لا مكان لها في الرسالة الرسمية.':'اللغة فصحى رسمية.'},
+   {ok:has(text,REQ).length>0,t:has(text,REQ).length?'استخدمت صيغة طلب مهذّبة.':'أضف صيغة مهذّبة مثل: «أرجو التكرم بـ...» أو «نأمل من سيادتكم...».'},
+   {ok:has(d.close,F_CLOSE).length>0,t:has(d.close,F_CLOSE).length?'عبارة الختام رسمية.':'اختم بعبارة رسمية: «وتفضلوا بقبول فائق الاحترام».'},
+   {ok:wc(d.sign)>=2,t:wc(d.sign)>=2?'التوقيع فيه الصفة والاسم.':'اكتب صفتك واسمك: «مقدّم الطلب/ الاسم».'},
+   {ok:bodyW>=50,t:bodyW>=50?`عدد كلمات النص: ${AR(bodyW)}، وهو طول مناسب.`:`عدد كلمات النص: ${AR(bodyW)} فقط؛ وضّح أسبابك أكثر (٥٠ كلمة على الأقل).`}];
+  return [
+   {ok:dateOk,t:dateOk?'المكان والتاريخ مكتوبان.':'اكتب المكان والتاريخ في أعلى الرسالة.'},
+   {ok:has(d.to,WARM_TO).length>0&&!has(d.to,FORMAL_TO).length,t:has(d.to,FORMAL_TO).length?'التحية رسمية أكثر من اللازم؛ استخدم «عزيزي» أو صلة القرابة.':has(d.to,WARM_TO).length?'التحية ودّية مناسبة.':'ابدأ بنداء ودّي: عزيزي، صديقي، جدتي الحبيبة...'},
+   {ok:!/(^|\n)\s*الموضوع\s*:/.test(text),t:/(^|\n)\s*الموضوع\s*:/.test(text)?'احذف «الموضوع»؛ فهو للرسائل الرسمية.':'لا يوجد سطر موضوع، وهذا صحيح في الرسالة الشخصية.'},
+   {ok:has(d.intro,P_INTRO).length>0,t:has(d.intro,P_INTRO).length?'المقدمة فيها أشواق أو سؤال عن الحال.':'ابدأ المقدمة بالسؤال عن الحال أو التعبير عن الشوق.'},
+   {ok:!colloq.length,t:colloq.length?`كلمات عامية: ${colloq.join('، ')}. الرسالة المكتوبة بالفصحى حتى لو كانت شخصية.`:'اللغة فصحى بسيطة.'},
+   {ok:has(d.close+' '+d.end,P_CLOSE).length>0&&!has(d.close,['تفضلوا','فائق الاحترام']).length,t:has(d.close,['تفضلوا','فائق الاحترام']).length?'عبارة الختام رسمية؛ استبدلها بـ«دمتَ بخير» أو «مع حبي وأشواقي».':has(d.close+' '+d.end,P_CLOSE).length?'الختام ودّي.':'اختم بختام ودّي: سلام للأهل، أو «دمتَ بخير»، أو «في انتظار ردّك».'},
+   {ok:has(d.sign,P_SIGN).length>0,t:has(d.sign,P_SIGN).length?'التوقيع يذكر العلاقة.':'وقّع بالعلاقة ثم الاسم: «صديقك المخلص/ ...».'},
+   {ok:bodyW>=50,t:bodyW>=50?`عدد كلمات النص: ${AR(bodyW)}، وهو طول مناسب.`:`عدد كلمات النص: ${AR(bodyW)} فقط؛ أضف أخبارًا أو تفاصيل (٥٠ كلمة على الأقل).`}];
+}
+function vWrite(el){
+  let cur=TASKS[0].id;
+  function draw(){
+    const T=TASKS.find(t=>t.id===cur), F=T.kind==='formal';
+    const d=store.drafts[cur]=Object.assign({date:'',to:'',subj:'',intro:'',body:'',end:'',close:'',sign:''},store.drafts[cur]||{});
+    const FIELDS=[
+     ['date','المكان والتاريخ','input',F?'القاهرة في: ٢٠ / ١٠ / ٢٠٢٦':'القاهرة في: ٢٠ / ١٠ / ٢٠٢٦'],
+     ['to',F?'المرسل إليه والتحية':'التحية','input',F?'السيد الأستاذ/ ... المحترم — تحية طيبة وبعد،':'عزيزي ...، السلام عليكم ورحمة الله وبركاته، وبعد:'],
+     ...(F?[['subj','الموضوع','input','طلب ... / شكوى من ...']]:[]),
+     ['intro','المقدمة','ta',F?'عرّف بنفسك وبغرض رسالتك.':'أشواقك وسؤالك عن حاله.'],
+     ['body','العرض','ta',F?'اشرح طلبك أو مشكلتك وأسبابها بإيجاز ووضوح.':'أخبارك ومشاعرك بأسلوب دافئ.'],
+     ['end','الخاتمة','ta',F?'طلب مهذّب وشكر.':'سلام للأهل، وأمنيات، وانتظار الرد.'],
+     ['close','عبارة الختام','input',F?'وتفضلوا بقبول فائق الاحترام،':'دمتَ بخير،'],
+     ['sign','التوقيع','input',F?'مقدّم الطلب/ الاسم':'صديقك المخلص/ الاسم']];
+    el.innerHTML=stationHead('write')+`<div class="stack">
+     <div class="tabs">${TASKS.map(t=>`<button class="tab ${t.id===cur?'on':''}" data-id="${t.id}"><b>${t.title}</b><small>${t.kind==='formal'?'رسمية':'شخصية'}</small></button>`).join('')}</div>
+     <div class="fb tip"><span class="typebadge ${T.kind}">${F?'رسالة رسمية':'رسالة شخصية'}</span> ${T.task}</div>
+     <div class="workgrid">
+      <div class="card stack">${FIELDS.map(([k,l,tp,ph])=>`<div class="fld"><label for="f-${cur}-${k}">${l}</label>${tp==='ta'?`<textarea id="f-${cur}-${k}" data-k="${k}" placeholder="${ph}">${esc(d[k])}</textarea>`:`<input id="f-${cur}-${k}" data-k="${k}" value="${esc(d[k])}" placeholder="${ph}">`}</div>`).join('')}
+       <div class="row" style="justify-content:flex-end"><button class="btn ghost" id="cp">انسخ الرسالة</button><button class="btn" id="rv">راجع رسالتي</button></div></div>
+      <div id="pv"></div>
+     </div>
+     <div id="report" class="stack"></div></div>`;
+    el.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{cur=b.dataset.id;draw()});
+    const preview=()=>{const L=[];const add=(c,v,ph)=>L.push(`<span class="ln ${c} ${v?'':'ghost'}">${v?esc(v):ph}</span>`);
+      add('date',d.date,'المكان والتاريخ');
+      d.to?d.to.split(/\s+[—–-]\s+/).forEach(x=>L.push(`<span class="ln to">${esc(x)}</span>`)):add('to','',F?'المرسل إليه والتحية':'التحية');
+      if(F)add('subj',d.subj?(d.subj.startsWith('الموضوع')?d.subj:'الموضوع: '+d.subj):'','الموضوع');
+      ['intro','body','end'].forEach(k=>{if(d[k])d[k].split(/\n+/).filter(Boolean).forEach(x=>L.push(`<span class="ln p">${esc(x)}</span>`));else add('p','',{intro:'المقدمة',body:'العرض',end:'الخاتمة'}[k])});
+      add('close',d.close,'عبارة الختام');add('sign',d.sign,'التوقيع');
+      $('#pv').innerHTML=`<div class="paper ${T.kind}"><span class="tagline">معاينة الرسالة</span>${L.join('')}</div>`};
+    el.querySelectorAll('[data-k]').forEach(x=>x.oninput=()=>{d[x.dataset.k]=x.value;save();preview();$('#report').innerHTML=''});
+    preview();
+    $('#cp').onclick=()=>{const subj=F&&d.subj?(d.subj.startsWith('الموضوع')?d.subj:'الموضوع: '+d.subj):'';
+      const txt=[d.date,d.to,subj,d.intro,d.body,d.end,d.close,d.sign].filter(Boolean).join('\n');
+      try{navigator.clipboard.writeText(txt).then(()=>{$('#cp').textContent='نُسخت ✓';setTimeout(()=>{const b=$('#cp');if(b)b.textContent='انسخ الرسالة'},1500)},()=>{})}catch(e){}};
+    $('#rv').onclick=()=>{
+      if(wc([d.intro,d.body,d.end].join(' '))<10){$('#report').innerHTML='<div class="fb bad">اكتب رسالتك أولًا، ثم راجعها.</div>';return}
+      const c=checks(T,d), met=c.filter(x=>x.ok).length, stars=met===8?3:met>=6?2:1; setStars('write',stars);
+      $('#report').innerHTML=`<div class="card stack"><div class="row" style="justify-content:space-between"><h3>تقرير المراجعة: ${AR(met)} من ٨</h3>${starStr(stars)}</div>
+       <ul class="check">${c.map(x=>`<li><span class="${x.ok?'mark-ok':'mark-no'}">${x.ok?'✓':'✗'}</span><span>${x.t}</span></li>`).join('')}</ul>
+       <p class="muted small">المراجع الآلي يفحص الشكل والصيغ، أما جمال الأسلوب وقوة الأسباب فحكمها لمعلّمك.</p>
+       <button class="btn ghost" id="sm">اعرض رسالة نموذجية</button><div id="mdl"></div></div>`;
+      $('#sm').onclick=()=>{const m=T.model;const cls=F?['date','to','subj','p','p','p','close','sign']:(m.length===8?['date','to','p','p','p','p','close','sign']:['date','to','p','p','p','close','sign']);
+        $('#mdl').innerHTML=`<div class="paper ${T.kind}"><span class="tagline">رسالة نموذجية</span>${m.map((x,j)=>`<span class="ln ${cls[j]||'p'}">${x}</span>`).join('')}</div><p class="muted small">قارن: كيف بدأت؟ كيف انتقلت إلى الغرض؟ كيف ختمت؟</p>`;$('#sm').hidden=true};
+      $('#report').scrollIntoView({behavior:'smooth',block:'start'});
+    };
+  }
+  draw();
+}
+
+route();
+
+</script>
+</body>
+</html>
