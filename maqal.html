@@ -1,0 +1,665 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>رحلة المقال</title>
+<script data-goatcounter="https://rehlatwones.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=Noto+Naskh+Arabic:wght@400;600&display=swap">
+<style>
+body{margin:0}img{max-width:100%}[hidden]{display:none!important}
+
+/* Layout: a journey map of 7 stations; each station is one focused working card, text panels set in Naskh for reading */
+:root{
+  --bg:#FBF8F1; --surface:#FFFFFF; --ink:#2A2A1C; --muted:#6B6A52; --line:#E3DECB;
+  --olive:#64663A; --olive-soft:#ECEDDC; --terra:#C97735; --terra-soft:#F8E7D6;
+  --good:#3B7A4C; --good-soft:#E1F0E3; --bad:#B4452F; --bad-soft:#F7E0DA; --warn:#9A6E12; --warn-soft:#F6EBCF;
+  --hl:#F5DC86; --on-accent:#FFFFFF;
+  --f-display:"Reem Kufi","IBM Plex Sans Arabic",Tahoma,sans-serif;
+  --f-ui:"IBM Plex Sans Arabic",Tahoma,"Segoe UI",sans-serif;
+  --f-read:"Noto Naskh Arabic","Amiri","Traditional Arabic",serif;
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#1A1B13; --surface:#24251B; --ink:#EEEBDC; --muted:#AAA88E; --line:#393A2B;
+  --olive:#AEB274; --olive-soft:#31331F; --terra:#E4975E; --terra-soft:#3D2A1A;
+  --good:#80C492; --good-soft:#1E3224; --bad:#EE8B76; --bad-soft:#3D221C; --warn:#E3BA5E; --warn-soft:#382F18;
+  --hl:#6A5A1C; --on-accent:#1A1B13; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#1A1B13; --surface:#24251B; --ink:#EEEBDC; --muted:#AAA88E; --line:#393A2B;
+  --olive:#AEB274; --olive-soft:#31331F; --terra:#E4975E; --terra-soft:#3D2A1A;
+  --good:#80C492; --good-soft:#1E3224; --bad:#EE8B76; --bad-soft:#3D221C; --warn:#E3BA5E; --warn-soft:#382F18;
+  --hl:#6A5A1C; --on-accent:#1A1B13; color-scheme:dark }
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-ui);font-size:16px;line-height:1.7}
+.wrap{max-width:860px;margin:0 auto;padding-block:20px 40px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);font-weight:700;text-wrap:balance;margin:0;line-height:1.35}
+h1{font-size:clamp(2rem,6vw,2.9rem);color:var(--olive)}
+h2{font-size:1.55rem;color:var(--olive)}
+h3{font-size:1.15rem}
+p{margin:0}
+button{font-family:inherit;font-size:inherit;color:inherit}
+button:focus-visible,textarea:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--terra);outline-offset:2px}
+
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:22px;flex-wrap:wrap}
+.brand{font-family:var(--f-display);color:var(--olive);font-size:1.05rem;display:flex;align-items:center;gap:8px}
+.brand i{width:10px;height:10px;border-radius:50%;background:var(--terra);display:inline-block}
+.credit-top{font-size:.8rem;color:var(--muted)}
+.back{background:none;border:1px solid var(--line);border-radius:999px;padding:6px 14px;cursor:pointer;color:var(--olive);font-weight:500}
+.back:hover{background:var(--olive-soft)}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.3fr 1fr;gap:28px;align-items:center;margin-bottom:30px}
+.hero p.lead{font-size:1.1rem;color:var(--muted);margin-top:10px;max-width:46ch}
+.squeeze{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:flex;align-items:center;gap:14px}
+.lines{flex:1;display:flex;flex-direction:column;gap:7px}
+.lines span{height:8px;border-radius:4px;background:var(--line)}
+.lines span.k{background:var(--olive)}
+.arrow{font-family:var(--f-display);color:var(--terra);font-size:1.6rem}
+.one{flex:.7;display:flex;flex-direction:column;gap:7px}
+.one span{height:8px;border-radius:4px;background:var(--terra)}
+.squeeze-cap{font-size:.8rem;color:var(--muted);margin-top:8px;text-align:center}
+
+/* map */
+.map{display:flex;flex-direction:column;gap:0;position:relative}
+.station{display:grid;grid-template-columns:56px 1fr auto;gap:14px;align-items:center;padding:14px 4px;border-bottom:1px dashed var(--line);cursor:pointer;background:none;border-left:none;border-right:none;border-top:none;text-align:right;width:100%}
+.station:hover .st-title{color:var(--terra)}
+.st-num{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-display);font-size:1.3rem;border:2px solid var(--olive);color:var(--olive);background:var(--surface)}
+.station.done .st-num{background:var(--olive);color:var(--on-accent)}
+.st-title{font-family:var(--f-display);font-size:1.15rem;transition:color .15s}
+.st-desc{color:var(--muted);font-size:.93rem}
+.stars{color:var(--terra);letter-spacing:2px;font-size:1.05rem;white-space:nowrap}
+.stars .off{color:var(--line)}
+
+/* cards & common */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px}
+.stack{display:flex;flex-direction:column;gap:16px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.eyebrow{font-size:.8rem;letter-spacing:.04em;color:var(--terra);font-weight:700}
+.muted{color:var(--muted)}
+.small{font-size:.88rem}
+.passage{font-family:var(--f-read);font-size:1.18rem;line-height:2.1;background:var(--olive-soft);border-radius:12px;padding:16px 18px}
+.btn{border:none;border-radius:999px;padding:10px 20px;cursor:pointer;font-weight:700;background:var(--olive);color:var(--on-accent)}
+.btn:hover{filter:brightness(1.07)}
+.btn.alt{background:var(--terra)}
+.btn.ghost{background:none;border:1.5px solid var(--olive);color:var(--olive)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.progress{display:flex;gap:6px}
+.progress span{flex:1;height:6px;border-radius:3px;background:var(--line)}
+.progress span.on{background:var(--olive)}
+.progress span.now{background:var(--terra)}
+
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{display:block;width:100%;text-align:right;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:12px 16px;cursor:pointer;font-family:var(--f-read);font-size:1.08rem;line-height:1.9}
+.opt:hover:not([disabled]){border-color:var(--olive)}
+.opt.right{border-color:var(--good);background:var(--good-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt[disabled]{cursor:default}
+.fb{border-radius:12px;padding:12px 16px;font-size:.98rem}
+.fb.good{background:var(--good-soft);color:var(--ink);border-inline-start:4px solid var(--good)}
+.fb.bad{background:var(--bad-soft);color:var(--ink);border-inline-start:4px solid var(--bad)}
+.fb.tip{background:var(--terra-soft);border-inline-start:4px solid var(--terra)}
+.fb b{font-weight:700}
+
+/* guide */
+.gtext span.s{transition:all .3s;border-radius:4px}
+.gtext .cut{text-decoration:line-through;text-decoration-color:var(--bad);text-decoration-thickness:2px;opacity:.45}
+.gtext .hl{background:var(--hl);padding:0 2px}
+.gtext .mg{background:var(--terra-soft);box-shadow:0 0 0 2px var(--terra-soft)}
+.gtext ins{text-decoration:none;background:var(--good-soft);color:var(--good);font-weight:600;padding:0 4px;border-radius:4px}
+.steps{display:flex;gap:6px;flex-wrap:wrap}
+.steps button{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px;cursor:pointer;font-size:.9rem}
+.steps button.on{background:var(--olive);border-color:var(--olive);color:var(--on-accent)}
+.rule{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start}
+.rule .tag{font-family:var(--f-display);background:var(--terra);color:var(--on-accent);border-radius:8px;padding:4px 10px;white-space:nowrap}
+.final{border:2px solid var(--olive);border-radius:12px;padding:14px 18px;font-family:var(--f-read);font-size:1.15rem;line-height:2}
+.meta{display:flex;gap:18px;flex-wrap:wrap;font-size:.9rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.meta b{color:var(--ink)}
+
+/* trim */
+.trimtext{font-family:var(--f-read);font-size:1.15rem;line-height:2.25}
+.sent{cursor:pointer;border-radius:5px;padding:1px 2px;transition:background .15s}
+.sent:hover{background:var(--olive-soft)}
+.sent.del{text-decoration:line-through;text-decoration-color:var(--bad);text-decoration-thickness:2px;color:var(--muted)}
+.sent.ok{box-shadow:inset 0 -3px 0 var(--good)}
+.sent.no{box-shadow:inset 0 -3px 0 var(--bad);background:var(--bad-soft)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.88rem;color:var(--muted)}
+.reasons{display:flex;flex-direction:column;gap:8px;padding:0;margin:0;list-style:none}
+.reasons li{display:grid;grid-template-columns:22px 1fr;gap:8px;font-size:.95rem}
+.mark-ok{color:var(--good);font-weight:700}
+.mark-no{color:var(--bad);font-weight:700}
+
+/* diagnose */
+.sumcard{border:1.5px solid var(--line);border-radius:12px;padding:12px 16px;display:flex;flex-direction:column;gap:10px}
+.sumcard .txt{font-family:var(--f-read);font-size:1.06rem;line-height:1.95}
+.sumcard.pick{cursor:pointer}
+.sumcard.pick:hover{border-color:var(--olive)}
+.sumcard.best{border-color:var(--good);background:var(--good-soft)}
+.sumcard.wrongpick{border-color:var(--bad);background:var(--bad-soft)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 12px;cursor:pointer;font-size:.88rem}
+.chip.sel{border-color:var(--terra);background:var(--terra-soft)}
+.chip.right{border-color:var(--good);background:var(--good-soft)}
+.chip.wrong{border-color:var(--bad);background:var(--bad-soft)}
+
+/* write */
+.tabs{display:flex;gap:8px;flex-wrap:wrap}
+.tab{border:1.5px solid var(--line);background:var(--surface);border-radius:12px;padding:8px 14px;cursor:pointer;text-align:right}
+.tab b{display:block;font-family:var(--f-display);font-weight:500}
+.tab small{color:var(--muted)}
+.tab.on{border-color:var(--olive);background:var(--olive-soft)}
+.wtext .sent.hlt{background:var(--hl)}
+.ideas{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ideas input{width:100%;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);border-radius:10px;padding:8px 12px;font-family:var(--f-ui);font-size:.95rem}
+textarea{width:100%;min-height:150px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);border-radius:12px;padding:12px 14px;font-family:var(--f-read);font-size:1.12rem;line-height:2;resize:vertical}
+.meters{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.meter{border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.meter .lbl{font-size:.8rem;color:var(--muted)}
+.meter .val{font-family:var(--f-display);font-size:1.35rem;font-variant-numeric:tabular-nums}
+.meter .note{font-size:.8rem}
+.meter.good{border-color:var(--good);background:var(--good-soft)}
+.meter.warn{border-color:var(--warn);background:var(--warn-soft)}
+.meter.bad{border-color:var(--bad);background:var(--bad-soft)}
+.lenbar{position:relative;height:10px;border-radius:5px;background:var(--line);margin-top:4px}
+.lenbar .band{position:absolute;top:0;bottom:0;background:var(--olive);opacity:.35;border-radius:5px}
+.lenbar .pin{position:absolute;top:-4px;width:4px;height:18px;border-radius:2px;background:var(--terra);transition:right .2s}
+.check{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+.check li{display:grid;grid-template-columns:24px 1fr;gap:8px}
+.copied{background:var(--bad-soft);border-radius:4px;padding:0 3px}
+
+.result{text-align:center;display:flex;flex-direction:column;gap:12px;align-items:center}
+.result .big{font-size:2.4rem;color:var(--terra);letter-spacing:6px}
+footer{margin-top:36px;padding-top:14px;border-top:1px solid var(--line);font-size:.82rem;color:var(--muted);text-align:center}
+
+@media (max-width:640px){
+  .hero{grid-template-columns:1fr}
+  .meters{grid-template-columns:1fr 1fr}
+  .ideas{grid-template-columns:1fr}
+  .station{grid-template-columns:44px 1fr;}
+  .station .stars{grid-column:2}
+  .st-num{width:40px;height:40px;font-size:1.1rem}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+
+:root{--c-intro:#C97735;--c-body:#64663A;--c-end:#3D6B86;--c-intro-soft:#F8E7D6;--c-body-soft:#ECEDDC;--c-end-soft:#DFEBF2}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--c-intro:#E4975E;--c-body:#AEB274;--c-end:#83B4D2;--c-intro-soft:#3D2A1A;--c-body-soft:#31331F;--c-end-soft:#1C2E3A}}
+:root[data-theme="dark"]{--c-intro:#E4975E;--c-body:#AEB274;--c-end:#83B4D2;--c-intro-soft:#3D2A1A;--c-body-soft:#31331F;--c-end-soft:#1C2E3A}
+.essay{display:flex;flex-direction:column;gap:10px;font-family:var(--f-read);font-size:1.12rem;line-height:2.05}
+.essay .ttl{font-family:var(--f-display);text-align:center;font-size:1.3rem;color:var(--olive)}
+.para{border-radius:12px;padding:10px 14px;border-inline-start:5px solid var(--line);transition:all .3s}
+.para.intro.on{border-color:var(--c-intro);background:var(--c-intro-soft)}
+.para.body.on{border-color:var(--c-body);background:var(--c-body-soft)}
+.para.end.on{border-color:var(--c-end);background:var(--c-end-soft)}
+.essay .k{transition:all .3s;border-radius:4px}
+.essay.show-topic .k.topic{background:var(--hl);padding:0 2px}
+.essay.show-hook .k.hook{background:var(--hl);padding:0 2px}
+.essay.show-thesis .k.thesis{background:var(--hl);padding:0 2px}
+.essay.show-ex .k.ex{text-decoration:underline wavy var(--terra);text-underline-offset:6px}
+.essay.show-conn .k.conn{background:var(--terra);color:var(--on-accent);padding:0 4px}
+.essay.show-close .k.close{background:var(--hl);padding:0 2px}
+.essay .ttl.on{background:var(--hl);border-radius:8px}
+.sandwich{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;text-align:center;font-size:.9rem}
+.sandwich div{border-radius:10px;padding:8px 6px}
+.sandwich .a{background:var(--c-intro-soft);border:2px solid var(--c-intro)}
+.sandwich .b{background:var(--c-body-soft);border:2px solid var(--c-body)}
+.sandwich .c{background:var(--c-end-soft);border:2px solid var(--c-end)}
+.sandwich b{display:block;font-family:var(--f-display);font-weight:500}
+/* order */
+.slots{display:flex;flex-direction:column;gap:8px;counter-reset:s}
+.slot{display:grid;grid-template-columns:32px 1fr;gap:10px;align-items:start;border:1.5px dashed var(--line);border-radius:12px;padding:8px 12px;min-height:46px;font-family:var(--f-read);font-size:1.04rem;line-height:1.9;background:var(--surface);text-align:right;width:100%}
+.slot .no{font-family:var(--f-display);color:var(--olive);font-size:1.1rem}
+.slot.filled{border-style:solid;cursor:pointer}
+.slot.right{border-color:var(--good);background:var(--good-soft)}
+.slot.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.pool{display:flex;flex-direction:column;gap:8px}
+.card-pick{border:1.5px solid var(--line);background:var(--olive-soft);border-radius:12px;padding:8px 14px;cursor:pointer;font-family:var(--f-read);font-size:1.04rem;line-height:1.9;text-align:right;width:100%}
+.card-pick:hover{border-color:var(--olive)}
+.blank{display:inline-block;min-width:4.5em;border-bottom:2.5px solid var(--terra);text-align:center;color:var(--terra);font-weight:600}
+.blank.filled{border-color:var(--good);color:var(--good)}
+/* workshop */
+.plan{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.plan label,.wbox label{font-size:.85rem;color:var(--muted);display:block;margin-bottom:4px}
+.plan input,.wbox input{width:100%;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);border-radius:10px;padding:8px 12px;font-family:var(--f-ui);font-size:.95rem}
+.plan .full{grid-column:1/-1}
+.wbox{border-inline-start:5px solid var(--line);padding-inline-start:12px;display:flex;flex-direction:column;gap:6px}
+.wbox.intro{border-color:var(--c-intro)}.wbox.body{border-color:var(--c-body)}.wbox.end{border-color:var(--c-end)}
+.wbox textarea{min-height:110px}
+.wbox .hint{font-size:.85rem;color:var(--muted)}
+.wbox .cnt{font-size:.8rem;color:var(--muted);font-variant-numeric:tabular-nums;align-self:flex-end}
+.conns{display:flex;gap:6px;flex-wrap:wrap}
+.conns span{border-radius:999px;padding:2px 10px;font-size:.85rem;background:var(--good-soft);border:1px solid var(--good)}
+.outline{display:flex;flex-direction:column;gap:6px;font-size:.98rem}
+.outline div{display:grid;grid-template-columns:auto 1fr;gap:10px}
+.outline b{font-family:var(--f-display);font-weight:500;color:var(--terra);white-space:nowrap}
+@media (max-width:640px){.plan{grid-template-columns:1fr}.sandwich{grid-template-columns:1fr}}
+
+
+</style>
+</head>
+<body>
+<div class="wrap" dir="rtl" lang="ar">
+  <div class="topbar">
+    <a class="brand" href="https://salema744.github.io/rehlat-wones-play/" style="text-decoration:none"><i></i>رحلة مع ونس</a>
+    <div id="nav"></div>
+  </div>
+  <main id="app"></main>
+  <footer>إعداد: رحلة ونس - أ. سالمة سيد</footer>
+</div>
+<script>
+document.documentElement.lang='ar';document.documentElement.dir='rtl';
+const AR=n=>String(n).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);
+const $=s=>document.querySelector(s);
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ---------- storage ---------- */
+const KEY='rw-maqal-v1';
+let store={stars:{},drafts:{}};
+try{const s=JSON.parse(localStorage.getItem(KEY));if(s)store=Object.assign(store,s)}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+function setStars(id,n){if((store.stars[id]||0)<n){store.stars[id]=n;save()}}
+const starStr=n=>'<span class="stars">'+[1,2,3].map(i=>i<=n?'★':'<span class="off">★</span>').join('')+'</span>';
+
+/* ---------- Arabic text tools ---------- */
+function norm(s){return s.replace(/[ً-ْٰـ]/g,'').replace(/[أإآٱ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي').replace(/[^ء-ي0-9٠-٩\s]/g,' ').replace(/\s+/g,' ').trim()}
+function toks(s){return norm(s).split(' ').filter(Boolean).map(w=>(w.length>3&&/^[وف]/.test(w))?w.slice(1):w)}
+const wc=s=>{const t=norm(s);return t?t.split(' ').length:0};
+
+/* ---------- stations ---------- */
+const ST=[
+ {id:'guide',n:'٠',t:'تشريح المقال',d:'تعرّف على أجزاء المقال وهي تُضاء أمامك واحدًا واحدًا.'},
+ {id:'order',n:'١',t:'رتّب المقال',d:'أعد ترتيب الفقرات والجمل مستعينًا بأدوات الربط.'},
+ {id:'intro',n:'٢',t:'المقدمة الجذابة',d:'اختر المقدمة الأقوى، وتعرّف على طرق جذب القارئ.'},
+ {id:'intruder',n:'٣',t:'الجملة الدخيلة',d:'اكتشف الجملة التي خرجت عن فكرة الفقرة.'},
+ {id:'connect',n:'٤',t:'أدوات الربط',d:'اختر الأداة التي تصنع العلاقة الصحيحة بين الجمل.'},
+ {id:'ending',n:'٥',t:'الخاتمة المحكمة',d:'اختر الخاتمة التي تُغلق المقال بقوة.'},
+ {id:'write',n:'٦',t:'ورشة المقال',d:'خطّط واكتب مقالك كاملًا ومعك مراجِع آلي يقيّمه.'}
+];
+
+/* ---------- station 1: order ---------- */
+const ORDER=[
+ {title:'مقال: الماء سرّ الحياة',prompt:'رتّب فقرات المقال الخمس. اضغط على الفقرة لتضعها في المكان التالي.',items:[
+  'الماء أساس كل حياة على الأرض؛ فلا نبات ولا حيوان ولا إنسان يستطيع أن يعيش بدونه. فما الذي يجعل الماء بهذه الأهمية؟ وكيف نحافظ عليه؟',
+  'أولًا، يحتاج جسم الإنسان إلى الماء في كل لحظة؛ فهو يشكّل أكثر من نصف وزنه، وينقل الغذاء إلى خلاياه، وينظّم حرارته.',
+  'ثانيًا، لا تقوم الزراعة ولا الصناعة إلا بالماء؛ فالحقول تُروى به، والمصانع تستخدمه في معظم أعمالها.',
+  'ومع هذه الأهمية الكبيرة، يهدر كثير من الناس الماء دون أن ينتبهوا، فيتركون الصنبور مفتوحًا، أو يغسلون السيارات بالخرطوم.',
+  'وفي الختام، الماء نعمة لا تُعوَّض، والحفاظ عليه مسؤولية كل واحد منا، تبدأ بإغلاق صنبور مفتوح.'],
+  why:'المقدمة تطرح السؤال، و«أولًا» و«ثانيًا» تقودان العرض، و«ومع هذه الأهمية» تنقلنا إلى المشكلة، و«وفي الختام» تعلن النهاية.'},
+ {title:'فقرة: الهاتف المحمول',prompt:'رتّب جمل الفقرة لتبدأ بالجملة المفتاحية وتنتهي بالنتيجة.',items:[
+  'للهاتف المحمول فوائد كثيرة في حياتنا اليومية.',
+  'فهو يقرّبنا من أهلنا وأصدقائنا مهما بعدت المسافات.',
+  'كما يساعدنا على البحث عن المعلومات في ثوانٍ.',
+  'فمثلًا، يستطيع الطالب أن يعرف معنى كلمة صعبة وهو في مكانه.',
+  'لذلك أصبح الهاتف أداة لا غنى عنها لمن يحسن استخدامه.'],
+  why:'الجملة المفتاحية أولًا، ثم الفائدتان، ثم المثال بعد الفائدة التي يشرحها، ثم «لذلك» للنتيجة.'},
+ {title:'فقرة: كيف تبدأ عادة القراءة؟',prompt:'هذه فقرة خطوات. رتّبها حسب التسلسل الزمني.',items:[
+  'تبدأ عادة القراءة بخطوات صغيرة.',
+  'في البداية، اختر كتابًا قصيرًا في موضوع تحبه.',
+  'ثم خصّص له وقتًا ثابتًا كل يوم، ولو عشر دقائق.',
+  'وبعد أن تنهيه، احكِ لغيرك ما أعجبك فيه.',
+  'وهكذا تتحول القراءة شيئًا فشيئًا من واجب إلى متعة.'],
+  why:'«في البداية» ثم «ثم» ثم «وبعد أن» ثم «وهكذا»: أدوات الترتيب الزمني هي خريطتك.'}
+];
+
+/* ---------- station 2: intro ---------- */
+const INTRO=[
+ {passage:'موضوع المقال: أثر الإنترنت في حياتنا',prompt:'أي مقدمة هي الأقوى؟',options:[
+  {t:'منذ سنوات قليلة كان البحث عن معلومة يحتاج إلى زيارة مكتبة، أما اليوم فيكفي أن تلمس شاشة صغيرة. لقد غيّر الإنترنت طريقة تعلّمنا وتواصلنا وعملنا، وفي هذا المقال نتأمل أثره الإيجابي والسلبي.',ok:1,why:'بدأت بمقارنة تجذب القارئ، ثم ذكرت الفكرة الرئيسة للمقال بوضوح.'},
+  {t:'سوف أكتب في هذا المقال عن الإنترنت.',ok:0,why:'إعلان مباشر بلا تمهيد ولا فكرة. القارئ لا يجد سببًا ليكمل.'},
+  {t:'الإنترنت شبكة عالمية تتكون من ملايين الحواسيب المتصلة ببعضها عن طريق خطوط الاتصال والأقمار الصناعية والكابلات البحرية.',ok:0,why:'تفاصيل تقنية مكانها العرض إن احتجتها، والمقدمة لم تذكر فكرة المقال.'},
+  {t:'الإنترنت أسوأ اختراع عرفه الإنسان، ومن يستخدمه يضيّع وقته.',ok:0,why:'حكم متطرف في أول سطر قبل أي دليل.'}],
+  tip:'المقدمة = تمهيد يجذب القارئ + جملة تحدد فكرة المقال.'},
+ {passage:'«العلم في الصغر كالنقش على الحجر»؛ مَثَلٌ قديم يلخّص لماذا تهتم الأمم بتعليم أطفالها منذ سنواتهم الأولى.',prompt:'ما طريقة التمهيد في هذه المقدمة؟',options:[
+  {t:'قول مأثور',ok:1,why:'بدأت بمثل مشهور، ثم ربطته بالموضوع.'},
+  {t:'سؤال',ok:0,why:'لا يوجد سؤال هنا.'},
+  {t:'موقف قصير',ok:0,why:'لا توجد حكاية أو مشهد.'},
+  {t:'حقيقة أو رقم مدهش',ok:0,why:'المثل حكمة، وليس معلومة علمية.'}],
+  tip:'إذا استخدمت قولًا مأثورًا، فاربطه فورًا بفكرة مقالك ولا تتركه وحده.'},
+ {passage:'وقف عمر أمام الفصل وقد احمرّ وجهه، ونسي فجأة كل ما حفظه. هذا الموقف يعرفه كثير منا، فالخوف من الحديث أمام الناس مشكلة شائعة، لكن التغلب عليها ممكن.',prompt:'ما طريقة التمهيد في هذه المقدمة؟',options:[
+  {t:'موقف قصير',ok:1,why:'بدأت بمشهد حيّ يعيش فيه القارئ، ثم انتقلت إلى الفكرة.'},
+  {t:'قول مأثور',ok:0,why:'لا يوجد مثل أو حكمة.'},
+  {t:'حقيقة أو رقم مدهش',ok:0,why:'لا توجد معلومة علمية.'},
+  {t:'سؤال',ok:0,why:'لا يوجد سؤال.'}],
+  tip:'الموقف القصير يناسب المقالات عن المشاعر والسلوك.'},
+ {passage:'يغطي الماء نحو ثلاثة أرباع سطح الأرض، ومع ذلك فإن ما يصلح منه للشرب قليل جدًا. فكيف نحافظ على هذه الثروة النادرة؟',prompt:'ما طريقة التمهيد في هذه المقدمة؟',options:[
+  {t:'حقيقة أو رقم مدهش',ok:1,why:'المفارقة بين كثرة الماء وندرة الصالح للشرب تثير الدهشة. وانتهت بسؤال يحدد فكرة المقال.'},
+  {t:'موقف قصير',ok:0,why:'لا توجد حكاية.'},
+  {t:'قول مأثور',ok:0,why:'هذه معلومة علمية لا مثل.'},
+  {t:'نهاية مفتوحة',ok:0,why:'هذه طريقة لختام المقالات لا لبدئها.'}],
+  tip:'الحقيقة المدهشة تناسب المقالات العلمية والبيئية. تأكد من صحتها قبل كتابتها.'},
+ {passage:'ماذا لو استيقظت يومًا فوجدت كل الأشجار قد اختفت من مدينتك؟ لا ظل، ولا عصافير، ولا هواء نقي. الأشجار أكثر من مجرد منظر جميل؛ إنها حياة.',prompt:'ما طريقة التمهيد في هذه المقدمة؟',options:[
+  {t:'سؤال يدعو إلى التخيّل',ok:1,why:'السؤال يضع القارئ داخل المشكلة، ثم جاءت الفكرة الرئيسة في الجملة الأخيرة.'},
+  {t:'قول مأثور',ok:0,why:'لا يوجد مثل.'},
+  {t:'حقيقة أو رقم مدهش',ok:0,why:'لا توجد معلومة علمية محددة.'},
+  {t:'موقف قصير حدث فعلًا',ok:0,why:'هو موقف متخيَّل يطرحه سؤال، لا حكاية حدثت.'}],
+  tip:'السؤال القوي لا يُجاب بـ«نعم» أو «لا»، بل يدفع القارئ إلى التفكير.'},
+ {passage:'موضوع المقال: العمل التطوعي',prompt:'أي مقدمة هي الأقوى؟',options:[
+  {t:'في كل حيّ أناس يحتاجون إلى يد تساعدهم، وفي كل شاب طاقة تبحث عن طريق. وحين يلتقي الاثنان يولد العمل التطوعي، الذي يعود بالخير على المجتمع وعلى المتطوع نفسه.',ok:1,why:'تمهيد بصورة متوازنة، ثم فكرة واضحة تَعِد القارئ بما سيأتي.'},
+  {t:'العمل التطوعي مهم. وهو جميل. ويجب أن نتطوع.',ok:0,why:'جمل قصيرة مفككة وعامة، بلا تمهيد حقيقي.'},
+  {t:'تطوعت العام الماضي في جمعية خيرية ثلاث مرات، ووزعنا ملابس وطعامًا، وكان معنا أستاذ الرياضيات.',ok:0,why:'تفاصيل شخصية متتابعة لا تقود إلى فكرة المقال.'},
+  {t:'في هذا المقال سأتكلم عن العمل التطوعي وفوائده وأنواعه وأهميته وتاريخه.',ok:0,why:'إعلان وقائمة، وليس مقدمة تجذب القارئ.'}],
+  tip:'اسأل نفسك: لو قرأت هذه المقدمة وحدها، هل أعرف عمّ يتحدث المقال؟ وهل أرغب في إكماله؟'}
+];
+
+/* ---------- station 3: intruder ---------- */
+const INTR=[
+ {title:'فوائد الشجرة',sents:['للشجرة فوائد عظيمة للإنسان.','فهي تمنحه الظل في أيام الحر.','وتمدّه بالثمار والخشب.','وقد زرتُ حديقة الحيوان الأسبوع الماضي مع أسرتي.','كما تنقّي الهواء الذي يتنفسه.'],bad:3,why:'زيارة حديقة الحيوان لا علاقة لها بفوائد الشجرة.'},
+ {title:'أسرار المذاكرة',sents:['للمذاكرة الناجحة أسرار بسيطة.','أولها أن تختار مكانًا هادئًا جيد الإضاءة.','وثانيها أن تقسّم وقتك إلى فترات قصيرة تتخللها راحة.','والرياضيات من أصعب المواد عند كثير من الطلاب.','وثالثها أن تراجع ما درسته قبل النوم.'],bad:3,why:'صعوبة الرياضيات ليست سرًّا من أسرار المذاكرة. لاحظ أنها كسرت ترتيب «أولها، ثانيها، ثالثها».'},
+ {title:'النحل',sents:['يعدّ النحل من أنفع الحشرات للإنسان.','فهو يصنع العسل الذي فيه غذاء وشفاء.','ويساعد على تلقيح الأزهار فتكثر الثمار.','ولسعة النحلة مؤلمة، وقد تسبب تورّمًا.','لذلك يحرص المزارعون على وجود خلايا النحل قرب حقولهم.'],bad:3,why:'فخ ذكي! الجملة عن النحل، لكن الفقرة عن «نفع» النحل، واللسعة فكرة أخرى. الجملة الدخيلة قد تتكلم عن الموضوع نفسه وتخرج عن فكرته.'},
+ {title:'النوم والتعلم',sents:['يحتاج الطالب إلى نوم كافٍ ليتعلم جيدًا.','ففي أثناء النوم يثبّت الدماغ ما حفظه في يومه.','والطالب الذي ينام جيدًا أكثر تركيزًا في الفصل.','وتختلف مدة النوم التي تحتاجها الحيوانات اختلافًا كبيرًا.','لذلك ينصح الخبراء بالنوم مبكرًا في ليالي الدراسة.'],bad:3,why:'نوم الحيوانات معلومة صحيحة، لكنها لا تخدم فكرة «النوم يساعد الطالب على التعلم».'},
+ {title:'اللغة العربية',sents:['اللغة العربية من أغنى لغات العالم بالمفردات.','فللأسد والسيف والجمل فيها أسماء كثيرة.','وفيها كلمات دقيقة تفرّق بين درجات المعنى، كالحب والشوق والوَلَه.','ويتعلم كثير من الطلاب في أمريكا لغات أجنبية في المدرسة.','ولهذا الثراء يجد الكاتب بالعربية كلمة مناسبة لكل معنى يريده.'],bad:3,why:'الحديث عن تعلم اللغات في أمريكا يخرج عن فكرة «ثراء مفردات العربية».'}
+];
+
+/* ---------- station 4: connectors ---------- */
+const CONN=[
+ {passage:'كان الجو ممطرًا، ____ خرجنا للرحلة في موعدها.',prompt:'اختر أداة الربط المناسبة:',options:[
+  {t:'ومع ذلك',ok:1,why:'المطر كان يمنع الخروج، لكننا خرجنا: علاقة استدراك.'},{t:'لذلك',ok:0,why:'«لذلك» تجعل الخروج نتيجة للمطر، وهذا غير منطقي.'},{t:'لأن',ok:0,why:'«لأن» تحتاج إلى سبب بعدها.'},{t:'على سبيل المثال',ok:0,why:'لا يوجد مثال هنا.'}],tip:'استدراك: لكنّ، ومع ذلك، غير أنّ، إلا أنّ، رغم.'},
+ {passage:'تأخر أحمد في النوم، ____ وصل إلى المدرسة متأخرًا.',prompt:'اختر أداة الربط المناسبة:',options:[
+  {t:'لذلك',ok:1,why:'التأخر في المدرسة نتيجة للسهر: علاقة سبب ونتيجة.'},{t:'لكنّه',ok:0,why:'لا تعارض بين الجملتين.'},{t:'بالإضافة إلى ذلك',ok:0,why:'الجملة الثانية نتيجة، لا معلومة مضافة.'},{t:'مثلًا',ok:0,why:'ليست مثالًا.'}],tip:'نتيجة: لذلك، لذا، ولهذا، فـ، وبالتالي.'},
+ {passage:'تساعد الرياضة على تقوية الجسم، ____ تخفّف التوتر.',prompt:'اختر أداة الربط المناسبة:',options:[
+  {t:'كما أنها',ok:1,why:'أضفنا فائدة ثانية: علاقة إضافة.'},{t:'إلا أنها',ok:0,why:'«إلا أن» للاستدراك، والفائدتان لا تتعارضان.'},{t:'بسبب أنها',ok:0,why:'تخفيف التوتر ليس سببًا لتقوية الجسم.'},{t:'في المقابل',ok:0,why:'للمقارنة بين أمرين مختلفين.'}],tip:'إضافة: كما، أيضًا، فضلًا عن ذلك، بالإضافة إلى، علاوة على ذلك.'},
+ {passage:'يفضّل بعض الطلاب المذاكرة في الصباح، ____ يفضّل آخرون المذاكرة في المساء.',prompt:'اختر أداة الربط المناسبة:',options:[
+  {t:'في حين',ok:1,why:'نقارن بين فريقين: علاقة مقابلة.'},{t:'لأن',ok:0,why:'تفضيل الفريق الثاني ليس سببًا لتفضيل الأول.'},{t:'لذلك',ok:0,why:'ليس نتيجة.'},{t:'أولًا',ok:0,why:'للترتيب، لا للمقارنة.'}],tip:'مقابلة: في حين، بينما، في المقابل، أما... فـ.'},
+ {passage:'خسر الفريق المباراة ____ لاعبيه لم يتعاونوا.',prompt:'اختر أداة الربط المناسبة:',options:[
+  {t:'لأنّ',ok:1,why:'عدم التعاون سبب الخسارة: علاقة تعليل.'},{t:'لذلك',ok:0,why:'«لذلك» تجعل عدم التعاون نتيجة للخسارة، والعكس هو الصحيح.'},{t:'رغم أنّ',ok:0,why:'لا تعارض هنا.'},{t:'ثم',ok:0,why:'«ثم» للترتيب الزمني.'}],tip:'تعليل: لأنّ، بسبب، إذ، حيث، نظرًا إلى.'},
+ {passage:'للقراءة فوائد كثيرة، ____ أنها تنمّي الخيال وتزيد الحصيلة اللغوية.',prompt:'اختر أداة الربط المناسبة:',options:[
+  {t:'من ذلك',ok:1,why:'ذكرنا فوائد منها: علاقة تمثيل وتفصيل.'},{t:'لكنّ',ok:0,why:'لا يوجد تعارض.'},{t:'بينما',ok:0,why:'لا توجد مقارنة.'},{t:'وأخيرًا',ok:0,why:'لم نبدأ الترتيب بعد.'}],tip:'تمثيل: مثلًا، على سبيل المثال، من ذلك، كأن.'},
+ {passage:'يحب خالد كرة القدم، ____ لا يجد وقتًا كافيًا للعب بسبب الدراسة.',prompt:'اختر أداة الربط المناسبة:',options:[
+  {t:'لكنّه',ok:1,why:'يحبها، ولا يلعبها كثيرًا: استدراك.'},{t:'لذلك',ok:0,why:'حبّ الكرة لا يُنتج قلة اللعب.'},{t:'لأنّه',ok:0,why:'ليس تعليلًا.'},{t:'كما',ok:0,why:'ليست إضافة في الاتجاه نفسه.'}],tip:'«لكنّ» تحتاج إلى اسم أو ضمير بعدها: لكنّه، لكنّها، لكنّ الطالب.'},
+ {passage:'____، يمكن القول إن الماء أساس الحياة، وإن الحفاظ عليه واجب على كل فرد.',prompt:'هذه أول جملة في الخاتمة. اختر:',options:[
+  {t:'وخلاصة القول',ok:1,why:'أداة تعلن الختام والتلخيص.'},{t:'في البداية',ok:0,why:'للافتتاح لا للختام.'},{t:'على سبيل المثال',ok:0,why:'للتمثيل.'},{t:'بسبب ذلك',ok:0,why:'للنتيجة داخل الفقرة.'}],tip:'ختام: وخلاصة القول، وفي الختام، وهكذا نرى، وبذلك يتضح.'}
+];
+
+/* ---------- station 5: endings ---------- */
+const ENDING=[
+ {passage:'مقال عن الرياضة: المقدمة تقول إن الرياضة ليست وقتًا ضائعًا، والعرض ذكر فوائدها للجسم والعقل والأخلاق.',prompt:'اختر أفضل خاتمة:',options:[
+  {t:'وهكذا تتضح لنا قيمة الرياضة للجسم والعقل والأخلاق، فلنجعلها عادة يومية لا هواية مؤقتة.',ok:1,why:'لخّصت الأفكار الثلاث بكلمات جديدة، ثم دعت القارئ إلى فعل.'},
+  {t:'هذا كل ما أعرفه عن الرياضة، وأرجو أن يكون موضوعي قد أعجبكم.',ok:0,why:'خاتمة اعتذارية تُضعف المقال. لا تتحدث عن نفسك ككاتب.'},
+  {t:'ومن الرياضات المشهورة أيضًا السباحة وركوب الخيل والرماية.',ok:0,why:'فكرة جديدة في الخاتمة. مكانها العرض أو لا مكان لها.'},
+  {t:'فالرياضة ليست وقتًا ضائعًا بعيدًا عن الدراسة، بل هي من أهم ما يحتاجه الطالب.',ok:0,why:'نسخ المقدمة كما هي. الخاتمة تعيد الفكرة بصياغة جديدة وأقوى.'}],
+  tip:'الخاتمة = تلخيص الأفكار بكلمات جديدة + رسالة أخيرة (دعوة، أمنية، سؤال، حكمة).'},
+ {passage:'مقال عن الماء: العرض تحدث عن حاجة الجسم إليه، والزراعة والصناعة، ومشكلة الإهدار.',prompt:'اختر أفضل خاتمة:',options:[
+  {t:'الماء سرّ حياتنا؛ يحتاجه الجسم، وتقوم عليه الزراعة والصناعة، فلنحافظ عليه بعادات بسيطة قبل أن نندم على كل قطرة ضاعت.',ok:1,why:'جمعت الأفكار في جملة واحدة، وانتهت برسالة مؤثرة.'},
+  {t:'ويتكون الماء من الهيدروجين والأكسجين.',ok:0,why:'معلومة جديدة لا علاقة لها بما قبلها، ولا تختم شيئًا.'},
+  {t:'وفي الختام.',ok:0,why:'خاتمة مبتورة: أعلنت النهاية ولم تقل شيئًا.'},
+  {t:'ولا أعرف ماذا أكتب أكثر من ذلك عن الماء.',ok:0,why:'اعتراف يُضعف ثقة القارئ بالمقال كله.'}],
+  tip:'اقرأ مقدمتك قبل كتابة الخاتمة؛ فالخاتمة الجيدة «ترد» على المقدمة.'},
+ {passage:'مقال عن العمل التطوعي: العرض ذكر أنه يخدم المجتمع، ويُكسب المتطوع مهارات، ويملأ وقت الفراغ بما ينفع.',prompt:'اختر أفضل خاتمة:',options:[
+  {t:'إن العمل التطوعي عطاء يعود على صاحبه قبل غيره؛ فهو يخدم المجتمع، ويصقل مهارات المتطوع، ويملأ فراغه بما ينفع. فما أجمل أن يبدأ كلٌّ منا بساعة واحدة في الأسبوع!',ok:1,why:'تلخيص دقيق، ودعوة عملية صغيرة يستطيع القارئ تنفيذها.'},
+  {t:'والعمل التطوعي في أوروبا أكثر انتشارًا منه في بلادنا.',ok:0,why:'فكرة جديدة وتعميم يحتاج إلى دليل.'},
+  {t:'وبذلك أكون قد انتهيت من موضوعي عن العمل التطوعي.',ok:0,why:'إعلان النهاية ليس خاتمة.'},
+  {t:'العمل التطوعي مهم ومفيد، ومهم جدًا لأنه مفيد.',ok:0,why:'تكرار فارغ يدور حول نفسه.'}],
+  tip:'من أقوى الخواتيم: دعوة صغيرة محددة يستطيع القارئ أن يبدأ بها اليوم.'}
+];
+
+/* ---------- station 6: topics ---------- */
+const TOPICS=[
+ {id:'tech',title:'التكنولوجيا: نعمة أم نقمة؟',kind:'مقال رأي',outline:{
+   thesis:'التكنولوجيا أداة؛ نفعها أو ضررها يتوقف على طريقة استخدامنا لها.',
+   ideas:['جوانبها النافعة: التعلم، والتواصل، وتسهيل العمل والعلاج.','جوانبها الضارة: الإدمان، وقلة الحركة، والعزلة، والمعلومات الكاذبة.','كيف نستخدمها بحكمة: تحديد الوقت، واختيار المحتوى، والتحقق من المعلومات.'],
+   hook:'سؤال: هل تستطيع أن تقضي يومًا كاملًا بلا هاتف ولا إنترنت؟',
+   end:'التكنولوجيا كالسكين: تقطع الخبز وقد تجرح اليد، والعبرة بمن يمسكها.'}},
+ {id:'arabic',title:'لماذا أتعلم اللغة العربية؟',kind:'مقال تأمّلي',outline:{
+   thesis:'العربية ليست مادة دراسية فقط، بل جسر إلى ديني وهويتي وأسرتي وثقافة واسعة.',
+   ideas:['لغة القرآن الكريم: أفهم ما أقرؤه في صلاتي.','لغة أهلي وجذوري: أتواصل مع أجدادي وأقاربي وأعتزّ بهويتي.','لغة ثقافة وفرص: يتكلمها مئات الملايين، وتفتح أبواب الأدب والعمل والسفر.'],
+   hook:'موقف: جدّتي تحكي لي حكاية، فلا أفهم إلا نصفها...',
+   end:'كل كلمة عربية أتعلمها خطوة أقترب بها من نفسي.'}},
+ {id:'env',title:'كيف نحافظ على البيئة في مدرستنا؟',kind:'مقال مشكلة وحل',outline:{
+   thesis:'المدرسة النظيفة الخضراء مسؤولية مشتركة، تبدأ بعادات صغيرة من كل طالب.',
+   ideas:['المشكلة: القمامة في الفناء، وإهدار الماء والكهرباء، وقلة الأشجار.','الحلول: إعادة التدوير، وإطفاء الأنوار، وإغلاق الصنابير، وزراعة ركن أخضر.','دور كل طرف: الطلاب والمعلمون والإدارة، وأهمية القدوة.'],
+   hook:'مشهد: في نهاية كل فسحة يتحول فناء المدرسة إلى...',
+   end:'دعوة: لنبدأ غدًا بخطوة واحدة، ونرى الفرق بعد شهر.'}},
+ {id:'person',title:'شخصية أثّرت في حياتي',kind:'مقال وصفي',outline:{
+   thesis:'هناك أشخاص يمرّون في حياتنا فيتركون أثرًا لا يُمحى، ومنهم (اسم الشخصية).',
+   ideas:['من هي وكيف عرفتها: وصف قصير لملامحها وطباعها.','موقف أو أكثر يكشف صفاتها.','الأثر الذي تركته فيّ وما تعلمته منها.'],
+   hook:'موقف قصير معها، أو كلمة قالتها لك ولم تنسها.',
+   end:'ما سأفعله لأكون مثلها، أو رسالة شكر لها.'}}
+];
+const CONNECTORS=['لذلك','لذا','ولهذا','وبالتالي','لان','بسبب','نظرا','اذ','حيث','كما','ايضا','فضلا عن','بالاضافه','علاوه علي','لكن','لكنه','لكنها','غير ان','الا ان','مع ذلك','رغم','بالرغم','في حين','بينما','في المقابل','اما','مثلا','علي سبيل المثال','من ذلك','اولا','ثانيا','ثالثا','اخيرا','ثم','بعد ذلك','في البدايه','وهكذا','خلاصه القول','في الختام','ختاما','اذن','كذلك','من ناحيه','بل','لهذا'];
+const STOP=new Set(['في','من','علي','الي','عن','ان','هو','هي','هم','هذا','هذه','ذلك','تلك','التي','الذي','الذين','ما','لا','كل','مع','او','كان','كانت','يكون','تكون','قد','لم','لن','ثم','بل','حتي','عند','بين','كما','ايضا','لكن','لذلك','انا','نحن','انه','انها','كثير','اكثر','بعض','غير','الا','اذا','لقد','كيف','ماذا','لماذا','منها','فيها','عليه','عليها','به','بها','له','لها','لنا','منه','فيه']);
+const ANNOUNCE=['سوف اكتب','ساكتب','ساتحدث','سوف اتحدث','ساتكلم','سوف اتكلم','في هذا الموضوع سوف'];
+const WEAKEND=['هذا كل ما','انتهيت من','اكون قد انتهيت','ارجو ان يكون','لا اعرف ماذا'];
+
+/* ---------- router ---------- */
+function go(id){location.hash=id?'#'+id:'#home'}
+function route(){
+  const id=(location.hash||'').slice(1)||'home';
+  const st=ST.find(s=>s.id===id);
+  $('#nav').innerHTML=st?'<button class="back" id="homeBtn">→ خريطة الرحلة</button>':'<span class="credit-top">كتابة المقال · مستوى متقدم</span>';
+  if(st)$('#homeBtn').onclick=()=>go('home');
+  const app=$('#app');app.innerHTML='';
+  ({home:vHome,guide:vGuide,order:vOrder,intro:()=>vQuiz('intro',INTRO,true),intruder:vIntr,connect:()=>vQuiz('connect',CONN,false),ending:()=>vQuiz('ending',ENDING,true),write:vWrite}[id]||vHome)(app);
+  window.scrollTo(0,0);
+}
+window.addEventListener('hashchange',route);
+
+function stationHead(id){const s=ST.find(x=>x.id===id);return `<div class="stack" style="gap:6px;margin-bottom:18px"><div class="eyebrow">المحطة ${s.n}</div><h2>${s.t}</h2><p class="muted">${s.d}</p></div>`}
+function nextId(id){const i=ST.findIndex(s=>s.id===id);return ST[i+1]?ST[i+1].id:null}
+const progBar=(n,i)=>`<div class="progress">${Array.from({length:n},(_,j)=>`<span class="${j<i?'on':j===i?'now':''}"></span>`).join('')}</div>`;
+function resultCard(el,id,score,total){
+  const pct=score/total, stars=pct>=.9?3:pct>=.6?2:1; setStars(id,stars);
+  const nx=nextId(id);
+  el.innerHTML=stationHead(id)+`<div class="card result"><div class="big">${'★'.repeat(stars)}${'☆'.repeat(3-stars)}</div>
+   <h3>أنهيت المحطة: ${AR(score)} من ${AR(total)}</h3><p class="muted">${stars===3?'أداء ممتاز! أنت جاهز للمحطة التالية.':stars===2?'جيد جدًا. راجع الأخطاء ثم جرّب مرة أخرى لتحصل على ثلاث نجوم.':'لا بأس، المهارة تُبنى بالتكرار. أعد المحطة واقرأ تفسير كل إجابة.'}</p>
+   <div class="row" style="justify-content:center"><button class="btn ghost" id="again">أعد المحطة</button><button class="btn" id="nx">${nx?'المحطة التالية ←':'خريطة الرحلة'}</button></div></div>`;
+  $('#again').onclick=route; $('#nx').onclick=()=>go(nx||'home');
+}
+
+/* ---------- home ---------- */
+function vHome(el){
+  el.innerHTML=`<section class="hero"><div class="stack" style="gap:6px"><div class="eyebrow">مهارة الكتابة</div><h1>رحلة المقال</h1>
+   <p class="lead">المقال الجيد بناء له أساس وجدران وسقف. سبع محطات تأخذك من فهم أجزاء المقال إلى كتابة مقال كامل يراجعه معك مراجِع آلي.</p></div>
+   <div class="card stack" style="gap:8px" aria-hidden="true"><div class="sandwich"><div class="a"><b>المقدمة</b>تمهيد + فكرة</div><div class="b"><b>العرض</b>فقرات + أدلة</div><div class="c"><b>الخاتمة</b>تلخيص + رسالة</div></div><p class="squeeze-cap">يربط بينها كلها: أدوات الربط</p></div></section>
+   <nav class="map">${ST.map(s=>`<button class="station ${store.stars[s.id]?'done':''}" data-id="${s.id}"><span class="st-num">${s.n}</span><span><div class="st-title">${s.t}</div><div class="st-desc">${s.d}</div></span>${starStr(store.stars[s.id]||0)}</button>`).join('')}</nav>`;
+  el.querySelectorAll('.station').forEach(b=>b.onclick=()=>go(b.dataset.id));
+}
+
+/* ---------- guide ---------- */
+function vGuide(el){
+  const STEPS=[
+   {tag:'المقال كاملًا',txt:'اقرأ المقال كاملًا أولًا. ثم اضغط «التالي» لنفكّكه جزءًا جزءًا.',cls:'',paras:[]},
+   {tag:'العنوان',txt:'عنوان قصير يلخّص فكرة المقال ويشدّ القارئ. يُكتب بعد الانتهاء من المقال غالبًا.',cls:'',paras:[],title:1},
+   {tag:'المقدمة',txt:'تبدأ بـ<b>تمهيد</b> يجذب القارئ (هنا: سؤال)، ثم <b>الفكرة الرئيسة</b> للمقال كله.',cls:'show-hook show-thesis',paras:['intro']},
+   {tag:'العرض',txt:'ثلاث فقرات، لكل فقرة فكرة واحدة. تبدأ الفقرة بـ<b>جملة مفتاحية</b> ثم تفاصيل، وقد يأتي <b>مثال</b> يوضّحها.',cls:'show-topic show-ex',paras:['body']},
+   {tag:'أدوات الربط',txt:'كلمات صغيرة تربط الفقرات والجمل، وتخبر القارئ بالعلاقة: إضافة، أو ترتيب، أو نتيجة، أو ختام.',cls:'show-conn',paras:[]},
+   {tag:'الخاتمة',txt:'<b>تلخيص</b> الأفكار بكلمات جديدة، ثم <b>رسالة أخيرة</b> تبقى في ذهن القارئ.',cls:'show-close',paras:['end']}];
+  let k=0;
+  function draw(){
+    const s=STEPS[k], on=p=>s.paras.includes(p)?'on':'';
+    el.innerHTML=stationHead('guide')+`<div class="card stack">
+     <div class="steps">${STEPS.map((x,i)=>`<button class="${i===k?'on':''}" data-i="${i}">${AR(i)} ${x.tag}</button>`).join('')}</div>
+     <div class="rule"><span class="tag">${s.tag}</span><p>${s.txt}</p></div>
+     <div class="essay ${s.cls}">
+      <div class="ttl ${s.title?'on':''}">الرياضة صحة للجسم والعقل</div>
+      <div class="para intro ${on('intro')}"><span class="k hook">هل تعلم أن دقائق قليلة من الحركة كل يوم قد تغيّر يومك كله؟</span> <span class="k thesis">فالرياضة ليست وقتًا ضائعًا بعيدًا عن الدراسة، بل هي من أهم ما يحتاجه الطالب ليعيش بصحة وتوازن.</span></div>
+      <div class="para body ${on('body')}"><span class="k topic"><span class="k conn">وأول</span> فوائد الرياضة أنها تقوّي الجسم.</span> فهي تشدّ العضلات، وتنشّط القلب، وتحمي من السمنة. <span class="k ex"><span class="k conn">فمثلًا</span>، الطالب الذي يمشي إلى مدرسته أو يلعب الكرة مع أصدقائه يشعر بنشاط أكبر طوال اليوم.</span></div>
+      <div class="para body ${on('body')}"><span class="k topic"><span class="k conn">فضلًا عن ذلك</span>، تفيد الرياضة العقل كما تفيد الجسم.</span> فهي تخفّف التوتر، وتحسّن النوم، وتساعد على التركيز في المذاكرة.</div>
+      <div class="para body ${on('body')}"><span class="k topic"><span class="k conn">كما</span> تعلّم الرياضةُ الطالبَ أخلاقًا مهمة.</span> ففي الألعاب الجماعية يتعلم التعاون، واحترام القواعد، وتقبّل الخسارة بروح طيبة.</div>
+      <div class="para end ${on('end')}"><span class="k close"><span class="k conn">وهكذا</span> نرى أن الرياضة تبني الجسم والعقل والخُلُق معًا.</span> <span class="k close">فلنجعل لها مكانًا ثابتًا في يومنا ولو كان صغيرًا، فالعقل السليم في الجسم السليم.</span></div>
+     </div>
+     <div class="row" style="justify-content:space-between"><button class="btn ghost" id="pv" ${k===0?'disabled':''}>→ السابق</button>
+      ${k<STEPS.length-1?'<button class="btn" id="nx">التالي ←</button>':'<button class="btn alt" id="done">فهمت البناء ←</button>'}</div></div>
+     <div class="card stack" style="margin-top:16px"><h3>خريطة أي مقال</h3>
+      <div class="sandwich"><div class="a"><b>المقدمة</b>تمهيد يجذب + الفكرة الرئيسة</div><div class="b"><b>العرض</b>٣ فقرات: جملة مفتاحية + تفاصيل + مثال</div><div class="c"><b>الخاتمة</b>تلخيص بكلمات جديدة + رسالة</div></div></div>`;
+    el.querySelectorAll('.steps button').forEach(b=>b.onclick=()=>{k=+b.dataset.i;draw()});
+    $('#pv').onclick=()=>{if(k>0){k--;draw()}};
+    if($('#nx'))$('#nx').onclick=()=>{k++;draw()};
+    if($('#done'))$('#done').onclick=()=>{setStars('guide',3);go('order')};
+  }
+  draw();
+}
+
+/* ---------- order ---------- */
+function vOrder(el){
+  let p=0,score=0;
+  function draw(){
+    const T=ORDER[p]; let pool=shuffle(T.items.map((_,i)=>i)); while(T.items.length>1&&pool.every((v,i)=>v===i))pool=shuffle(pool);
+    let ans=[],first=true,locked=0;
+    function paint(state){
+      el.innerHTML=stationHead('order')+`<div class="card stack">${progBar(ORDER.length,p)}
+       <h3>${T.title}</h3><p class="muted small">${T.prompt}</p>
+       <div class="slots">${T.items.map((_,i)=>{const v=ans[i];const cls=v===undefined?'':'filled'+(state&&state[i]!==undefined?(state[i]?' right':' wrong'):'');
+         return `<button class="slot ${cls}" data-i="${i}" ${v===undefined||i<locked?'disabled':''}><span class="no">${AR(i+1)}</span><span>${v===undefined?'<span class="muted small">…</span>':T.items[v]}</span></button>`}).join('')}</div>
+       ${pool.length?`<div class="eyebrow">اختر من هنا</div><div class="pool">${pool.map(v=>`<button class="card-pick" data-v="${v}">${T.items[v]}</button>`).join('')}</div>`:''}
+       <div id="fb"></div>
+       <div class="row" style="justify-content:flex-end"><button class="btn" id="ck" ${pool.length?'hidden':''}>تحقّق</button><button class="btn ghost" id="rt" hidden>أعد المحاولة</button><button class="btn" id="nx" hidden>${p<ORDER.length-1?'التالي ←':'النتيجة ←'}</button></div></div>`;
+      el.querySelectorAll('.card-pick').forEach(b=>b.onclick=()=>{const v=+b.dataset.v;pool=pool.filter(x=>x!==v);ans.push(v);paint()});
+      el.querySelectorAll('.slot.filled').forEach(b=>b.onclick=()=>{if(state)return;const i=+b.dataset.i;if(i<locked)return;const back=ans.splice(i);pool=pool.concat(back);paint()});
+      $('#ck').onclick=()=>{
+        const st=ans.map((v,i)=>v===i); const all=st.every(Boolean);
+        if(all){if(first)score++;paint(st);$('#ck').hidden=true;$('#fb').innerHTML=`<div class="fb good"><b>ترتيب صحيح!</b> ${T.why}</div>`;$('#nx').hidden=false;$('#nx').onclick=()=>{p++;p<ORDER.length?draw():resultCard(el,'order',score,ORDER.length)}}
+        else{first=false;paint(st);$('#ck').hidden=true;let pre=0;while(st[pre])pre++;
+          $('#fb').innerHTML=`<div class="fb bad"><b>${AR(st.filter(Boolean).length)} من ${AR(st.length)} في مكانها الصحيح.</b> انظر إلى أدوات الربط في أول كل جملة؛ فهي تخبرك بمكانها.</div>`;
+          $('#rt').hidden=false;$('#rt').onclick=()=>{locked=pre;const back=ans.splice(pre);pool=shuffle(back);paint()}}
+      };
+    }
+    paint();
+  }
+  draw();
+}
+
+/* ---------- generic quiz ---------- */
+function vQuiz(id,items,doShuffle){
+  const el=$('#app'); const order=doShuffle?[items[0]].concat(shuffle(items.slice(1))):shuffle(items); let i=0,score=0;
+  function draw(){
+    const it=order[i]; let tried=false,done=false; const opts=shuffle(it.options);
+    const pas=it.passage.replace('____','<span class="blank" id="blank">؟</span>');
+    el.innerHTML=stationHead(id)+`<div class="card stack">${progBar(order.length,i)}
+     <div class="passage">${pas}</div><h3>${it.prompt}</h3>
+     <div class="opts">${opts.map((o,j)=>`<button class="opt" data-j="${j}">${o.t}</button>`).join('')}</div>
+     <div id="fb" class="stack" style="gap:10px"></div>
+     <div class="row" style="justify-content:flex-end"><button class="btn" id="nx" hidden>${i<order.length-1?'التالي ←':'النتيجة ←'}</button></div></div>`;
+    el.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      if(done)return; const o=opts[+b.dataset.j];
+      if(o.ok){done=true;if(!tried)score++;b.classList.add('right');el.querySelectorAll('.opt').forEach(x=>x.disabled=true);
+        const bl=$('#blank');if(bl){bl.textContent=o.t;bl.classList.add('filled')}
+        $('#fb').innerHTML=`<div class="fb good"><b>${tried?'صحيح الآن.':'إجابة صحيحة!'}</b> ${o.why}</div>`+(it.tip?`<div class="fb tip"><b>قاعدة:</b> ${it.tip}</div>`:'');
+        $('#nx').hidden=false;$('#nx').focus();
+      }else{tried=true;b.classList.add('wrong');b.disabled=true;$('#fb').innerHTML=`<div class="fb bad"><b>ليست هذه.</b> ${o.why} جرّب مرة أخرى.</div>`}
+    });
+    $('#nx').onclick=()=>{i++;i<order.length?draw():resultCard(el,id,score,order.length)};
+  }
+  draw();
+}
+
+/* ---------- intruder ---------- */
+function vIntr(el){
+  const order=[INTR[0]].concat(shuffle(INTR.slice(1))); let i=0,score=0;
+  function draw(){
+    const P=order[i]; let tried=false,done=false;
+    el.innerHTML=stationHead('intruder')+`<div class="card stack">${progBar(order.length,i)}
+     <h3>${P.title}</h3><p class="muted small">اضغط على الجملة التي لا تخدم فكرة الفقرة.</p>
+     <div class="passage trimtext">${P.sents.map((s,j)=>`<span class="sent" data-j="${j}" role="button" tabindex="0">${s}</span>`).join(' ')}</div>
+     <div id="fb" class="stack" style="gap:10px"></div>
+     <div class="row" style="justify-content:flex-end"><button class="btn" id="nx" hidden>${i<order.length-1?'الفقرة التالية ←':'النتيجة ←'}</button></div></div>`;
+    const pick=sp=>{if(done)return;const j=+sp.dataset.j;
+      if(j===P.bad){done=true;if(!tried)score++;sp.classList.add('del','ok');el.querySelector('.sent[data-j="0"]').style.background='var(--hl)';
+        $('#fb').innerHTML=`<div class="fb good"><b>أحسنت!</b> ${P.why}</div><div class="fb tip"><b>المظلّل هو الجملة المفتاحية.</b> كل جملة في الفقرة يجب أن تخدمها.</div>`;$('#nx').hidden=false}
+      else{tried=true;sp.classList.add('no');$('#fb').innerHTML=`<div class="fb bad">${j===0?'هذه هي الجملة المفتاحية نفسها؛ كل الفقرة تدور حولها.':'هذه الجملة تخدم فكرة الفقرة.'} اقرأ مرة أخرى.</div>`}};
+    el.querySelectorAll('.sent').forEach(sp=>{sp.onclick=()=>pick(sp);sp.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();pick(sp)}}});
+    $('#nx').onclick=()=>{i++;i<order.length?draw():resultCard(el,'intruder',score,order.length)};
+  }
+  draw();
+}
+
+/* ---------- workshop ---------- */
+function analyze(d){
+  const parts={intro:d.intro,b0:d.body[0],b1:d.body[1],b2:d.body[2],end:d.end};
+  const all=[d.intro,...d.body,d.end].join(' \n ');
+  const N=' '+norm(all)+' ';
+  const conns=CONNECTORS.filter(c=>{const n=norm(c);return N.includes(' '+n+' ')||N.includes(' و'+n+' ')||N.includes(' ف'+n+' ')});
+  const counts={};toks(all).forEach(w=>{const b=w.replace(/^ال/,'');if(b.length<3||STOP.has(w)||STOP.has(b))return;counts[b]=(counts[b]||0)+1});
+  const rep=Object.entries(counts).filter(([w,c])=>c>=6).sort((a,b)=>b[1]-a[1]);
+  const sents=all.split(/[.!؟?\n]+/).map(s=>s.trim()).filter(Boolean);
+  const longS=sents.filter(s=>wc(s)>40).length;
+  const ws={};for(const k in parts)ws[k]=wc(parts[k]||'');
+  const g=s=>{const t=toks(s),o=new Set();for(let i=0;i+2<t.length;i++)o.add(t.slice(i,i+3).join(' '));return o};
+  const gi=g(d.intro), ge=[...g(d.end)]; const echo=ge.length?Math.round(ge.filter(x=>gi.has(x)).length/ge.length*100):0;
+  const ni=' '+norm(d.intro)+' ', ne=' '+norm(d.end)+' ';
+  return {conns,rep,longS,ws,total:wc(all),echo,announce:ANNOUNCE.some(a=>ni.includes(' '+a)),weakEnd:WEAKEND.some(a=>ne.includes(' '+a))};
+}
+function vWrite(el){
+  let cur=TOPICS[0].id;
+  function draw(){
+    const T=TOPICS.find(t=>t.id===cur);
+    const d=store.drafts[cur]=Object.assign({title:'',thesis:'',ideas:['','',''],hook:'',endmsg:'',intro:'',body:['','',''],end:''},store.drafts[cur]||{});
+    const persist=()=>save();
+    const HOOKS=['سؤال','حقيقة مدهشة','موقف قصير','قول مأثور'];
+    el.innerHTML=stationHead('write')+`<div class="stack">
+     <div class="tabs">${TOPICS.map(t=>`<button class="tab ${t.id===cur?'on':''}" data-id="${t.id}"><b>${t.title}</b><small>${t.kind}</small></button>`).join('')}</div>
+     <div class="card stack">
+      <div class="row" style="justify-content:space-between"><div class="eyebrow">١ · خطّط قبل أن تكتب</div><button class="btn ghost" id="sug" style="padding:6px 14px">اقترح لي خطة</button></div>
+      <div id="sugBox"></div>
+      <div class="plan">
+       <div class="full"><label for="th-${cur}">الفكرة الرئيسة للمقال (جملة واحدة)</label><input id="th-${cur}" data-k="thesis" value="${esc(d.thesis)}"></div>
+       ${[0,1,2].map(j=>`<div class="${j===2?'full':''}"><label for="id-${cur}-${j}">فكرة الفقرة ${AR(j+1)}</label><input id="id-${cur}-${j}" data-idea="${j}" value="${esc(d.ideas[j])}"></div>`).join('')}
+       <div class="full"><label>طريقة التمهيد</label><div class="chips">${HOOKS.map(h=>`<button class="chip ${d.hook===h?'sel':''}" data-hook="${h}">${h}</button>`).join('')}</div></div>
+       <div class="full"><label for="em-${cur}">الرسالة الأخيرة في الخاتمة</label><input id="em-${cur}" data-k="endmsg" value="${esc(d.endmsg)}"></div>
+      </div></div>
+     <div class="card stack">
+      <div class="eyebrow">٢ · اكتب مقالك</div>
+      <div class="wbox"><label for="tt-${cur}">العنوان</label><input id="tt-${cur}" data-k="title" value="${esc(d.title)}" placeholder="عنوان قصير يشدّ القارئ"></div>
+      <div class="wbox intro"><label for="in-${cur}">المقدمة</label><span class="hint">ابدأ بتمهيد (${d.hook||'اختر طريقة'}) ثم اكتب فكرتك الرئيسة.</span><textarea id="in-${cur}" data-k="intro">${esc(d.intro)}</textarea><span class="cnt" data-c="intro"></span></div>
+      ${[0,1,2].map(j=>`<div class="wbox body"><label for="bd-${cur}-${j}">فقرة العرض ${AR(j+1)}</label><span class="hint" data-hint="${j}">${d.ideas[j]?'فكرتك: '+esc(d.ideas[j]):'جملة مفتاحية، ثم تفاصيل، ثم مثال.'}</span><textarea id="bd-${cur}-${j}" data-body="${j}">${esc(d.body[j])}</textarea><span class="cnt" data-c="b${j}"></span></div>`).join('')}
+      <div class="wbox end"><label for="en-${cur}">الخاتمة</label><span class="hint">لخّص أفكارك بكلمات جديدة، ثم ${d.endmsg?'رسالتك: '+esc(d.endmsg):'رسالة أخيرة.'}</span><textarea id="en-${cur}" data-k="end">${esc(d.end)}</textarea><span class="cnt" data-c="end"></span></div>
+      <div class="meters" id="meters"></div>
+      <div id="connList"></div>
+      <div class="row" style="justify-content:flex-end"><button class="btn ghost" id="cp">انسخ المقال</button><button class="btn" id="rv">راجع مقالي</button></div>
+      <div id="report" class="stack"></div></div></div>`;
+    el.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{cur=b.dataset.id;draw()});
+    const showOutline=()=>{const o=T.outline;$('#sugBox').innerHTML=`<div class="fb tip outline"><div><b>الفكرة</b><span>${o.thesis}</span></div>${o.ideas.map((x,j)=>`<div><b>فقرة ${AR(j+1)}</b><span>${x}</span></div>`).join('')}<div><b>التمهيد</b><span>${o.hook}</span></div><div><b>الخاتمة</b><span>${o.end}</span></div><p class="small muted" style="margin-top:4px">هذه خطة مقترحة. خذ منها ما يناسبك، واكتبها بكلماتك.</p></div>`;$('#sug').hidden=true};
+    $('#sug').onclick=showOutline;
+    el.querySelectorAll('[data-k]').forEach(x=>x.oninput=()=>{d[x.dataset.k]=x.value;persist();live()});
+    el.querySelectorAll('[data-idea]').forEach(x=>x.oninput=()=>{const j=+x.dataset.idea;d.ideas[j]=x.value;persist();const h=el.querySelector(`[data-hint="${j}"]`);h.textContent=x.value?'فكرتك: '+x.value:'جملة مفتاحية، ثم تفاصيل، ثم مثال.'});
+    el.querySelectorAll('[data-body]').forEach(x=>x.oninput=()=>{d.body[+x.dataset.body]=x.value;persist();live()});
+    el.querySelectorAll('[data-hook]').forEach(x=>x.onclick=()=>{d.hook=x.dataset.hook;persist();el.querySelectorAll('[data-hook]').forEach(y=>y.classList.toggle('sel',y===x));el.querySelector('.wbox.intro .hint').textContent=`ابدأ بتمهيد (${d.hook}) ثم اكتب فكرتك الرئيسة.`});
+    function live(){
+      const a=analyze(d);
+      const tgt={intro:20,b0:30,b1:30,b2:30,end:15};
+      el.querySelectorAll('[data-c]').forEach(c=>{const k=c.dataset.c,n=a.ws[k];c.textContent=`${AR(n)} كلمة${n<tgt[k]?' · الأقل '+AR(tgt[k]):' ✓'}`});
+      const paras=['b0','b1','b2'].filter(k=>a.ws[k]>=30).length;
+      const cls=(ok,warn)=>a.total<10?'':ok?'good':warn?'warn':'bad';
+      $('#meters').innerHTML=`
+       <div class="meter ${cls(a.total>=180,a.total>=110)}"><span class="lbl">طول المقال</span><span class="val">${AR(a.total)}</span><span class="note">المناسب ١٨٠ كلمة فأكثر</span></div>
+       <div class="meter ${cls(paras===3,paras>=2)}"><span class="lbl">فقرات العرض المكتملة</span><span class="val">${AR(paras)} / ٣</span><span class="note">كل فقرة ٣٠ كلمة فأكثر</span></div>
+       <div class="meter ${cls(a.conns.length>=5,a.conns.length>=3)}"><span class="lbl">أدوات الربط</span><span class="val">${AR(a.conns.length)}</span><span class="note">استخدم ٥ أدوات مختلفة</span></div>
+       <div class="meter ${cls(!a.rep.length,a.rep.length<=1)}"><span class="lbl">التكرار</span><span class="val">${a.rep.length?'انتبه':'جيد'}</span><span class="note">${a.rep.length?'تكررت: '+a.rep.slice(0,2).map(([w,c])=>w+' ('+AR(c)+')').join('، '):'لا كلمة تكررت كثيرًا'}</span></div>`;
+      $('#connList').innerHTML=a.conns.length?`<div class="conns">${a.conns.map(c=>`<span>${c}</span>`).join('')}</div>`:'';
+      return a;
+    }
+    live();
+    $('#cp').onclick=()=>{const txt=[d.title,d.intro,...d.body,d.end].filter(Boolean).join('\n\n');
+      const done=()=>{$('#cp').textContent='نُسخ ✓';setTimeout(()=>{const b=$('#cp');if(b)b.textContent='انسخ المقال'},1500)};
+      try{navigator.clipboard.writeText(txt).then(done,()=>{})}catch(e){}};
+    $('#rv').onclick=()=>{
+      const a=live(); if(a.total<20){$('#report').innerHTML='<div class="fb bad">اكتب مقالك أولًا، ثم راجعه.</div>';return}
+      const short=['b0','b1','b2'].filter(k=>a.ws[k]<30).map(k=>AR(+k[1]+1));
+      const c=[
+       {ok:wc(d.title)>0&&wc(d.title)<=8,t:!wc(d.title)?'لم تكتب عنوانًا.':wc(d.title)>8?'العنوان طويل؛ اجعله ثماني كلمات أو أقل.':'العنوان مناسب.'},
+       {ok:a.ws.intro>=20&&!a.announce,t:a.announce?'المقدمة تبدأ بإعلان مثل «سوف أكتب عن...». ابدأ بتمهيد يجذب القارئ.':a.ws.intro<20?'المقدمة قصيرة؛ تحتاج إلى تمهيد ثم فكرة رئيسة.':'المقدمة فيها تمهيد كافٍ.'},
+       {ok:!short.length,t:short.length?`فقرة العرض ${short.join(' و')} أقل من ٣٠ كلمة. أضف تفصيلًا أو مثالًا.`:'فقرات العرض الثلاث مكتملة.'},
+       {ok:a.conns.length>=5,t:a.conns.length>=5?`استخدمت ${AR(a.conns.length)} أدوات ربط مختلفة.`:`استخدمت ${AR(a.conns.length)} أدوات ربط فقط. نوّع بين: كما، لذلك، لكنّ، فمثلًا، وأخيرًا.`},
+       {ok:a.ws.end>=15&&!a.weakEnd,t:a.weakEnd?'الخاتمة فيها عبارة ضعيفة مثل «هذا كل ما أعرفه» أو «انتهيت من موضوعي». احذفها.':a.ws.end<15?'الخاتمة قصيرة؛ لخّص أفكارك ثم أضف رسالة.':'الخاتمة مكتملة.'},
+       {ok:a.echo<40,t:a.echo>=40?'الخاتمة تكرر كلمات المقدمة نفسها. أعد الفكرة بصياغة جديدة.':'الخاتمة لا تنسخ المقدمة.'},
+       {ok:!a.rep.length,t:a.rep.length?`كررت كلمة «${a.rep[0][0]}» ${AR(a.rep[0][1])} مرات. استخدم مرادفًا أو ضميرًا.`:'لا يوجد تكرار مزعج للكلمات.'},
+       {ok:!a.longS,t:a.longS?`عندك ${AR(a.longS)} جملة أطول من ٤٠ كلمة. قسّمها بنقطة.`:'أطوال الجمل مناسبة.'}];
+      const met=c.filter(x=>x.ok).length, stars=met===8?3:met>=6?2:1; setStars('write',stars);
+      $('#report').innerHTML=`<div class="card stack" style="background:var(--bg)"><div class="row" style="justify-content:space-between"><h3>تقرير المراجعة: ${AR(met)} من ٨</h3>${starStr(stars)}</div>
+       <ul class="check">${c.map(x=>`<li><span class="${x.ok?'mark-ok':'mark-no'}">${x.ok?'✓':'✗'}</span><span>${x.t}</span></li>`).join('')}</ul>
+       <div class="fb tip"><b>راجع بنفسك أيضًا:</b> هل كل فقرة تخدم الفكرة الرئيسة؟ هل في كل فقرة جملة دخيلة؟ هل الأمثلة مقنعة؟</div>
+       <p class="muted small">المراجع الآلي يقيس البناء والشكل، أما الأفكار والأسلوب فحكمها لمعلّمك.</p></div>`;
+      $('#report').scrollIntoView({behavior:'smooth',block:'start'});
+    };
+  }
+  draw();
+}
+
+route();
+
+</script>
+</body>
+</html>
