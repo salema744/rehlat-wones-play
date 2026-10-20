@@ -7,7 +7,7 @@ const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;',
 function norm(s){return String(s||'').replace(/[ً-ْٰـ]/g,'').replace(/[أإآٱ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي').replace(/[^ء-ي0-9٠-٩\s]/g,' ').replace(/\s+/g,' ').trim()}
 const wc=s=>{const t=norm(s);return t?t.split(' ').length:0};
 /* finds which items of list appear as word-starts (with و/ف/ب/ل/ك prefixes allowed) */
-function found(s,list){const n=' '+norm(s)+' ';return [...new Set(list.filter(w=>{const k=norm(w);return [' ',' و',' ف',' ب',' ل',' ك',' وب',' ول',' فل'].some(p=>n.includes(p+k))}))]}
+function found(s,list){const n=' '+norm(s)+' ';return [...new Set(list.filter(w=>{const k=norm(w);return [' ',' و',' ف',' ب',' ل',' ك',' وب',' ول',' فل',' ال',' وال',' فال',' بال',' لل',' كال',' وبال',' ولل'].some(p=>n.includes(p+k))}))]}
 function foundWord(s,list){const ws=norm(s).split(' ').map(w=>w.replace(/^[وف]/,''));return [...new Set(list.filter(w=>ws.includes(norm(w))))]}
 const P=(emo,bg,cap)=>`<div class="panel bg${bg||0}">${emo}${cap?`<span class="cap">${cap}</span>`:''}</div>`;
 function simile(s){const n=' '+norm(s)+' ';return /كأن/.test(s||'')||/\s[وف]?كان(ه|ها|هما|هم)\s/.test(n)||/\s[وف]?كال\S{2,}/.test(n)||/\s[وف]?(مثل|يشبه|تشبه)\s/.test(n)}
