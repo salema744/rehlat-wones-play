@@ -609,6 +609,14 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--olive);outline-
 .mic.mus{grid-column:1/-1;background:var(--olive-soft)}.mic.mus p{font-family:var(--f-word);font-size:18px}
 .secgrid .tile-sec:last-child:nth-child(odd){grid-column:1/-1}
 .options .opt[data-h="cr"]{box-shadow:0 0 0 3px #1FA968 inset,0 6px 0 #1FA968}.options .opt[data-h="cn"]{box-shadow:0 0 0 3px #F08A00 inset,0 6px 0 #F08A00}.options .opt[data-h="cj"]{box-shadow:0 0 0 3px #2F7FE0 inset,0 6px 0 #2F7FE0}
+.srch{display:flex;align-items:center;gap:8px;background:var(--surface);border-radius:18px;padding:4px 14px;box-shadow:0 0 0 3px var(--sky) inset,0 5px 0 var(--sky-e)}
+.srch .si{font-size:20px}.srch input{flex:1;min-width:0;border:0;background:transparent;font:inherit;font-size:18px;padding:10px 0;color:var(--ink);outline:none}
+.srch:focus-within{box-shadow:0 0 0 3px var(--olive) inset,0 5px 0 var(--sky-e)}
+.sres{display:flex;flex-direction:column;gap:8px;margin-top:-6px}.sres:empty{display:none}
+.srcnt{font-size:13px;color:var(--muted);font-weight:700}
+.sitem{display:flex;align-items:center;gap:10px;text-align:start;background:var(--surface);border:0;border-radius:16px;padding:10px 12px;box-shadow:0 0 0 2px var(--line) inset,0 4px 0 var(--line);color:var(--ink);font-family:inherit;cursor:pointer}
+.sitem:active{transform:translateY(3px)}.sitem .sp{font-size:30px;flex:none}.sitem .st{flex:1;min-width:0;display:flex;flex-direction:column}
+.sitem b{font-size:17px;line-height:1.4}.sitem small{color:var(--muted);font-size:13px;line-height:1.4}.sitem .ss{color:var(--sun-e);flex:none;font-size:13px}
 </style>
 
 <div class="wrap" id="app"></div>
@@ -4476,6 +4484,8 @@ function home(){stopStory();
   app.innerHTML=`${topBar()}
   <section class="hi">${nm?`<h1>أَهْلًا يَا ${esc(nm)} 👋</h1><button class="hi-edit" id="nmE" aria-label="غيّر اسمك">✎</button>`:`<h1>أَهْلًا بِكَ 👋</h1>`}</section>
   <form class="name-row" id="nameForm" ${nm?"hidden":""}><input id="nameInput" placeholder="اكْتُبِ اسْمَكَ" value="${esc(nm)}" maxlength="24" aria-label="الاسم"><button type="submit" class="blk sun sm">حِفْظٌ</button></form>
+  <div class="srch"><span class="si">🔍</span><input id="srchIn" type="search" placeholder="دَوِّرْ عَلَى دَرْسٍ بِاسْمِهِ..." aria-label="ابحث عن درس" autocomplete="off"></div>
+  <div class="sres" id="srchRes" aria-live="polite"></div>
   <button class="blk sun play" id="dailyB"><span class="pe">${done?"✅":"▶"}</span><span class="pt">${done?"خَلَّصْتَ تَحَدِّيَ الْيَوْمِ":"تَحَدِّي الْيَوْمِ"}<small>${my?myLevelName():"اخْتَرْ مُسْتَوَاكَ"}</small></span></button>
   ${due?`<button class="blk sky rev" id="revB">🔁 رَاجِعْ أَخْطَاءَكَ <b>${arNum(due)}</b></button>`:""}
   <h2 class="hh">🔤 الْعَرَبِيَّةُ</h2>
@@ -4491,7 +4501,7 @@ function home(){stopStory();
   document.getElementById("dailyB").onclick=startDaily;
   {const r=document.getElementById("revB");if(r)r.onclick=startReview;const ml=document.getElementById("mylvB");if(ml)ml.onclick=()=>chooseLevel();
    const e=document.getElementById("nmE");if(e)e.onclick=()=>{const f=document.getElementById("nameForm");f.hidden=false;document.getElementById("nameInput").focus()}}
-  wireToolsRow();wireAsmaDay();
+  wireToolsRow();wireAsmaDay();wireSearch();
   app.querySelector("#nameForm").onsubmit=e=>{e.preventDefault();store.name=document.getElementById("nameInput").value.trim();save();home()};
   app.querySelectorAll("[data-lv]").forEach(b=>b.onclick=()=>b.dataset.sec?section(b.dataset.lv):CURRICULUM.find(x=>x.id===b.dataset.lv).maze?maze(CURRICULUM.find(x=>x.id===b.dataset.lv)):level(b.dataset.lv));
 }
@@ -5504,6 +5514,27 @@ function miHTML(L){if(!L.mi)return "";
    <div class="mic"><b>🤸 حَرِّكْ جِسْمَكَ</b><p>${esc(L.mi.body)}</p></div>
    <div class="mic"><b>👫 مَعَ صَاحِبِكَ</b><p>${esc(L.mi.social)}</p></div>
    <div class="mic"><b>💭 عَنْ نَفْسِكَ</b><p>${esc(L.mi.self)}</p></div></div></details>`}
+
+
+
+/* ---------- البحث عن درس ---------- */
+const normAr=s=>String(s||"").replace(/[ً-ْٰـ]/g,"").replace(/[أإآٱ]/g,"ا").replace(/ة/g,"ه").replace(/ى/g,"ي").replace(/[«»"'()،,.:؛!؟?\-–—]/g," ").replace(/\s+/g," ").trim().toLowerCase();
+let SRCH=null;
+function searchIndex(){if(SRCH)return SRCH;SRCH=[];
+  CURRICULUM.filter(lv=>!lv.section).forEach(lv=>lv.lessons.forEach(l=>{if(!playable(l))return;
+    SRCH.push({lv,l,t:normAr(l.title),u:normAr((l.unit||"")+" "+(l.storyTitle||"")+" "+(l.passageTitle||"")),n:fullName(lv)})}));return SRCH}
+function doSearch(q){const box=document.getElementById("srchRes");if(!box)return;const nq=normAr(q);
+  if(nq.length<2){box.innerHTML="";return}
+  const words=nq.split(" ");
+  const res=searchIndex().map(x=>{const all=x.t+" "+x.u;if(!words.every(w=>all.includes(w)))return null;
+    const pt=" "+x.t+" ",whole=words.every(w=>pt.includes(" "+w+" ")||pt.includes(" ال"+w+" ")||pt.includes(" و"+w+" "));
+    return {x,s:whole?-1:(x.t.startsWith(nq)?0:x.t.includes(nq)?1:words.every(w=>x.t.includes(w))?2:3)}}).filter(Boolean).sort((a,b)=>a.s-b.s).slice(0,25);
+  box.innerHTML=res.length?`<div class="srcnt">${arNum(res.length)}${res.length===25?"+":""} نَتِيجَةٌ</div>`+res.map(({x},i)=>`<button class="sitem" data-i="${i}"><span class="sp">${x.l.pic||"📘"}</span><span class="st"><b>${x.l.title}</b><small>${esc(x.n)}${x.l.unit?" · "+esc(x.l.unit):""}</small></span><span class="ss">${starStr(lessonStars(x.l.id))}</span></button>`).join("")
+    :`<div class="empty-state">مَفِيشْ دَرْسٌ بِالِاسْمِ دَهْ. جَرِّبْ كَلِمَةً تَانْيَةً 🔎</div>`;
+  box.querySelectorAll(".sitem").forEach(b=>b.onclick=()=>{const {x}=res[+b.dataset.i];store.lastLevel=x.lv.id;save();start(x.lv,x.l.id)});
+}
+function wireSearch(){const i=document.getElementById("srchIn");if(!i)return;let t;i.oninput=()=>{clearTimeout(t);t=setTimeout(()=>doSearch(i.value),150)};
+  i.onkeydown=e=>{if(e.key==="Enter"){const f=document.querySelector("#srchRes .sitem");if(f)f.click()}}}
 
 home();
 </script>
