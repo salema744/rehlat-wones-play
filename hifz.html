@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>رفيق حفظ البقرة</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Readex+Pro:wght@300;400;500;600&display=swap">
+<style>
+/* Layout: one narrow phone column, tabs at the bottom like an app; mushaf-margin ornament only on the headline */
+:root{
+  --bg:#eef2ee; --surface:#fbfcfa; --ink:#18322b; --muted:#5c6f68; --line:#d3ddd7;
+  --accent:#1f6b57; --accent-soft:#dcebe4; --gold:#a8822e; --gold-soft:#f3ead3;
+  --warn:#a5532b; --warn-soft:#f6e3d8;
+  --display:"Amiri","Traditional Arabic",serif;
+  --body:"Readex Pro","Segoe UI",Tahoma,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#101a17; --surface:#16231f; --ink:#e5eee9; --muted:#9bb0a8; --line:#2a3b35;
+  --accent:#5fc0a0; --accent-soft:#1d3a31; --gold:#d8b25e; --gold-soft:#33291a;
+  --warn:#e59a73; --warn-soft:#3a2419; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#101a17; --surface:#16231f; --ink:#e5eee9; --muted:#9bb0a8; --line:#2a3b35;
+  --accent:#5fc0a0; --accent-soft:#1d3a31; --gold:#d8b25e; --gold-soft:#33291a;
+  --warn:#e59a73; --warn-soft:#3a2419; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.7;direction:rtl}
+.wrap{max-width:520px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:18px 110px;display:flex;flex-direction:column;gap:16px}
+header{display:flex;flex-direction:column;gap:2px}
+.eyebrow{font-size:12px;color:var(--gold);letter-spacing:.02em;font-weight:500}
+h1{font-family:var(--display);font-weight:700;font-size:30px;line-height:1.3;margin:0;text-wrap:balance}
+h2{font-family:var(--display);font-size:22px;margin:0;line-height:1.4}
+.sub{color:var(--muted);font-size:13.5px;margin:0}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center}
+.stat b{display:block;font-size:20px;font-variant-numeric:tabular-nums;color:var(--accent)}
+.stat span{font-size:12px;color:var(--muted)}
+.bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:6px;transition:width .4s}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.card.new{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-soft)}
+.ayah-range{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.ayah-range .big{font-family:var(--display);font-size:26px;font-weight:700}
+.pill{font-size:12px;padding:2px 10px;border-radius:99px;background:var(--accent-soft);color:var(--accent);white-space:nowrap}
+.pill.gold{background:var(--gold-soft);color:var(--gold)}
+.pill.warn{background:var(--warn-soft);color:var(--warn)}
+.links{display:flex;gap:8px;flex-wrap:wrap}
+a.btn,button{font-family:inherit;font-size:14px;border-radius:10px;padding:9px 14px;border:1px solid var(--line);background:var(--surface);color:var(--ink);text-decoration:none;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+a.btn.primary,button.primary{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+button.warnb{color:var(--warn);border-color:var(--warn)}
+button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+button:disabled{opacity:.45;cursor:default}
+.steps{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none}
+.step{display:grid;grid-template-columns:34px 1fr auto;gap:10px;align-items:center;padding:10px;border-radius:12px;background:var(--bg);border:1px solid transparent}
+.step.done{border-color:var(--accent);background:var(--accent-soft)}
+.step .n{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--surface);border:1px solid var(--line);font-size:13px;font-variant-numeric:tabular-nums}
+.step.done .n{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.step p{margin:0;font-size:14px;min-width:0}
+.step small{display:block;color:var(--muted);font-size:12px}
+.tap{min-width:64px;justify-content:center;font-variant-numeric:tabular-nums}
+.rate{display:flex;gap:8px;flex-wrap:wrap}
+.timer{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.timer .clock{font-size:28px;font-variant-numeric:tabular-nums;font-weight:500;color:var(--accent)}
+.rev{display:flex;flex-direction:column;gap:8px}
+.rev-item{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;padding:10px;border-radius:12px;background:var(--bg)}
+.rev-item.ok{opacity:.55}
+.rev-item .lbl{min-width:0}
+.empty{color:var(--muted);font-size:14px;margin:0}
+.done-banner{text-align:center;padding:18px;border-radius:16px;background:var(--accent-soft);color:var(--accent);font-family:var(--display);font-size:22px}
+.map{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.pg{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 6px;text-align:center;display:flex;flex-direction:column;gap:6px}
+.pg b{font-size:13px;font-weight:500}
+.pg small{font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+.halves{display:flex;gap:4px}
+.halves span{flex:1;height:8px;border-radius:4px;background:var(--line)}
+.halves span.learning{background:var(--gold)}
+.halves span.done{background:var(--accent)}
+.legend{display:flex;gap:14px;font-size:12px;color:var(--muted);flex-wrap:wrap}
+.legend i{display:inline-block;width:12px;height:8px;border-radius:3px;margin-inline-end:5px;vertical-align:middle}
+.tips{display:flex;flex-direction:column;gap:12px;margin:0;padding:0;list-style:none}
+.tips li{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.tips b{color:var(--accent)}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.confirm{background:var(--warn-soft);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px}
+nav{position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--line);display:flex;justify-content:center;padding-bottom:env(safe-area-inset-bottom,0px);padding-left:max(8px,env(safe-area-inset-left,0px));padding-right:max(8px,env(safe-area-inset-right,0px));z-index:5}
+nav .in{display:flex;max-width:520px;width:100%}
+nav button{flex:1;border:0;border-radius:0;background:none;flex-direction:column;gap:0;padding:10px 4px;font-size:13px;color:var(--muted);justify-content:center}
+nav button[aria-current="page"]{color:var(--accent);font-weight:600}
+nav svg{width:22px;height:22px}
+.field{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.field label{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted);min-width:0}
+.field select,.field input{font-family:inherit;font-size:16px;padding:9px 10px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);width:100%}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chips button{font-size:13px;padding:6px 12px;border-radius:99px}
+.err{color:var(--warn);font-size:13px;margin:0}
+.addtask{width:100%;justify-content:center;padding:14px;border:1.5px dashed var(--gold);background:var(--gold-soft);color:var(--ink);font-weight:500;border-radius:14px}
+.addtask span{color:var(--gold);font-size:18px}
+.card.task{border-color:var(--gold)}
+.chunk{display:flex;flex-direction:column;gap:10px;padding-top:4px;border-top:1px solid var(--line)}
+.fld{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted);min-width:0}
+.fld input,.fld select{font-family:inherit;font-size:16px;padding:9px 10px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);width:100%}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.chk{display:flex;gap:8px;align-items:flex-start;font-size:14px}
+.chk input{margin-top:6px;accent-color:var(--accent)}
+.err{margin:0;color:var(--warn);font-size:13.5px}
+.juz{display:flex;flex-direction:column;gap:8px}
+.juz-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px;border-bottom:1px solid var(--line);padding-bottom:4px}
+.juz-h b{font-family:var(--display);font-size:18px}
+.juz-h span{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.score-top{display:flex;justify-content:space-between;align-items:flex-end;gap:10px;flex-wrap:wrap}
+.pts{font-size:36px;font-weight:600;color:var(--accent);font-variant-numeric:tabular-nums;line-height:1.2}
+.lvl{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+.lvl small{font-size:12px;color:var(--muted)}
+.qsecs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.qsec{flex-direction:column;align-items:flex-start;text-align:start;gap:2px;padding:14px;border-radius:14px;min-width:0}
+.qsec b{font-family:var(--display);font-size:18px}
+.qsec small{color:var(--muted);font-size:12.5px}
+.qsec .qmeta{font-size:11.5px;color:var(--accent);margin-top:6px}
+.qsec.mix{grid-column:1/-1;border-color:var(--gold);background:var(--gold-soft)}
+.qhead{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.qtext{font-family:var(--display);font-size:21px;line-height:1.7;margin:4px 0}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{justify-content:flex-start;text-align:start;padding:12px 14px;font-size:16px;font-family:var(--display);line-height:1.6}
+.opt.right{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);opacity:1}
+.opt.wrong{background:var(--warn-soft);border-color:var(--warn);color:var(--warn);opacity:1}
+.opt.dim{opacity:.45}
+.explain{border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:4px}
+.explain.ok{background:var(--accent-soft)}
+.explain.no{background:var(--warn-soft)}
+.explain p{margin:0;font-size:14px}
+.explain a{color:var(--accent);font-size:13px}
+.linkish{border:0;background:none;color:var(--muted);font-size:13px;align-self:center}
+.result{text-align:center;align-items:center}
+.stars{font-size:38px;letter-spacing:6px;color:var(--line)}
+.stars .on{color:var(--gold)}
+.big-score{font-size:34px;font-weight:600;margin:0;color:var(--accent);font-variant-numeric:tabular-nums}
+nav button{font-size:12px;padding-inline:2px}
+.credit{text-align:center;font-size:11px;color:var(--muted);margin-top:8px}
+.sync{font-size:11px;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap" id="app">
+  <header>
+    <span class="eyebrow">سورة البقرة كاملة · ٤٨ وجه · ٢٨٦ آية</span>
+    <h1>رفيق حفظ البقرة</h1>
+    <p class="sub" id="greet">جرعة صغيرة كل يوم، ومراجعة خفيفة، ومن غير ما تقعد ساعة قدام المصحف.</p>
+  </header>
+  <section id="view"></section>
+  <p class="credit">إعداد: رحلة ونس - أ. سالمة سيد · <span class="sync" id="sync">التقدّم محفوظ على الجهاز ده</span></p>
+</div>
+
+<nav aria-label="الأقسام"><div class="in">
+  <button data-tab="today" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><circle cx="12" cy="12" r="4"/></svg>النهارده</button>
+  <button data-tab="map"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>خريطة الجزء</button>
+  <button data-tab="pick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M7 12h10M10 17h4"/></svg>اختار</button>
+  <button data-tab="quiz"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg>أسئلة</button>
+  <button data-tab="plan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4h14v16H5z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>الخطة</button>
+</div></nav>
+
+<script>
+// Madani mushaf pages 2–49 = Al-Baqarah 1–286
+const PAGES=[[2,1,5],[3,6,16],[4,17,24],[5,25,29],[6,30,37],[7,38,48],[8,49,57],[9,58,61],[10,62,69],[11,70,76],[12,77,83],[13,84,88],[14,89,93],[15,94,101],[16,102,105],[17,106,112],[18,113,119],[19,120,126],[20,127,134],[21,135,141],
+[22,142,145],[23,146,153],[24,154,163],[25,164,169],[26,170,176],[27,177,181],[28,182,186],[29,187,190],[30,191,196],[31,197,202],[32,203,210],[33,211,215],[34,216,219],[35,220,224],[36,225,230],[37,231,233],[38,234,237],[39,238,245],[40,246,248],[41,249,252],
+[42,253,256],[43,257,259],[44,260,264],[45,265,269],[46,270,274],[47,275,281],[48,282,282],[49,283,286]];
+const JUZ=[{n:'الجزء الأول',from:1,to:141},{n:'الجزء التاني',from:142,to:252},{n:'من الجزء التالت',from:253,to:286}];
+const UNITS=[];
+PAGES.forEach(([p,a,b])=>{const n=b-a+1;if(n===1){UNITS.push({id:p+'a',page:p,from:a,to:b,half:0});return}const h=Math.ceil(n/2);UNITS.push({id:p+'a',page:p,from:a,to:a+h-1,half:1});UNITS.push({id:p+'b',page:p,from:a+h,to:b,half:2});});
+const ar=n=>Number(n).toLocaleString('ar-EG');
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+const dayDiff=(a,b)=>Math.round((new Date(b)-new Date(a))/864e5);
+const fresh=()=>({pace:'half',units:{},log:{},day:null,picks:[]});
+let P={mode:'page',sel:null,cnt:{},err:''};
+let S=fresh(),tab='today',saveRef=null,confirmReset=false;
+
+function load(){try{const r=localStorage.getItem('hifz-baqarah');if(r)S=Object.assign(fresh(),JSON.parse(r))}catch(e){}}
+function save(){try{localStorage.setItem('hifz-baqarah',JSON.stringify(S))}catch(e){}if(saveRef){saveRef.set({state:JSON.stringify(S)}).catch(()=>{})}}
+
+function unitState(u){return S.units[u.id]||{status:'new'}}
+function currentUnits(){ // today's new portion(s)
+  const n=S.pace==='page'?2:1;const out=[];
+  for(const u of UNITS){if(unitState(u).status!=='done'){out.push(u);if(out.length===n)break}}
+  return out;
+}
+function reviewUnits(){
+  const t=today();const cur=new Set(currentUnits().map(u=>u.id));
+  const done=UNITS.filter(u=>!cur.has(u.id)&&unitState(u).status==='done');
+  const weak=done.filter(u=>unitState(u).rating==='weak');
+  const recent=done.slice(-2);
+  const older=done.filter(u=>!recent.includes(u)&&!weak.includes(u)).sort((a,b)=>(unitState(a).last||'').localeCompare(unitState(b).last||'')).slice(0,2);
+  const set=[];[...weak,...recent,...older].forEach(u=>{if(!set.includes(u))set.push(u)});
+  return set.map(u=>({u,doneToday:unitState(u).last===t}));
+}
+function ensureDay(){const t=today();if(S.day!==t){S.day=t;S.steps={};save()}if(!S.steps)S.steps={}}
+function streak(){let s=0;let d=new Date();for(;;){const k=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');if(S.log[k]){s++;d.setDate(d.getDate()-1)}else{if(s===0&&k===today()){d.setDate(d.getDate()-1);continue}break}}return s}
+function doneCount(){return UNITS.filter(u=>unitState(u).status==='done').length}
+function qlink(u){return 'https://quran.com/2/'+u.from+(u.to>u.from?'-'+u.to:'')}
+function rangeTxt(u){return u.from===u.to?'آية '+ar(u.from):'الآيات '+ar(u.from)+' – '+ar(u.to)}
+
+const STEPS=[
+  {k:'listen',t:'اسمع المقطع',s:'من الرابط، بشيخ صوته مريح ليك',goal:5},
+  {k:'read',t:'اقرأ من المصحف وصباعك على الكلام',s:'بصوت مسموع، على مهلك',goal:3},
+  {k:'close',t:'غمّض وسمّع آية آية',s:'لو وقفتي، بُص وكمّل عادي',goal:3},
+  {k:'write',t:'اكتب أول كلمة من كل آية في ورقة',s:'الكتابة بتثبّت الترتيب',goal:1},
+];
+
+// ===== Class assignment (مطلوب الحصة) =====
+let taskForm=false,formErr='',confirmTaskEnd=false;
+function buildChunks(type,from,to,date){
+  const n=to-from+1;let parts;
+  if(type==='hifz'){const d=date?dayDiff(today(),date):Math.ceil(n/3);parts=Math.max(1,Math.min(n,d))}
+  else parts=Math.max(1,Math.ceil(n/5));
+  const size=Math.ceil(n/parts);const out=[];
+  for(let a=from;a<=to;a+=size)out.push({from:a,to:Math.min(to,a+size-1),status:'new',steps:{}});
+  return out;
+}
+function taskDaysLeft(){if(!S.task||!S.task.date)return null;return dayDiff(today(),S.task.date)}
+function taskTodayChunk(){if(!S.task||S.task.type!=='hifz')return -1;return S.task.chunks.findIndex(c=>c.status!=='done')}
+function pageOf(v){const p=PAGES.find(([,a,b])=>v>=a&&v<=b);return p?p[0]:null}
+function renderTaskForm(){
+  const t=S.task||{type:'hifz',from:'',to:'',date:'',pause:false};
+  return `<div class="card new" id="taskFormCard"><h2>${S.task?'تعديل':'تحديد'} مطلوب الحصة</h2>
+  <div class="seg"><button type="button" data-ttype="hifz" aria-pressed="${t.type==='hifz'}">حفظ جديد</button><button type="button" data-ttype="review" aria-pressed="${t.type==='review'}">مراجعة</button></div>
+  <label class="fld">اختار وجه بسرعة (اختياري)
+    <select id="tPage"><option value="">—</option>${PAGES.map(([p,a,b])=>`<option value="${p}">وجه ${ar(p)} · ${ar(a)}–${ar(b)}</option>`).join('')}${JUZ.map((j,i)=>`<option value="j${i}">${j.n} · ${ar(j.from)}–${ar(j.to)}</option>`).join('')}<option value="all">السورة كلها · ١–٢٨٦</option></select></label>
+  <div class="row2"><label class="fld">من آية<input id="tFrom" type="number" inputmode="numeric" min="1" max="286" value="${t.from}"></label>
+  <label class="fld">لحد آية<input id="tTo" type="number" inputmode="numeric" min="1" max="286" value="${t.to}"></label></div>
+  <label class="fld">ميعاد الحصة (اختياري)<input id="tDate" type="date" value="${t.date||''}"></label>
+  <label class="chk"><input id="tPause" type="checkbox" ${t.pause?'checked':''}> وقّف الحفظ الجديد في الخطة لحد ما أخلّص المطلوب</label>
+  ${formErr?`<p class="err">${formErr}</p>`:''}
+  <div class="rate"><button class="primary" id="tSave">حفظ</button><button id="tCancel">إلغاء</button></div>
+  <p class="sub">سورة البقرة من ١ لـ ٢٨٦. لو حددت ميعاد، المطلوب هيتقسم على الأيام اللي فاضلة.</p></div>`;
+}
+function renderTask(){
+  if(taskForm)return renderTaskForm();
+  if(!S.task)return `<button class="addtask" id="tOpen"><span>＋</span> حدد المطلوب للحصة (حفظ أو مراجعة)</button>`;
+  const T=S.task,dl=taskDaysLeft(),t=today();
+  const doneN=T.type==='hifz'?T.chunks.filter(c=>c.status==='done').length:T.chunks.filter(c=>c.last===t).length;
+  const left=dl===null?'':dl>1?`باقي ${ar(dl)} أيام على الحصة`:dl===1?'الحصة بكرة':dl===0?'الحصة النهارده':'ميعاد الحصة عدّى';
+  let h=`<div class="card task"><div class="ayah-range"><span class="pill gold">مطلوب الحصة · ${T.type==='hifz'?'حفظ':'مراجعة'}</span>${left?`<span class="pill ${dl!==null&&dl<=1?'warn':''}">${left}</span>`:''}</div>
+  <div class="ayah-range"><span class="big">${rangeTxt(T)}</span></div>
+  <div class="links"><a class="btn" href="${qlink(T)}" target="_blank" rel="noopener">▶ المطلوب كله</a><button id="tEdit">تعديل</button>${confirmTaskEnd?'':'<button class="warnb" id="tEnd">خلصت الحصة</button>'}</div>
+  ${confirmTaskEnd?`<div class="confirm"><p style="margin:0">نشيل المطلوب ده؟</p><div class="rate"><button class="warnb" id="tEndYes">أيوه</button><button id="tEndNo">لأ</button></div></div>`:''}
+  <div class="bar"><i style="width:${doneN/T.chunks.length*100}%"></i></div>
+  <p class="sub" style="margin:0">${ar(doneN)} من ${ar(T.chunks.length)} ${T.type==='hifz'?'مقاطع محفوظة':'مقاطع اتراجعت النهارده'}</p>`;
+  if(T.type==='hifz'){
+    const i=taskTodayChunk();
+    if(i<0){h+=`<div class="done-banner" style="font-size:19px">خلّصت حفظ المطلوب 🤍<br><span class="sub">راجعه كله مرة كل يوم لحد الحصة</span></div>`;
+      h+=revList(T.chunks.map((c,j)=>({c,j})))}
+    else{const c=T.chunks[i];const st=c.steps||{};
+      h+=`<div class="chunk"><div class="ayah-range"><span class="big" style="font-size:21px">مقطع النهارده: ${rangeTxt(c)}</span>${c.rating==='weak'?'<span class="pill warn">بنكمّله</span>':''}</div>
+      <div class="links"><a class="btn primary" href="${qlink(c)}" target="_blank" rel="noopener">▶ اسمع واقرأ</a>${pageOf(c.from)?`<a class="btn" href="https://quran.com/page/${pageOf(c.from)}" target="_blank" rel="noopener">وجه ${ar(pageOf(c.from))}</a>`:''}</div>
+      <ol class="steps">${STEPS.map((s,k)=>{const n=st[s.k]||0,ok=n>=s.goal;return `<li class="step ${ok?'done':''}"><span class="n">${ok?'✓':ar(k+1)}</span><p>${s.t}<small>${s.s}</small></p><button class="tap" data-task="${i}" data-k="${s.k}" data-g="${s.goal}">${s.goal>1?ar(n)+'/'+ar(s.goal):(ok?'تم':'خلصت')}</button></li>`}).join('')}</ol>`;
+      const allOk=STEPS.every(s=>(st[s.k]||0)>=s.goal);
+      h+=`<div class="rate"><button class="primary" data-trate="good" data-i="${i}" ${allOk?'':'disabled'}>سمّعته صح</button><button class="warnb" data-trate="weak" data-i="${i}" ${allOk?'':'disabled'}>لسه بيتلخبط</button></div></div>`;
+      const prev=T.chunks.map((c,j)=>({c,j})).filter(x=>x.c.status==='done');
+      if(prev.length)h+=`<p class="sub" style="margin:4px 0 0">ومراجعة اللي حفظته من المطلوب:</p>`+revList(prev);
+    }
+  } else h+=revList(T.chunks.map((c,j)=>({c,j})));
+  return h+`</div>`;
+}
+function revList(items){const t=today();return `<div class="rev">${items.map(({c,j})=>{const ok=c.last===t,w=c.rating==='weak';
+  return `<div class="rev-item ${ok?'ok':''}"><div class="lbl"><a href="${qlink(c)}" target="_blank" rel="noopener">${rangeTxt(c)}</a>${w?' <span class="pill warn">محتاج تقوية</span>':''}</div><div class="rate">${ok?'<span class="pill">راجعته ✓</span>':`<button data-trev="good" data-i="${j}">تمام</button><button class="warnb" data-trev="weak" data-i="${j}">محتاج</button>`}</div></div>`}).join('')}</div>`}
+
+const QSECS=[
+ {id:'gen',name:'معلومات عن السورة',desc:'أسئلة عامة عن البقرة وقصصها'},
+ {id:'taf',name:'التفسير الميسّر',desc:'معاني كلمات وآيات بسيطة'},
+ {id:'mut',name:'المتشابهات',desc:'فرّق بين الآيات اللي شبه بعض'},
+ {id:'taj',name:'التجويد',desc:'أحكام بأمثلة من السورة'},
+];
+const QS=[
+// ===== معلومات عامة =====
+{s:'gen',q:'سورة البقرة مكية ولا مدنية؟',o:['مدنية','مكية'],a:0,e:'البقرة سورة مدنية، ومن أوائل ما نزل في المدينة.'},
+{s:'gen',q:'كام عدد آيات سورة البقرة؟',o:['٢٨٦','٢٠٠','١٧٦','٢٢٧'],a:0,e:'عدد آياتها ٢٨٦ آية، وهي أطول سورة في القرآن.'},
+{s:'gen',q:'السورة اتسمّت «البقرة» ليه؟',o:['عشان قصة البقرة اللي ربنا أمر بني إسرائيل يذبحوها','عشان أول آية فيها اتكلمت عن البقرة','عشان فيها أحكام الزكاة على الأنعام'],a:0,e:'القصة في الآيات ٦٧–٧٣.',r:[67,73]},
+{s:'gen',q:'آية الكرسي رقمها كام في السورة؟',o:['٢٥٥','٢٥٦','٢٨٥','٢٤٨'],a:0,e:'آية الكرسي هي الآية ٢٥٥، وهي أعظم آية في كتاب الله.',r:[255,255]},
+{s:'gen',q:'أطول آية في القرآن كله هي:',o:['آية الدَّين (٢٨٢)','آية الكرسي (٢٥٥)','آية البِرّ (١٧٧)'],a:0,e:'آية الدَّين ٢٨٢ أطول آية في القرآن، وواخدة وجه كامل لوحدها.',r:[282,282]},
+{s:'gen',q:'«الزهراوان» هما:',o:['البقرة وآل عمران','البقرة والنساء','الفاتحة والبقرة'],a:0,e:'النبي ﷺ سمّى البقرة وآل عمران «الزهراوين».'},
+{s:'gen',q:'النبي ﷺ قال إن الشيطان بينفر من البيت اللي بيتقري فيه سورة:',o:['البقرة','الكهف','يس'],a:0,e:'الحديث في صحيح مسلم: إن الشيطان ينفر من البيت الذي تُقرأ فيه سورة البقرة.'},
+{s:'gen',q:'«من قرأ بالآيتين من آخر سورة البقرة في ليلة كفتاه». الآيتين دول رقمهم:',o:['٢٨٥ و٢٨٦','٢٥٥ و٢٥٦','٢٨٣ و٢٨٤'],a:0,e:'خواتيم البقرة: من «آمن الرسول» لآخر السورة.',r:[285,286]},
+{s:'gen',q:'مين الملك اللي ربنا بعثه لبني إسرائيل عشان يقاتلوا معاه؟',o:['طالوت','جالوت','داود'],a:0,e:'قالوا «أنّى يكون له الملك علينا»، والقصة من آية ٢٤٦.',r:[246,251]},
+{s:'gen',q:'مين اللي قتل جالوت؟',o:['داود عليه السلام','طالوت','سليمان عليه السلام'],a:0,e:'«وقتل داود جالوت وآتاه الله الملك والحكمة»، آية ٢٥١.',r:[251,251]},
+{s:'gen',q:'مين النبي اللي جادل الملك وقال له «ربي الذي يحيي ويميت»؟',o:['إبراهيم عليه السلام','موسى عليه السلام','نوح عليه السلام'],a:0,e:'الآية ٢٥٨.',r:[258,258]},
+{s:'gen',q:'إبراهيم عليه السلام طلب من ربنا يوريه إزاي بيحيي الموتى، فأمره ياخد كام طير؟',o:['أربعة','سبعة','اتنين'],a:0,e:'«فخذ أربعة من الطير»، آية ٢٦٠.',r:[260,260]},
+{s:'gen',q:'الراجل اللي مرّ على قرية خربانة، ربنا أماته قد إيه وبعدين بعثه؟',o:['مئة سنة','سبعين سنة','ألف سنة'],a:0,e:'«فأماته الله مائة عام ثم بعثه»، آية ٢٥٩.',r:[259,259]},
+{s:'gen',q:'تحويل القبلة اتذكر في البقرة. القبلة اتحولت من إيه لإيه؟',o:['من بيت المقدس للكعبة','من الكعبة لبيت المقدس','من المدينة لمكة'],a:0,e:'آيات تحويل القبلة من ١٤٢ لـ ١٥٠.',r:[142,150]},
+{s:'gen',q:'آيات الصيام في سورة البقرة بتبدأ بـ:',o:['«يا أيها الذين آمنوا كتب عليكم الصيام»','«شهر رمضان الذي أنزل فيه القرآن»','«أحل لكم ليلة الصيام»'],a:0,e:'آيات الصيام من ١٨٣ لـ ١٨٧.',r:[183,187]},
+{s:'gen',q:'هاروت وماروت اتذكروا في البقرة إنهم كانوا في:',o:['بابل','مصر','مدين'],a:0,e:'«وما أُنزل على الملكين ببابل هاروت وماروت»، آية ١٠٢.',r:[102,102]},
+{s:'gen',q:'أول السورة بيوصف ٣ أصناف من الناس. هما:',o:['المؤمنين والكفار والمنافقين','الأنبياء والصالحين والشهداء','المهاجرين والأنصار والأعراب'],a:0,e:'المؤمنين (١–٥)، الكفار (٦–٧)، المنافقين (٨–٢٠).',r:[1,20]},
+{s:'gen',q:'لما موسى استسقى لقومه وضرب الحجر، انفجر منه كام عين؟',o:['١٢ عين','٧ عيون','١٠ عيون'],a:0,e:'«فانفجرت منه اثنتا عشرة عينًا»، آية ٦٠، عين لكل سبط.',r:[60,60]},
+
+// ===== التفسير =====
+{s:'taf',q:'«ذلك الكتاب لا ريب فيه». يعني إيه «لا ريب فيه»؟',o:['لا شكّ فيه','لا تعب فيه','لا تغيير فيه'],a:0,e:'الريب هو الشك، يعني القرآن حق لا شك إنه من عند الله.',r:[2,2]},
+{s:'taf',q:'«الذين يؤمنون بالغيب». الغيب هنا هو:',o:['كل اللي ربنا أخبر بيه وإحنا مش شايفينه، زي الملائكة والجنة والنار','المستقبل اللي محدش يعرفه بس','الحاجات اللي بنحلم بيها'],a:0,e:'الإيمان بالغيب أول صفة للمتقين.',r:[3,3]},
+{s:'taf',q:'«ختم الله على قلوبهم وعلى سمعهم». الآية دي بتتكلم عن:',o:['الكفار المعاندين','المنافقين','بني إسرائيل'],a:0,e:'بعد ما وصفت المؤمنين، الآيات ٦–٧ وصفت الكفار.',r:[6,7]},
+{s:'taf',q:'«في قلوبهم مرض». المرض هنا معناه:',o:['الشك والنفاق','مرض جسدي حقيقي','الحزن'],a:0,e:'دي في وصف المنافقين، والمرض هو الشك والنفاق.',r:[10,10]},
+{s:'taf',q:'«مثلهم كمثل الذي استوقد نارًا» ده مثل لـ:',o:['المنافقين','الكفار','أهل الكتاب'],a:0,e:'مثل ناري للمنافقين: نوّروا شوية بإسلامهم الظاهر، وبعدين النور راح.',r:[17,18]},
+{s:'taf',q:'«وعلّم آدم الأسماء كلها». ربنا علّم آدم إيه؟',o:['أسماء الأشياء كلها','أسماء الملائكة بس','أسماء ذريته'],a:0,e:'علّمه أسماء المخلوقات، وده بيّن فضله على الملائكة في العلم.',r:[31,33]},
+{s:'taf',q:'«وأنزلنا عليكم المنّ والسلوى». السلوى هي:',o:['طائر شبه السِّمّان','نوع عسل','نبات أخضر'],a:0,e:'المنّ شراب حلو زي العسل، والسلوى طائر صغير شبه السمّان.',r:[57,57]},
+{s:'taf',q:'«قالوا أتتخذنا هزوًا». بني إسرائيل قالوا كده لموسى لما:',o:['أمرهم يذبحوا بقرة','أمرهم يدخلوا الأرض المقدسة','ضرب الحجر'],a:0,e:'استغربوا الأمر وظنوه بيهزّر معاهم، آية ٦٧.',r:[67,67]},
+{s:'taf',q:'«وكذلك جعلناكم أمة وسطًا». «وسطًا» معناها:',o:['عُدولًا خيارًا','في نص الأرض','متوسطين في العدد'],a:0,e:'يعني أمة عادلة خيّرة، بتشهد على الناس.',r:[143,143]},
+{s:'taf',q:'«صبغة الله ومن أحسن من الله صبغة». الصبغة هنا:',o:['دين الله (الإسلام)','لون الجلد','الحجاب'],a:0,e:'دين الله اللي بيصبغ حياة المؤمن كلها.',r:[138,138]},
+{s:'taf',q:'في آية الكرسي «لا تأخذه سِنَة ولا نوم». السِّنَة هي:',o:['النعاس','الغفلة','السنة الهجرية'],a:0,e:'السِّنة أول النوم (النعاس)، وربنا منزّه عنها وعن النوم.',r:[255,255]},
+{s:'taf',q:'«القيّوم» معناه:',o:['القائم بنفسه والقائم على تدبير كل خلقه','الذي لا ينام فقط','الذي يرزق فقط'],a:0,e:'من أسماء الله الحسنى، اتذكر مع «الحي» في آية الكرسي.',r:[255,255]},
+{s:'taf',q:'«لا إكراه في الدين» معناها:',o:['محدش يتجبر على دخول الإسلام','الدين مفيهوش أوامر','كل الأديان زي بعض'],a:0,e:'الحق واضح من الضلال، والإيمان لازم يكون باقتناع.',r:[256,256]},
+{s:'taf',q:'«فمن يكفر بالطاغوت». الطاغوت هو:',o:['كل ما يُعبد من دون الله','الشيطان بس','الحاكم الظالم بس'],a:0,e:'كل اللي اتعبد من دون الله وهو راضي، أو دعا لعبادة غير الله.',r:[256,256]},
+{s:'taf',q:'«لا يكلّف الله نفسًا إلا وُسعها». «وسعها» يعني:',o:['طاقتها وقدرتها','رزقها','عمرها'],a:0,e:'ربنا ما بيطلبش من الإنسان أكتر من اللي يقدر عليه.',r:[286,286]},
+{s:'taf',q:'«ربنا ولا تحمل علينا إصرًا». الإصر هو:',o:['التكاليف الشاقة الثقيلة','الذنب','العدو'],a:0,e:'زي التكاليف الصعبة اللي كانت على الأمم قبلنا.',r:[286,286]},
+{s:'taf',q:'«فتلقّى آدم من ربه كلمات فتاب عليه». أشهر قول في الكلمات دي إنها:',o:['«ربنا ظلمنا أنفسنا وإن لم تغفر لنا وترحمنا…»','آية الكرسي','الفاتحة'],a:0,e:'وده دعاء آدم وحواء المذكور في سورة الأعراف.',r:[37,37]},
+{s:'taf',q:'«يمحق الله الربا ويُربي الصدقات». «يمحق» معناها:',o:['يُذهب البركة ويُنقص','يزوّد','يحرّم'],a:0,e:'الربا ربنا بيمحق بركته، والصدقة بيزوّدها ويباركها.',r:[276,276]},
+
+// ===== المتشابهات =====
+{s:'mut',q:'في البقرة: «وكُلا منها ____ حيث شئتما»',o:['رَغَدًا','(مفيش كلمة) حيث شئتما'],a:0,e:'في البقرة (٣٥) «وكلا منها رغدًا حيث شئتما»، وفي الأعراف «فكلا من حيث شئتما» من غير «رغدًا».',r:[35,35]},
+{s:'mut',q:'في البقرة: «يسومونكم سوء العذاب ____ أبناءكم»',o:['يُذبّحون','ويُذبّحون','يُقتّلون'],a:0,e:'البقرة (٤٩) «يذبّحون» من غير واو. في إبراهيم «ويذبّحون» بالواو، وفي الأعراف «يقتّلون».',r:[49,49]},
+{s:'mut',q:'في البقرة: «وقولوا حِطّة نغفر لكم ____»',o:['خطاياكم','خطيئاتكم'],a:0,e:'البقرة (٥٨) «خطاياكم وسنزيد المحسنين»، والأعراف «خطيئاتكم سنزيد المحسنين».',r:[58,58]},
+{s:'mut',q:'في البقرة (٥٨): «نغفر لكم خطاياكم ____ المحسنين»',o:['وسنزيد (بالواو)','سنزيد (من غير واو)'],a:0,e:'البقرة بالواو «وسنزيد»، والأعراف من غير واو.',r:[58,58]},
+{s:'mut',q:'في البقرة (٦١): «ويقتلون النبيين بغير ____»',o:['الحقّ','حقّ'],a:0,e:'البقرة «بغير الحق» معرّفة، وفي آل عمران «بغير حق».',r:[61,61]},
+{s:'mut',q:'في البقرة (٦٢)، الترتيب إيه؟',o:['«والنصارى والصابئين»','«والصابئون والنصارى»'],a:0,e:'البقرة النصارى قبل الصابئين، والمائدة «والصابئون والنصارى».',r:[62,62]},
+{s:'mut',q:'في البقرة: «لن تمسّنا النار إلا أيامًا ____»',o:['معدودة','معدودات'],a:0,e:'البقرة (٨٠) «معدودة»، وآل عمران «معدودات».',r:[80,80]},
+{s:'mut',q:'آية ٤٨: «ولا يُقبل منها ____ ولا يؤخذ منها ____»',o:['شفاعة … عدل','عدل … شفاعة'],a:0,e:'آية ٤٨ الشفاعة الأول، وآية ١٢٣ «ولا يُقبل منها عدل ولا تنفعها شفاعة».',r:[48,48]},
+{s:'mut',q:'آية ١٢٠، الصيغة الصح:',o:['«قل إن هدى الله هو الهدى»','«قل إن الهدى هدى الله»'],a:0,e:'البقرة «إن هدى الله هو الهدى»، وفي آل عمران «إن الهدى هدى الله».',r:[120,120]},
+{s:'mut',q:'آية ١٢٠: «ولئن اتبعت أهواءهم بعد ____ جاءك من العلم»',o:['الذي','ما'],a:0,e:'آية ١٢٠ «بعد الذي جاءك»، وآية ١٤٥ «من بعد ما جاءك».',r:[120,120]},
+{s:'mut',q:'دعاء إبراهيم في البقرة (١٢٦): «ربّ اجعل هذا ____ آمنًا»',o:['بلدًا','البلد'],a:0,e:'البقرة «بلدًا آمنًا» قبل ما تكون مدينة، وفي سورة إبراهيم «هذا البلد آمنًا».',r:[126,126]},
+{s:'mut',q:'آية ١٣٦: «قولوا آمنا بالله وما أُنزل ____»',o:['إلينا','علينا'],a:0,e:'البقرة «إلينا»، وآل عمران (٨٤) «علينا».',r:[136,136]},
+{s:'mut',q:'في دعاء إبراهيم (١٢٩) التزكية «ويزكيهم» جت فين؟',o:['في الآخر بعد تعليم الكتاب والحكمة','في الأول بعد تلاوة الآيات'],a:0,e:'دعاء إبراهيم (١٢٩) التزكية في الآخر، أما في ١٥١ «ويزكيكم ويعلمكم الكتاب» قبل التعليم.',r:[129,129]},
+{s:'mut',q:'آية ١٧٠: «بل نتّبع ما ____ عليه آباءنا»',o:['ألفينا','وجدنا'],a:0,e:'البقرة «ألفينا»، وفي لقمان «ما وجدنا عليه آباءنا».',r:[170,170]},
+{s:'mut',q:'آية ١٧٣: «فمن اضطُرّ غير باغٍ ولا عادٍ ____»',o:['فلا إثم عليه','فإن ربك غفور رحيم'],a:0,e:'البقرة «فلا إثم عليه إن الله غفور رحيم»، وفي الأنعام والنحل «فإن ربك/الله غفور رحيم».',r:[173,173]},
+
+// ===== التجويد =====
+{s:'taj',q:'حكم النون الساكنة في «مِنْ قَبْلِكَ» (آية ٤):',o:['إخفاء','إظهار','إدغام','إقلاب'],a:0,e:'النون الساكنة قبل القاف = إخفاء حقيقي.',r:[4,4]},
+{s:'taj',q:'حكم النون في «مِن رَّبِّهِمْ» (آية ٥):',o:['إدغام بغير غنة','إدغام بغنة','إظهار','إخفاء'],a:0,e:'النون قبل الراء أو اللام = إدغام بغير غنة.',r:[5,5]},
+{s:'taj',q:'حكم النون في «مَن يَقُولُ» (آية ٨):',o:['إدغام بغنة','إدغام بغير غنة','إخفاء','إظهار'],a:0,e:'حروف الإدغام بغنة: «ينمو». والياء منهم.',r:[8,8]},
+{s:'taj',q:'حكم النون في «مِنۢ بَعْدِ»:',o:['إقلاب','إخفاء','إظهار','إدغام'],a:0,e:'النون الساكنة قبل الباء بتتقلب ميم مخفاة بغنة = إقلاب.',},
+{s:'taj',q:'حكم النون في «مَنْ ءَامَنَ» (آية ٦٢):',o:['إظهار حلقي','إخفاء','إدغام','إقلاب'],a:0,e:'النون قبل حرف من حروف الحلق (ء هـ ع ح غ خ) = إظهار.',r:[62,62]},
+{s:'taj',q:'حكم التنوين في «هُدًى لِّلْمُتَّقِينَ» (آية ٢):',o:['إدغام بغير غنة','إخفاء','إظهار','إدغام بغنة'],a:0,e:'التنوين زي النون الساكنة، وقبل اللام = إدغام بغير غنة.',r:[2,2]},
+{s:'taj',q:'حكم التنوين في «عَذَابٌ أَلِيمٌ» (آية ١٠):',o:['إظهار حلقي','إخفاء','إقلاب','إدغام'],a:0,e:'التنوين قبل الهمزة = إظهار.',r:[10,10]},
+{s:'taj',q:'حكم الميم الساكنة في «وَمَا هُم بِمُؤْمِنِينَ» (آية ٨):',o:['إخفاء شفوي','إظهار شفوي','إدغام شفوي'],a:0,e:'الميم الساكنة قبل الباء = إخفاء شفوي بغنة.',r:[8,8]},
+{s:'taj',q:'حكم الميم في «فِي قُلُوبِهِم مَّرَضٌ» (آية ١٠):',o:['إدغام شفوي (متماثلين)','إخفاء شفوي','إظهار شفوي'],a:0,e:'ميم ساكنة بعدها ميم = إدغام متماثلين بغنة.',r:[10,10]},
+{s:'taj',q:'حكم الميم في «أَمْ لَمْ تُنذِرْهُمْ» (آية ٦):',o:['إظهار شفوي','إخفاء شفوي','إدغام شفوي'],a:0,e:'الميم الساكنة قبل أي حرف غير الباء والميم = إظهار شفوي.',r:[6,6]},
+{s:'taj',q:'«الٓمٓ» أول السورة. المد في «لام» و«ميم» نوعه ومقداره:',o:['مد لازم حرفي ٦ حركات','مد طبيعي حركتين','مد منفصل ٤ حركات'],a:0,e:'الحروف المقطعة اللي هجاؤها ٣ حروف وسطها حرف مد = مد لازم ٦ حركات.',r:[1,1]},
+{s:'taj',q:'المد في «السَّمَاءِ» نوعه:',o:['مد واجب متصل','مد جائز منفصل','مد لازم'],a:0,e:'حرف المد والهمزة في نفس الكلمة = متصل، ٤ أو ٥ حركات.'},
+{s:'taj',q:'المد في «بِمَا أُنزِلَ» (آية ٤) نوعه:',o:['مد جائز منفصل','مد واجب متصل','مد عارض للسكون'],a:0,e:'حرف المد في آخر كلمة والهمزة في أول الكلمة اللي بعدها = منفصل.',r:[4,4]},
+{s:'taj',q:'لما تقف على «يُوقِنُونَ» (آية ٤) المد ده اسمه:',o:['مد عارض للسكون','مد لازم','مد صلة'],a:0,e:'الوقف عمل سكون عارض بعد حرف المد، ويجوز ٢ أو ٤ أو ٦ حركات.',r:[4,4]},
+{s:'taj',q:'اللام في «الْكِتَابُ» (آية ٢):',o:['قمرية (بتتنطق)','شمسية (مش بتتنطق)'],a:0,e:'الكاف من الحروف القمرية، فاللام بتظهر.',r:[2,2]},
+{s:'taj',q:'اللام في «النَّاسِ»:',o:['شمسية (مش بتتنطق)','قمرية (بتتنطق)'],a:0,e:'النون حرف شمسي، فاللام بتدغم والنون بتتشدد.'},
+{s:'taj',q:'«إِنَّ اللَّهَ»: النون المشددة حكمها:',o:['غنة مشددة بمقدار حركتين','إظهار','إخفاء'],a:0,e:'النون والميم المشددتين فيهم غنة لازم حركتين.'},
+{s:'taj',q:'حروف القلقلة مجموعة في:',o:['قطب جد','يرملون','ينمو'],a:0,e:'قطب جد: ق ط ب ج د.'},
+];
+
+const LEVELS=[[0,'بداية الطريق'],[100,'مجتهد'],[300,'مثابر'],[600,'حافظ نشيط'],[1000,'نجم البقرة'],[1600,'صاحب البقرة']];
+let QZ=null;
+function qstate(){if(!S.quiz)S.quiz={points:0,best:{},wrong:{},rounds:0};return S.quiz}
+function level(p){let cur=LEVELS[0],next=null;for(let i=0;i<LEVELS.length;i++){if(p>=LEVELS[i][0]){cur=LEVELS[i];next=LEVELS[i+1]||null}}return {cur,next}}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function startRound(sec){
+  const st=qstate();const pool=QS.map((x,i)=>({x,i})).filter(o=>sec==='mix'||o.x.s===sec);
+  const weak=shuffle(pool.filter(o=>st.wrong[o.i])),rest=shuffle(pool.filter(o=>!st.wrong[o.i]));
+  const pick=shuffle([...weak.slice(0,4),...rest].slice(0,10));
+  QZ={sec,items:pick.map(o=>({i:o.i,order:shuffle(o.x.o.map((t,k)=>k)),chosen:null})),pos:0,score:0,combo:0,correct:0};
+}
+function qlinkR(r){return r?'https://quran.com/2/'+r[0]+(r[1]>r[0]?'-'+r[1]:''):null}
+function renderQuiz(){
+  const st=qstate();
+  if(QZ)return renderRound();
+  const {cur,next}=level(st.points);
+  let h=`<div class="card score"><div class="score-top"><div><span class="eyebrow">نقاطك</span><div class="pts">${ar(st.points)}</div></div><div class="lvl"><span class="pill gold">${cur[1]}</span>${next?`<small>باقي ${ar(next[0]-st.points)} نقطة لـ «${next[1]}»</small>`:'<small>وصلت لأعلى مستوى 🤍</small>'}</div></div>
+  ${next?`<div class="bar"><i style="width:${(st.points-cur[0])/(next[0]-cur[0])*100}%"></i></div>`:''}
+  <p class="sub" style="margin:0">١٠ نقط لكل إجابة صح، و٥ زيادة كل ٣ إجابات صح ورا بعض. الأسئلة اللي بتغلط فيها بترجعلك تاني.</p></div>
+  <div class="qsecs">`;
+  [...QSECS,{id:'mix',name:'جولة منوّعة',desc:'من كل الأقسام'}].forEach(sc=>{const n=QS.filter(x=>sc.id==='mix'||x.s===sc.id).length;const b=st.best[sc.id];
+    h+=`<button class="qsec ${sc.id==='mix'?'mix':''}" data-qstart="${sc.id}"><b>${sc.name}</b><small>${sc.desc}</small><span class="qmeta">${ar(n)} سؤال${b!==undefined?` · أحسن نتيجة ${ar(b)}/١٠`:''}</span></button>`});
+  return h+`</div>`;
+}
+function renderRound(){
+  const it=QZ.items[QZ.pos],q=QS[it.i];const sec=QSECS.find(s=>s.id===q.s);
+  let h=`<div class="card"><div class="qhead"><span class="pill">${sec.name}</span><span class="sub">سؤال ${ar(QZ.pos+1)} من ${ar(QZ.items.length)}</span><span class="pill gold">+${ar(QZ.score)}</span></div>
+  <div class="bar"><i style="width:${QZ.pos/QZ.items.length*100}%"></i></div>
+  <p class="qtext">${q.q}</p><div class="opts">`;
+  it.order.forEach(k=>{let cls='';if(it.chosen!==null){if(k===q.a)cls='right';else if(k===it.chosen)cls='wrong';else cls='dim'}
+    h+=`<button class="opt ${cls}" data-qans="${k}" ${it.chosen!==null?'disabled':''}>${q.o[k]}</button>`});
+  h+=`</div>`;
+  if(it.chosen!==null){const ok=it.chosen===q.a;const lk=qlinkR(q.r);
+    h+=`<div class="explain ${ok?'ok':'no'}"><b>${ok?(it.bonus?'برافو! +١٥ (٣ ورا بعض)':'صح، +١٠'):'الإجابة الصح متعلّمة بالأخضر'}</b><p>${q.e}</p>${lk?`<a href="${lk}" target="_blank" rel="noopener">افتح الآية</a>`:''}</div>
+    <button class="primary" id="qnext" style="justify-content:center">${QZ.pos+1<QZ.items.length?'السؤال اللي بعده':'شوف النتيجة'}</button>`}
+  return h+`<button id="qquit" class="linkish">إنهاء الجولة</button></div>`;
+}
+function renderResult(){
+  const r=QZ.result;const stars=r.correct>=9?3:r.correct>=6?2:r.correct>=3?1:0;
+  return `<div class="card result"><div class="stars">${[0,1,2].map(i=>`<span class="${i<stars?'on':''}">★</span>`).join('')}</div>
+  <h2>${r.correct>=9?'ما شاء الله، ممتاز!':r.correct>=6?'شغل حلو جدًا':r.correct>=3?'بداية كويسة، كمّل':'ولا يهمك، المرة الجاية أحسن'}</h2>
+  <p class="big-score">${ar(r.correct)} / ${ar(r.total)}</p><p class="sub">كسبت ${ar(r.score)} نقطة في الجولة دي</p>
+  <div class="rate" style="justify-content:center"><button class="primary" data-qstart="${QZ.sec}">جولة كمان</button><button id="qhome">الأقسام</button></div></div>`;
+}
+
+
+// ===== اختار: free session (read / memorize / review) =====
+const PSTEPS={
+  read:[{k:'r',t:'اقرأ من المصحف بصوت مسموع',s:'على مهلك، وصباعك على الكلام',g:1},{k:'l',t:'اسمع القراءة من الرابط',s:'اختياري، بيظبط النطق',g:1,opt:true}],
+  hifz:STEPS.map(x=>({k:x.k,t:x.t,s:x.s,g:x.goal})),
+  review:[{k:'r',t:'اقرأ المقطع مرة من المصحف',s:'قراءة سريعة تفكّرك',g:1},{k:'s',t:'سمّع من غير ما تبص',s:'لنفسك أو لحد يسمّعلك',g:1},{k:'w',t:'لو وقفت في حتة، اقراها ٣ مرات',s:'وارجع سمّع المقطع تاني',g:1,opt:true}]
+};
+const PNAMES={read:'قراءة',hifz:'حفظ',review:'مراجعة وتسميع'};
+if(!P.purpose)P.purpose='hifz';
+function pickSel(f,t,label){P.sel={from:f,to:t,label:label||'',purpose:P.purpose};P.cnt={}}
+function renderPick(){
+  const d=UNITS.filter(u=>unitState(u).status==='done');const w=d.filter(u=>unitState(u).rating==='weak');
+  const pageOpts=sel=>PAGES.map(([p,a,b])=>`<option value="${p}" ${p===sel?'selected':''}>وجه ${ar(p)} · ${a===b?ar(a):ar(a)+'–'+ar(b)}</option>`).join('');
+  let h=`<div class="card"><h2>اختار اللي هتقرأه أو تحفظه</h2>
+  <div class="seg">${['read','hifz','review'].map(k=>`<button data-ppurpose="${k}" aria-pressed="${P.purpose===k}">${PNAMES[k]}</button>`).join('')}</div>
+  <div class="seg"><button data-pmode="page" aria-pressed="${P.mode==='page'}">بالوجه</button><button data-pmode="ayah" aria-pressed="${P.mode!=='page'}">بأرقام الآيات</button></div>`;
+  h+=P.mode==='page'?`<div class="row2"><label class="fld">من وجه<select id="pFrom">${pageOpts(2)}</select></label><label class="fld">لحد وجه<select id="pTo">${pageOpts(2)}</select></label></div>`
+    :`<div class="row2"><label class="fld">من آية<input id="aFrom" type="number" inputmode="numeric" min="1" max="286"></label><label class="fld">لحد آية<input id="aTo" type="number" inputmode="numeric" min="1" max="286" placeholder="اختياري"></label></div>`;
+  h+=`${P.err?`<p class="err">${P.err}</p>`:''}<button class="primary" id="pGo" style="justify-content:center">ابدأ</button>
+  <div><p class="sub" style="margin:0 0 6px">اختيار سريع:</p><div class="links">${JUZ.map(j=>`<button data-again="${j.from}-${j.to}">${j.n}</button>`).join('')}<button data-again="1-286">السورة كلها</button>
+  ${d.length?`<button data-quick="last">آخر المحفوظ</button><button data-quick="all">كل المحفوظ</button>`:''}${w.length?`<button class="warnb" data-quick="weak">المقاطع الضعيفة</button>`:''}</div></div></div>`;
+  if(P.sel){const x=P.sel,steps=PSTEPS[x.purpose],pg=pageOf(x.from);
+    const allOk=steps.every(s=>s.opt||(P.cnt[s.k]||0)>=s.g);
+    h+=`<div class="card new"><div class="ayah-range"><span class="pill gold">${PNAMES[x.purpose]}</span>${x.label?`<span class="pill">${x.label}</span>`:''}</div>
+    <div class="ayah-range"><span class="big">${rangeTxt(x)}</span></div>
+    <div class="links"><a class="btn primary" href="${qlink(x)}" target="_blank" rel="noopener">▶ اسمع واقرأ</a>${pg?`<a class="btn" href="https://quran.com/page/${pg}" target="_blank" rel="noopener">وجه ${ar(pg)}</a>`:''}</div>
+    <ol class="steps">${steps.map((s,i)=>{const n=P.cnt[s.k]||0,ok=n>=s.g;return `<li class="step ${ok?'done':''}"><span class="n">${ok?'✓':ar(i+1)}</span><p>${s.t}<small>${s.s}</small></p><button class="tap" data-pc="${s.k}" data-g="${s.g}">${s.g>1?ar(n)+'/'+ar(s.g):(ok?'تم':'خلصت')}</button></li>`}).join('')}</ol>
+    <div class="rate">${x.purpose==='read'?`<button class="primary" data-prate="read" ${allOk?'':'disabled'}>خلّصت القراءة</button>`:`<button class="primary" data-prate="good" ${allOk?'':'disabled'}>سمّعته صح</button><button class="warnb" data-prate="weak" ${allOk?'':'disabled'}>لسه بيتلخبط</button>`}<button data-pclose="1">إلغاء</button></div></div>`;}
+  const hist=(S.picks||[]).slice(-8).reverse();
+  if(hist.length){h+=`<div class="card"><h2>اللي عملته قبل كده</h2><div class="rev">${hist.map(x=>`<div class="rev-item"><div class="lbl">${rangeTxt(x)} <span class="pill ${x.rating==='weak'?'warn':''}">${PNAMES[x.purpose||'review']}${x.rating==='weak'?' · محتاج تقوية':''}</span><br><small class="sub">${x.date}</small></div><button data-again="${x.from}-${x.to}">تاني</button></div>`).join('')}</div></div>`}
+  return h;
+}
+
+let timer={left:600,run:false,id:null};
+function tickTimer(){timer.left--;if(timer.left<=0){timer.left=0;timer.run=false;clearInterval(timer.id);try{navigator.vibrate&&navigator.vibrate(300)}catch(e){}}paintTimer()}
+function paintTimer(){const c=document.getElementById('clock');if(c)c.textContent=fmt(timer.left);const b=document.getElementById('tbtn');if(b)b.textContent=timer.run?'وقّف':(timer.left===0?'خلصت ✓ ابدأ تاني':'ابدأ');}
+function fmt(s){return ar(Math.floor(s/60)).padStart(2,'٠')+':'+ar(s%60).padStart(2,'٠')}
+
+function renderToday(){
+  ensureDay();
+  const cur=currentUnits();const rev=reviewUnits();const total=UNITS.length,dn=doneCount();
+  let h=`<div class="stats">
+    <div class="stat"><b>${ar(dn)}/${ar(total)}</b><span>مقطع محفوظ</span></div>
+    <div class="stat"><b>${ar(streak())}</b><span>يوم ورا بعض</span></div>
+    <div class="stat"><b>${ar(Math.ceil((total-dn)/(S.pace==='page'?2:1)))}</b><span>يوم فاضل تقريبًا</span></div>
+  </div><div class="bar" aria-hidden="true"><i style="width:${dn/total*100}%"></i></div>`;
+
+  h+=renderTask();
+  h+=`<div class="card"><div class="timer"><div><h2>جلسة تركيز</h2><p class="sub">١٠ دقايق بس. التليفون على وضع الطيران.</p></div><div class="clock" id="clock">${fmt(timer.left)}</div></div>
+  <div class="links"><button class="primary" id="tbtn">${timer.run?'وقّف':(timer.left===0?'خلصت ✓ ابدأ تاني':'ابدأ')}</button><button id="treset">من الأول</button></div></div>`;
+
+  const paused=S.task&&S.task.type==='hifz'&&S.task.pause&&taskTodayChunk()>=0;
+  if(paused){h+=`<p class="empty" style="text-align:center">الحفظ الجديد في الخطة واقف لحد ما تخلّص مطلوب الحصة. المراجعة شغّال عادي.</p>`}
+  else if(!cur.length){h+=`<div class="done-banner">ما شاء الله، ختمت حفظ سورة البقرة كلها 🤍<br><span class="sub">كمّل المراجعة اليومية تحت</span></div>`}
+  (paused?[]:cur).forEach(u=>{
+    const st=S.steps[u.id]||{};const us=unitState(u);
+    h+=`<div class="card new"><div class="ayah-range"><span class="big">${rangeTxt(u)}</span><span class="pill gold">وجه ${ar(u.page)} · ${u.half===1?'النص الأول':u.half===2?'النص التاني':'الوجه كله'}</span>${us.status==='learning'?'<span class="pill warn">بنكمّله من امبارح</span>':''}</div>
+    <div class="links"><a class="btn primary" href="${qlink(u)}" target="_blank" rel="noopener">▶ اسمع واقرأ المقطع</a><a class="btn" href="https://quran.com/page/${u.page}" target="_blank" rel="noopener">الوجه كامل</a></div>
+    <ol class="steps">`;
+    STEPS.forEach((s,i)=>{const c=st[s.k]||0;const ok=c>=s.goal;
+      h+=`<li class="step ${ok?'done':''}"><span class="n">${ok?'✓':ar(i+1)}</span><p>${s.t}<small>${s.s}</small></p><button class="tap" data-u="${u.id}" data-k="${s.k}" data-g="${s.goal}" aria-label="${s.t}">${s.goal>1?ar(c)+'/'+ar(s.goal):(ok?'تم':'خلصت')}</button></li>`});
+    const allOk=STEPS.every(s=>(st[s.k]||0)>=s.goal);
+    h+=`</ol><div><p style="margin:0 0 8px">آخر خطوة: سمّع المقطع كله من غير ما تبص.</p><div class="rate">
+      <button class="primary" data-rate="good" data-u="${u.id}" ${allOk?'':'disabled'}>سمّعته صح</button>
+      <button class="warnb" data-rate="weak" data-u="${u.id}" ${allOk?'':'disabled'}>لسه بيتلخبط</button></div>
+      ${allOk?'':'<p class="sub" style="margin-top:6px">خلّص الخطوات اللي فوق الأول.</p>'}</div></div>`;
+  });
+
+  h+=`<div class="card"><h2>مراجعة النهارده</h2><p class="sub">اقراها مرة من المصحف وسمّعيها، أو صلّي بيها.</p><div class="rev">`;
+  if(!rev.length)h+=`<p class="empty">لسه مفيش مراجعة. أول ما تحفظ أول مقطع هيظهر هنا بكرة.</p>`;
+  rev.forEach(({u,doneToday})=>{const w=unitState(u).rating==='weak';
+    h+=`<div class="rev-item ${doneToday?'ok':''}"><div class="lbl"><a href="${qlink(u)}" target="_blank" rel="noopener">${rangeTxt(u)}</a> <span class="pill ${w?'warn':''}">${w?'محتاج تقوية':'وجه '+ar(u.page)}</span></div>
+    <div class="rate">${doneToday?'<span class="pill">راجعته ✓</span>':`<button data-rev="good" data-u="${u.id}">تمام</button><button class="warnb" data-rev="weak" data-u="${u.id}">محتاج</button>`}</div></div>`});
+  h+=`</div></div>`;
+  return h;
+}
+
+function renderMap(){
+  const dn=doneCount();
+  let h=`<div class="card"><h2>خريطة سورة البقرة</h2><p class="sub">كل مربع وجه من المصحف، مقسوم نصّين. دوس على أي وجه يفتحلك.</p>
+  <div class="legend"><span><i style="background:var(--line)"></i>لسه</span><span><i style="background:var(--gold)"></i>شغّال عليه</span><span><i style="background:var(--accent)"></i>محفوظ</span></div>`;
+  JUZ.forEach(j=>{const ps=PAGES.filter(([,a])=>a>=j.from&&a<=j.to);const us=UNITS.filter(u=>u.from>=j.from&&u.from<=j.to);const d=us.filter(u=>unitState(u).status==='done').length;
+    h+=`<div class="juz"><div class="juz-h"><b>${j.n}</b><span>${ar(j.from)}–${ar(j.to)} · ${ar(d)}/${ar(us.length)}</span></div><div class="map">`;
+    ps.forEach(([p,a,b])=>{const hs=UNITS.filter(u=>u.page===p);
+      h+=`<a class="pg" href="https://quran.com/page/${p}" target="_blank" rel="noopener" style="text-decoration:none;color:inherit"><b>وجه ${ar(p)}</b><small>${a===b?ar(a):ar(a)+'–'+ar(b)}</small><div class="halves">${hs.map(u=>`<span class="${unitState(u).status}"></span>`).join('')}</div></a>`});
+    h+=`</div></div>`});
+  return h+`</div>`;
+}
+
+function renderPlan(){
+  let h=`<div class="card"><h2>سرعة الحفظ</h2><div class="seg">
+    <button data-pace="half" aria-pressed="${S.pace==='half'}">نص وجه في اليوم (~٩٥ يوم)</button>
+    <button data-pace="page" aria-pressed="${S.pace==='page'}">وجه كامل في اليوم (~٤٨ يوم)</button></div>
+    <p class="sub">ابدأ بنص وجه. لو حسيت إنه سهل بعد أسبوع، زوّده.</p></div>
+  <ul class="tips">
+    <li><b>وقت ثابت مربوط بعادة:</b> اختار لحظة بتحصل كل يوم (بعد الفجر، بعد ما ترجع من الشغل، قبل النوم) واربط الجلسة بيها.</li>
+    <li><b>السماع في أي وقت:</b> شغّل المقطع في المواصلات أو وانت في المطبخ. لما تيجي تفتح المصحف هتلاقي نصّه اتحفظ.</li>
+    <li><b>لو زهقت:</b> قوم اتمشى في البيت وانت بتردّدي، أو غيّر الشيخ. الحركة بتكسر الملل.</li>
+    <li><b>صلّي بيه:</b> اللي حفظته النهارده اقراه في السنة أو قيام الليل. ده أقوى تثبيت.</li>
+    <li><b>يوم فاتك؟</b> عادي خالص. افتح وكمّل من مكانك، والمراجعة هتلحقك.</li>
+    <li><b>يوم الدرس:</b> سمّع اللي حفظته طول الأسبوع لحد بيسمّعلك.</li>
+  </ul>
+  <div class="card"><h2>من الأول</h2>`;
+  h+=confirmReset?`<div class="confirm"><p style="margin:0">هيتمسح كل التقدّم. متأكدة؟</p><div class="rate"><button class="warnb" id="doReset">أيوه امسح</button><button id="noReset">لأ</button></div></div>`:`<button class="warnb" id="askReset">ابدأ الخطة من جديد</button>`;
+  return h+`</div>`;
+}
+
+function render(){
+  const v=document.getElementById('view');
+  v.innerHTML=tab==='today'?renderToday():tab==='map'?renderMap():tab==='pick'?renderPick():tab==='quiz'?(QZ&&QZ.result?renderResult():renderQuiz()):renderPlan();
+  v.style.display='flex';v.style.flexDirection='column';v.style.gap='16px';
+  document.querySelectorAll('nav button').forEach(b=>b.setAttribute('aria-current',b.dataset.tab===tab?'page':'false'));
+}
+
+function markDayIfComplete(){
+  const t=today();const cur=currentUnits();
+  const newOk=Object.values(S.units).some(x=>x.newDay===t);
+  const rev=reviewUnits();const revOk=rev.every(r=>r.doneToday);
+  if((newOk||!cur.length)&&revOk)S.log[t]=true;
+}
+
+document.addEventListener('change',e=>{
+  if(e.target.id!=='tPage'||!e.target.value)return;const v=e.target.value;
+  const r=v==='all'?[0,1,286]:v[0]==='j'?[0,JUZ[+v.slice(1)].from,JUZ[+v.slice(1)].to]:PAGES.find(p=>p[0]===+v);
+  document.getElementById('tFrom').value=r[1];document.getElementById('tTo').value=r[2];
+});
+document.addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;
+  if(b.dataset.qstart){startRound(b.dataset.qstart);render();window.scrollTo(0,0);return}
+  if(b.dataset.qans!==undefined&&QZ){const it=QZ.items[QZ.pos];if(it.chosen!==null)return;const q=QS[it.i];it.chosen=+b.dataset.qans;const st=qstate();
+    if(it.chosen===q.a){QZ.combo++;QZ.correct++;let g=10;if(QZ.combo%3===0){g+=5;it.bonus=true}QZ.score+=g;st.points+=g;delete st.wrong[it.i]}else{QZ.combo=0;st.wrong[it.i]=1}
+    save();render();return}
+  if(b.id==='qnext'&&QZ){QZ.pos++;if(QZ.pos>=QZ.items.length){const st=qstate();st.rounds++;st.best[QZ.sec]=Math.max(st.best[QZ.sec]||0,QZ.correct);QZ.result={correct:QZ.correct,total:QZ.items.length,score:QZ.score};save()}render();window.scrollTo(0,0);return}
+  if(b.id==='qquit'||b.id==='qhome'){QZ=null;render();return}
+  if(b.id==='tOpen'||b.id==='tEdit'){taskForm=true;formErr='';confirmTaskEnd=false;render();return}
+  if(b.id==='tCancel'){taskForm=false;formErr='';render();return}
+  if(b.dataset.ttype){document.querySelectorAll('[data-ttype]').forEach(x=>x.setAttribute('aria-pressed',x===b));return}
+  if(b.id==='tSave'){
+    const type=document.querySelector('[data-ttype][aria-pressed="true"]').dataset.ttype;
+    const f=parseInt(document.getElementById('tFrom').value,10),t=parseInt(document.getElementById('tTo').value,10);
+    const date=document.getElementById('tDate').value||null,pause=document.getElementById('tPause').checked;
+    if(!f||!t||f<1||t>286||f>t){formErr='اكتب رقم آية البداية والنهاية صح (من ١ لـ ٢٨٦، والبداية قبل النهاية).';render();return}
+    const same=S.task&&S.task.type===type&&S.task.from===f&&S.task.to===t&&S.task.date===date;
+    S.task=same?Object.assign(S.task,{pause}):{type,from:f,to:t,date,pause,chunks:buildChunks(type,f,t,date)};
+    taskForm=false;formErr='';save();render();return}
+  if(b.id==='tEnd'){confirmTaskEnd=true;render();return}
+  if(b.id==='tEndNo'){confirmTaskEnd=false;render();return}
+  if(b.id==='tEndYes'){S.task=null;confirmTaskEnd=false;save();render();return}
+  if(b.dataset.task!==undefined){const c=S.task.chunks[+b.dataset.task],k=b.dataset.k,g=+b.dataset.g;c.steps=c.steps||{};const n=c.steps[k]||0;c.steps[k]=n>=g?0:n+1;save();render();return}
+  if(b.dataset.trate){const c=S.task.chunks[+b.dataset.i];if(b.dataset.trate==='good'){c.status='done';c.rating='good';c.last=today()}else{c.rating='weak';c.steps={}}save();render();return}
+  if(b.dataset.trev){const c=S.task.chunks[+b.dataset.i];c.last=today();c.rating=b.dataset.trev;save();render();return}
+  if(b.dataset.tab){tab=b.dataset.tab;confirmReset=false;render();window.scrollTo(0,0);return}
+  if(b.id==='tbtn'){if(timer.run){timer.run=false;clearInterval(timer.id)}else{if(timer.left===0)timer.left=600;timer.run=true;timer.id=setInterval(tickTimer,1000)}paintTimer();return}
+  if(b.id==='treset'){timer.run=false;clearInterval(timer.id);timer.left=600;render();return}
+  if(b.classList.contains('tap')){const u=b.dataset.u,k=b.dataset.k,g=+b.dataset.g;S.steps[u]=S.steps[u]||{};const c=S.steps[u][k]||0;S.steps[u][k]=c>=g?(g>1?0:0):c+1;
+    if(!S.units[u])S.units[u]={status:'learning'};save();render();return}
+  if(b.dataset.rate){const u=b.dataset.u;const t=today();
+    if(b.dataset.rate==='good'){S.units[u]={status:'done',rating:'good',last:t,newDay:t}}
+    else{S.units[u]={status:'learning',rating:'weak',newDay:t};S.steps[u]={}}
+    markDayIfComplete();save();render();return}
+  if(b.dataset.rev){const u=b.dataset.u;const x=S.units[u];x.last=today();x.rating=b.dataset.rev;markDayIfComplete();save();render();return}
+  if(b.dataset.ppurpose){P.purpose=b.dataset.ppurpose;if(P.sel){P.sel.purpose=P.purpose;P.cnt={}}render();return}
+  if(b.dataset.pmode){P.mode=b.dataset.pmode;P.err='';render();return}
+  if(b.id==='pGo'){
+    if(P.mode==='page'){let f=+document.getElementById('pFrom').value,t=+document.getElementById('pTo').value;if(t<f)[f,t]=[t,f];
+      const a=PAGES.find(x=>x[0]===f)[1],z=PAGES.find(x=>x[0]===t)[2];pickSel(a,z,f===t?'وجه '+ar(f):'من وجه '+ar(f)+' لـ '+ar(t));}
+    else{let f=parseInt(document.getElementById('aFrom').value),t=parseInt(document.getElementById('aTo').value);
+      if(!f){P.err='اكتب رقم أول آية.';render();return} if(!t)t=f; if(t<f)[f,t]=[t,f];
+      if(f<1||t>286){P.err='أرقام الآيات في البقرة من ١ لـ ٢٨٦.';render();return}
+      pickSel(f,t,'');}
+    render();setTimeout(()=>{const c=document.querySelector('.card.new');c&&c.scrollIntoView({behavior:'smooth',block:'start'})},50);return}
+  if(b.dataset.quick){const d=UNITS.filter(u=>unitState(u).status==='done');
+    if(b.dataset.quick==='all')pickSel(d[0].from,d[d.length-1].to,'كل المحفوظ');
+    else if(b.dataset.quick==='last'){const l=d.slice(-4);pickSel(l[0].from,l[l.length-1].to,'آخر المحفوظ')}
+    else{const w=d.filter(u=>unitState(u).rating==='weak');pickSel(w[0].from,w[w.length-1].to,'فيهم الضعيف')}
+    render();return}
+  if(b.dataset.again){const [f,t]=b.dataset.again.split('-').map(Number);pickSel(f,t,'');render();window.scrollTo(0,0);return}
+  if(b.dataset.pc){const k=b.dataset.pc,g=+b.dataset.g,c=P.cnt[k]||0;P.cnt[k]=c>=g?0:c+1;render();return}
+  if(b.dataset.pclose){P.sel=null;render();return}
+  if(b.dataset.prate){const x=P.sel,t=today(),rt=b.dataset.prate;
+    if(rt!=='read')UNITS.forEach(u=>{if(u.to>=x.from&&u.from<=x.to&&unitState(u).status==='done'){S.units[u.id].last=t;S.units[u.id].rating=rt}});
+    S.picks=(S.picks||[]).concat({from:x.from,to:x.to,date:t,rating:rt,purpose:x.purpose}).slice(-30);
+    markDayIfComplete();P.sel=null;save();render();return}
+  if(b.dataset.pace){S.pace=b.dataset.pace;save();render();return}
+  if(b.id==='askReset'){confirmReset=true;render();return}
+  if(b.id==='noReset'){confirmReset=false;render();return}
+  if(b.id==='doReset'){S=fresh();confirmReset=false;save();tab='today';render();return}
+});
+
+load();render();
+
+(async()=>{try{
+  if(!window.claude||!window.claude.use)return;
+  const [db,user]=await Promise.all([claude.use('db'),claude.use('user')]);
+  if(!db||!user)return;const id=await user.id();if(!id)return;
+  const ref=db.collection('data/users/'+id).doc('hifz-baqarah');
+  const snap=await ref.get();
+  if(snap.exists){const d=snap.data();try{const remote=JSON.parse(d.state);const localCount=Object.keys(S.units).length;
+    if(Object.keys(remote.units||{}).length>=localCount){S=Object.assign(fresh(),remote);try{localStorage.setItem('hifz-baqarah',JSON.stringify(S))}catch(e){}}}catch(e){}}
+  saveRef=ref;if(!snap.exists&&Object.keys(S.units).length)save();
+  document.getElementById('sync').textContent='التقدّم محفوظ على حسابك';render();
+}catch(e){}})();
+</script>
+
+</body>
+</html>
