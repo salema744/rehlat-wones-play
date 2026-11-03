@@ -1,0 +1,650 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="واجبات تفاعلية بعد كل حصة: تدريبات، ونصوص قراءة، وتحديات. إعداد رحلة ونس - أ. سالمة سيد">
+<title>واجبات رحلة ونس</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@400;600;700&family=Noto+Naskh+Arabic:wght@500;700&display=swap">
+<style id="page-style">
+/* Layout: one focused card per step, block progress on top, a quiet footer bar for next/back. Brand: رحلة ونس olive + terracotta. */
+:root{
+  --bg:#F7F5EE; --surface:#FFFFFF; --soft:#EEEEE2; --line:#DCD9C8;
+  --ink:#26261D; --muted:#6C6D57; --olive:#5E6036; --olive-ink:#FFFFFF;
+  --terra:#C2702F; --terra-soft:#F5E3D2; --go:#2F8A45; --go-soft:#DDF0E1; --bad:#B4412F; --bad-soft:#F6DED8;
+  --f-ui:"IBM Plex Sans Arabic","Noto Naskh Arabic",system-ui,sans-serif;
+  --f-word:"Noto Naskh Arabic","Amiri","IBM Plex Sans Arabic",serif;
+  --f-quran:"Amiri","Noto Naskh Arabic",serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#1C1C16; --surface:#26261E; --soft:#30302A; --line:#45453A;
+  --ink:#EFEEE4; --muted:#AEAE98; --olive:#9EA266; --olive-ink:#1C1C16;
+  --terra:#E39456; --terra-soft:#43301F; --go:#6CC583; --go-soft:#1F3A27; --bad:#EE8B78; --bad-soft:#47261F; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1C1C16; --surface:#26261E; --soft:#30302A; --line:#45453A;
+  --ink:#EFEEE4; --muted:#AEAE98; --olive:#9EA266; --olive-ink:#1C1C16;
+  --terra:#E39456; --terra-soft:#43301F; --go:#6CC583; --go-soft:#1F3A27; --bad:#EE8B78; --bad-soft:#47261F; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-ui);font-size:17px;line-height:1.6;direction:rtl;margin:0}
+.wrap{max-width:860px;margin:0 auto;padding-block:20px 120px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid var(--terra);outline-offset:2px}
+h1,h2,h3{text-wrap:balance;margin:0;line-height:1.3}
+.brand{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px;color:var(--muted);font-size:14px}
+.brand b{color:var(--olive);font-size:16px}
+/* home */
+.hello{font-size:30px;font-weight:700;color:var(--olive)}
+.hero{margin-top:14px;background:var(--olive);color:var(--olive-ink);border-radius:20px;padding:24px;display:grid;gap:10px}
+.hero .k{font-size:14px;opacity:.85}
+.hero h2{font-size:28px}
+.hero .meta{font-size:15px;opacity:.9}
+.hero .go{justify-self:start;background:var(--terra);color:#fff;border:0;border-radius:999px;padding:12px 26px;font-weight:700;font-size:18px}
+.list{margin-top:22px;display:grid;gap:10px}
+.list h3{font-size:15px;color:var(--muted);font-weight:600}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 16px}
+.row .t{font-weight:600}
+.row .s{font-size:13px;color:var(--muted)}
+.row button{background:none;border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:14px}
+.lock{opacity:.75;border-style:dashed}
+.pill{display:inline-block;font-size:12px;border-radius:999px;padding:2px 10px;background:var(--soft);color:var(--muted)}
+.pill.done{background:var(--go-soft);color:var(--go)}
+/* teacher */
+.teacher{margin-top:28px;border:2px dashed var(--terra);border-radius:16px;padding:16px;display:grid;gap:10px;background:var(--surface)}
+.teacher h3{color:var(--terra);font-size:16px}
+.teacher .btns{display:flex;flex-wrap:wrap;gap:8px}
+.teacher button{border:0;border-radius:10px;padding:9px 16px;background:var(--terra);color:#fff;font-weight:600}
+.teacher button.ghost{background:var(--soft);color:var(--ink)}
+.teacher .note{font-size:13px;color:var(--muted)}
+/* player */
+.top{display:flex;align-items:center;gap:10px;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap}
+.top .home{background:none;border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:14px}
+.top .st{font-weight:700;color:var(--olive);font-size:16px;min-width:0}
+.blocks{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.blocks span{font-size:12.5px;padding:3px 10px;border-radius:999px;background:var(--soft);color:var(--muted)}
+.blocks span.on{background:var(--olive);color:var(--olive-ink);font-weight:600}
+.blocks span.past{background:var(--go-soft);color:var(--go)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:24px;display:grid;gap:16px;min-width:0}
+.card h2{font-size:24px;color:var(--olive)}
+.tag{justify-self:start;font-size:13px;background:var(--terra-soft);color:var(--terra);border-radius:999px;padding:3px 12px;font-weight:600}
+.hint{color:var(--muted);font-size:15px}
+.step-n{font-size:13px;color:var(--muted)}
+.bar{position:fixed;inset:auto 0 0 0;background:var(--surface);border-top:1px solid var(--line);padding-block:12px calc(12px + env(safe-area-inset-bottom,0px));padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));z-index:5}
+.bar .in{max-width:860px;margin:0 auto;display:flex;gap:10px;align-items:center}
+.bar .next{flex:1;border:0;border-radius:14px;padding:14px;background:var(--olive);color:var(--olive-ink);font-weight:700;font-size:18px}
+.bar .back{border:1px solid var(--line);background:none;border-radius:14px;padding:14px 18px}
+.bar .idea{border:1px solid var(--terra);color:var(--terra);background:none;border-radius:14px;padding:14px 16px;font-weight:600}
+/* elements */
+.checks{display:grid;gap:10px}
+.chk{display:flex;align-items:center;gap:12px;text-align:right;background:var(--bg);border:1.5px solid var(--line);border-radius:14px;padding:14px 16px;font-size:18px}
+.chk .box{width:26px;height:26px;border-radius:7px;border:2.5px solid var(--terra);flex:none;display:grid;place-items:center;font-weight:700;color:#fff}
+.chk.on{border-color:var(--go);background:var(--go-soft)}
+.chk.on .box{background:var(--go);border-color:var(--go)}
+.goal{background:var(--olive);color:var(--olive-ink);border-radius:16px;padding:20px;font-size:21px;font-weight:700;text-align:center}
+.blockintro{display:grid;gap:14px;justify-items:center;text-align:center;padding:10px 0}
+.blockintro .num{font-size:15px;color:var(--terra);font-weight:700}
+.blockintro h2{font-size:38px}
+.phone{font-size:15px;color:var(--muted)}
+.timer{display:flex;align-items:center;gap:14px;justify-content:center;flex-wrap:wrap}
+.timer .clock{font-size:46px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink);direction:ltr;min-width:4ch;text-align:center}
+.timer button,.btn{border:0;border-radius:12px;padding:10px 20px;background:var(--terra);color:#fff;font-weight:700}
+.btn.ghost{background:var(--soft);color:var(--ink)}
+.btn.ok{background:var(--go)}
+.btn.no{background:var(--bad)}
+.timer.end .clock{color:var(--go)}
+.verses{font-family:var(--f-quran);font-size:30px;line-height:2.1;text-align:center;background:var(--bg);border-radius:16px;padding:18px}
+.words{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.w{font-family:var(--f-word);font-size:30px;font-weight:700;text-align:center;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:12px 6px}
+.tries{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.try{background:var(--bg);border-radius:12px;padding:10px;text-align:center;font-size:14px;color:var(--muted)}
+.try b{display:block;font-size:24px;color:var(--ink);font-variant-numeric:tabular-nums}
+.try.best b{color:var(--go)}
+.big{font-family:var(--f-word);font-size:72px;font-weight:700;text-align:center;line-height:1.5;position:relative}
+.startdot{display:inline-flex;align-items:center;gap:6px;color:var(--go);font-weight:700;font-size:15px}
+.startdot i{width:16px;height:16px;border-radius:50%;background:var(--go);display:inline-block}
+.cover{background:repeating-linear-gradient(45deg,var(--soft),var(--soft) 10px,var(--bg) 10px,var(--bg) 20px);border-radius:16px;min-height:150px;display:grid;place-items:center;color:var(--muted);font-size:18px;text-align:center;padding:16px}
+.actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.score{text-align:center;font-weight:700;color:var(--go)}
+.q3{display:grid;gap:10px}
+.q3 div{display:flex;justify-content:space-between;gap:10px;background:var(--bg);border-radius:12px;padding:12px 16px;flex-wrap:wrap}
+.q3 b{color:var(--olive);font-size:20px}
+.q3 span{color:var(--terra);font-weight:600}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.opt{font-family:var(--f-word);font-size:40px;font-weight:700;background:var(--bg);border:2px solid var(--line);border-radius:16px;padding:14px 8px;min-height:96px}
+.opt .mir{display:inline-block;transform:scaleX(-1)}
+.opt.right{border-color:var(--go);background:var(--go-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.fb{text-align:center;font-weight:700;min-height:1.6em}
+.fb.ok{color:var(--go)} .fb.no{color:var(--bad)}
+.facing{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.face{background:var(--bg);border-radius:16px;padding:14px;text-align:center;display:grid;gap:4px}
+.face .ch{font-family:var(--f-word);font-size:84px;line-height:1.3}
+.face .arr{color:var(--go);font-size:22px;font-weight:700}
+.face .cue{font-weight:600;color:var(--olive);font-size:15px}
+.match{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:start}
+.match .col{display:grid;gap:8px}
+.mi{background:var(--bg);border:2px solid var(--line);border-radius:12px;padding:12px;text-align:center;font-size:17px}
+.mi.wordy{font-family:var(--f-word);font-size:22px;font-weight:700}
+.mi.sel{border-color:var(--terra);background:var(--terra-soft)}
+.mi.done{border-color:var(--go);background:var(--go-soft);color:var(--go)}
+.mi.shake{border-color:var(--bad)}
+.choices{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.choices .opt{flex:1 1 140px;font-size:30px;min-height:72px}
+.choices .opt.small{font-family:var(--f-ui);font-size:19px}
+.prompt{font-family:var(--f-word);font-size:56px;font-weight:700;text-align:center;line-height:1.5}
+.prog{font-size:14px;color:var(--muted);text-align:center}
+.numq{display:grid;gap:10px}
+.numq .r{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--bg);border-radius:12px;padding:10px 14px;flex-wrap:wrap}
+.numq input{width:70px;font:inherit;font-size:20px;text-align:center;border:2px solid var(--line);border-radius:10px;padding:4px;background:var(--surface);color:var(--ink)}
+.numq .r.ok input{border-color:var(--go)} .numq .r.no input{border-color:var(--bad)}
+.skill{display:grid;gap:10px}
+.skill div{background:var(--bg);border-radius:14px;padding:12px 16px}
+.skill div:last-child{background:var(--terra-soft)}
+.skill b{display:block;color:var(--olive)}
+.rate{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.rate button{width:62px;height:62px;border-radius:50%;border:2px solid var(--line);background:var(--bg);font-size:26px;font-weight:700}
+.rate button.on{background:var(--terra);border-color:var(--terra);color:#fff}
+.ends{display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
+textarea,.in{width:100%;font:inherit;border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--bg);color:var(--ink)}
+textarea{min-height:70px;resize:vertical}
+.ideas{position:fixed;inset:auto 0 0 0;background:var(--surface);border-top:3px solid var(--terra);border-radius:20px 20px 0 0;padding-block:18px calc(18px + env(safe-area-inset-bottom,0px));padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));z-index:10;box-shadow:0 -10px 30px rgba(0,0,0,.15)}
+.ideas .in2{max-width:860px;margin:0 auto;display:grid;gap:10px}
+.ideas ul{margin:0;padding-inline-start:20px;color:var(--muted);font-size:15px;max-height:120px;overflow:auto}
+.restbox{display:grid;justify-items:center;gap:12px;text-align:center}
+.restbox .big2{font-size:34px;font-weight:700;color:var(--olive)}
+.sum{display:grid;gap:8px}
+.sum div{display:flex;justify-content:space-between;gap:10px;background:var(--bg);border-radius:12px;padding:10px 14px}
+.parts{display:grid;gap:8px;margin-top:4px}
+.part{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.35);color:inherit;border-radius:14px;padding:12px 14px;text-align:right}
+.part .pn{width:30px;height:30px;border-radius:50%;background:var(--terra);color:#fff;display:grid;place-items:center;font-weight:700;flex:none}
+.part .pt{flex:1;font-weight:700;font-size:18px}
+.part .ps{font-size:13px;opacity:.85}
+.part.pdone{background:rgba(255,255,255,.22)}
+.part.pdone .pn{background:var(--go)}
+.passage{font-family:var(--f-quran);font-size:25px;line-height:2.3;background:var(--bg);border-radius:16px;padding:18px 20px;max-width:65ch}
+.passage p{margin:0 0 10px}
+.prompt.psm{font-family:var(--f-ui);font-size:22px;line-height:1.6}
+.sent{min-height:70px;background:var(--bg);border:2px dashed var(--line);border-radius:14px;padding:14px;text-align:center;font-family:var(--f-word);font-size:28px;font-weight:700}
+.sent em{font-family:var(--f-ui);font-size:15px;color:var(--muted);font-style:normal;font-weight:400}
+.chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.chip{font-family:var(--f-word);font-size:24px;font-weight:700;border:2px solid var(--terra);background:var(--terra-soft);border-radius:12px;padding:8px 16px}
+.chip:disabled{opacity:.3}
+.say{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--olive);background:var(--surface);color:var(--olive);border-radius:999px;padding:6px 14px;font-size:15px;font-weight:600}
+.say:active{background:var(--soft)}
+.top .auto{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--muted)}
+.top .vhelp{font-size:12.5px;color:var(--terra);border-color:var(--terra)}
+.top .auto.on{color:var(--go);border-color:var(--go)}
+button.w{color:inherit;font-family:var(--f-word);cursor:pointer}
+.face{cursor:pointer}
+.rn{font-size:13px;font-weight:600;border:1px solid var(--line);background:none;color:var(--muted);border-radius:999px;padding:3px 12px;vertical-align:middle;margin-inline-start:8px}
+.toast{position:fixed;top:calc(16px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 18px;border-radius:999px;font-size:15px;z-index:20}
+@media (max-width:560px){
+  .big{font-size:56px}.prompt{font-size:44px}.opt{font-size:32px}.verses{font-size:24px}.passage{font-size:21px}.chip{font-size:20px}.w{font-size:24px}
+  .hero h2{font-size:23px}.blockintro h2{font-size:30px}.bar .idea{padding:14px 10px}
+}
+@media (prefers-reduced-motion:no-preference){.card{animation:in .25s ease-out}@keyframes in{from{transform:translateY(6px)}to{transform:none}}}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script type="application/json" id="page-state">{"unlocked":2}</script>
+<script id="page-main">
+(function(){
+"use strict";
+const STATE = JSON.parse(document.getElementById("page-state").textContent);
+const ENV = ["الموبايل بعيد ووشه لتحت","تابة واحدة بس مفتوحة على الشاشة","الكراسة والقلم جاهزين","مية جنبك"];
+const Q3 = {t:"q3"};
+
+/* ===================== UNITS: homework after each class ===================== */
+const P = (name, steps) => steps.map(s => Object.assign({b:name}, s));
+const SESSIONS_RAW = [
+{ n:2, code:"2817", title:"سورة الفاتحة", sub:"كلمات الفاتحة • نص «أول يوم» • رتّب الجملة", parts:[
+ ["تدريبات الواجب", [
+  {t:"q3"},
+  {t:"lcw", id:"u2-lcw", title:"انظر • قل • غطّ • اكتب • افحص", words:["الحمد","رب","نعبد","نستعين","الصراط","الدين"], start:true},
+  {t:"build", id:"u2-build", title:"ركّب الكلمة", items:[["ا + ل + ح + م + د","الحمد","الألف شقية: ا | لحمد"],["ن + ع + ب + د","نعبد","ع في النص: ـعـ"],["ن + س + ت + ع + ي + ن","نستعين","عدّ السنان قبل النقط"],["ا + ل + ص + ر + ا + ط","الصراط","ر وا شقيين: الصر | ا | ط"],["ا + ل + د + ي + ن","الدين","الدال شقية: ال | د | ين"]]},
+  {t:"choice", id:"u2-split", title:"فكّ الكلمة: أنهي تقسيم صح؟", small:true, items:[
+    {p:"نعبد",o:["ن + ع + ب + د","ن + غ + ب + د","ب + ع + ن + د"],a:"ن + ع + ب + د"},
+    {p:"نستعين",o:["ن + س + ت + ع + ي + ن","ن + ش + ت + ع + ي + ن","ن + س + ت + ع + ن"],a:"ن + س + ت + ع + ي + ن"},
+    {p:"الدين",o:["ا + ل + ذ + ي + ن","ا + ل + د + ي + ن","ا + ل + د + ن"],a:"ا + ل + د + ي + ن"}]},
+  {t:"partEnd"}]],
+ ["نص القراءة", [
+  {t:"passage", id:"u2-read", title:"أول يوم", hint:"اقرأ النص بصوت عالي. دوس «ابدأ» قبل ما تقرأ و«خلصت» بعد ما تخلص. اقرأه مرتين.", tries:2, text:"اِنْتَقَلَتْ لَيْلَى إِلَى مَدْرَسَةٍ جَدِيدَةٍ. فِي أَوَّلِ يَوْمٍ شَعَرَتْ بِالْخَوْفِ، فَهِيَ لَا تَعْرِفُ أَحَدًا. وَقَفَتْ فِي الْمَمَرِّ، ثُمَّ قَرَّرَتْ أَنْ تَطْلُبَ الْمُسَاعَدَةَ.\nسَأَلَتْ بِنْتًا تَحْمِلُ كُتُبًا: «أَيْنَ فَصْلُ الْعُلُومِ؟» اِبْتَسَمَتِ الْبِنْتُ وَقَالَتْ: «تَعَالَيْ مَعِي». اِسْمُهَا نُورُ، وَهِيَ تُحِبُّ الرَّسْمَ مِثْلَ لَيْلَى.\nفِي الْبَيْتِ قَالَتْ لَيْلَى: «الْحَمْدُ لِلَّهِ، صَارَ عِنْدِي صَدِيقَةٌ»."},
+  {t:"choice", id:"u2-q", title:"فهمت النص؟", small:true, items:[
+    {p:"لماذا شعرت ليلى بالخوف؟",o:["لأنها لا تعرف أحدًا","لأنها نسيت كتبها","لأن الامتحان صعب"],a:"لأنها لا تعرف أحدًا"},
+    {p:"ماذا قررت ليلى أن تفعل؟",o:["أن ترجع إلى البيت","أن تطلب المساعدة","أن تنتظر في الممر"],a:"أن تطلب المساعدة"},
+    {p:"ما الشيء المشترك بين ليلى ونور؟",o:["حب الرياضة","حب الرسم","نفس الفصل"],a:"حب الرسم"},
+    {p:"ما الفكرة الرئيسية للنص؟",o:["المدرسة الجديدة صعبة","طلب المساعدة بداية جديدة","الرسم هواية جميلة"],a:"طلب المساعدة بداية جديدة"}], promptSmall:true},
+  {t:"match", id:"u2-vocab", title:"كلمات من النص", pairs:[["الْمَمَرّ","مكان طويل بين الفصول"],["الْخَوْف","إحساس إنك قلقان"],["تَحْمِلُ","ماسكة في إيدها"],["قَرَّرَتْ","اختارت تعمل حاجة"]]},
+  {t:"info", title:"افتكر من الفاتحة", html:'<div class="goal" style="font-size:22px">«وَإِيَّاكَ نَسْتَعِينُ»</div><p>«نستعين» يعني <b>نطلب المساعدة</b> من الله. وليلى في النص طلبت المساعدة من حد، وده كان أول خطوة ليها.</p>'},
+  {t:"partEnd"}]],
+ ["تحدّي", [
+  {t:"order", id:"u2-order", title:"رتّب الكلمات وكوّن جملة", hint:"دوس على الكلمات بالترتيب الصح. الجملة بتتبني من اليمين.", items:[["طلبت","ليلى","المساعدة"],["نور","تحب","الرسم"],["صار","عندي","صديقة","جديدة"],["الحمد","لله","على","كل","شيء"]]},
+  {t:"write", id:"u2-write", title:"اكتب جملة واحدة", hint:"في الكراسة: اكتب جملة عن مرة طلبت فيها مساعدة من حد. ابدأ من اليمين، وبعدين اكتبها هنا كمان لو تحب.", ph:"مرة طلبت مساعدة من..."},
+  {t:"rating"},
+  {t:"done"}]]
+]},
+{ n:3, code:"3594", title:"سورة الناس", sub:"اتجاه الكتابة • نص «يوم بلا موبايل» • قرارك إنت", parts:[
+ ["تدريبات الواجب", [
+  {t:"info", title:"افتكر قبل ما تبدأ", html:'<div class="big" style="font-size:56px"><span class="startdot" style="vertical-align:middle;margin-left:10px"><i></i>ابدأ هنا</span>الناس</div><p class="goal" style="font-size:19px">العربي من اليمين للشمال ←<br>حط القلم على اليمين الأول</p>'},
+  {t:"mirror", id:"u3-mirror", title:"صحّح المراية", words:["الوسواس","الخناس","صدور","ملك","نستعين","الصمد"]},
+  {t:"facing", title:"الحرف بيبص فين؟", hint:"اكتب كل حرف في الهوا بإصبعك وإنت بتقول الجملة اللي تحته.", letters:[["د","فاتحة على الشمال"],["ع","راسها فاتحة على الشمال"],["ل","رجلها بتلف للشمال"],["ر","بتنزل تحت السطر للشمال"]]},
+  {t:"lcw", id:"u3-lcw", start:true, title:"اكتب من اليمين", words:["الناس","الجنة","يوسوس","برب"]},
+  {t:"choice", id:"u3-spell", title:"أنهي مكتوبة صح؟", items:[
+    {p:"؟",o:["الناس","الثاس","الياس"],a:"الناس"},{p:"؟",o:["توسوس","يوسوس","بوسوس"],a:"يوسوس"},{p:"؟",o:["الجتة","الجبة","الجنة"],a:"الجنة"},{p:"؟",o:["برب","يرب","ترب"],a:"برب"}], hidePrompt:true},
+  {t:"partEnd"}]],
+ ["نص القراءة", [
+  {t:"passage", id:"u3-read", title:"يوم بلا موبايل", hint:"اقرأ النص بصوت عالي مرتين، وشغّل التايمر في كل مرة.", tries:2, text:"قَرَّرَتْ سَارَةُ أَنْ تَقْضِيَ يَوْمًا كَامِلًا بِلَا مُوبَايِل. فِي الصَّبَاحِ مَدَّتْ يَدَهَا إِلَى الْمُوبَايِلِ عَشْرَ مَرَّاتٍ! فِي الظُّهْرِ شَعَرَتْ بِالْمَلَلِ، فَرَسَمَتْ قِطَّتَهَا وَهِيَ نَائِمَةٌ. فِي الْعَصْرِ لَعِبَتْ بِالْكُرَةِ مَعَ أَخِيهَا فِي الْحَدِيقَةِ.\nفِي اللَّيْلِ كَتَبَتْ: «أَنْهَيْتُ وَاجِبِي فِي نِصْفِ الْوَقْتِ!» ثُمَّ قَرَّرَتْ أَنْ تَجْعَلَ سَاعَةً كُلَّ يَوْمٍ بِلَا مُوبَايِل."},
+  {t:"choice", id:"u3-q", title:"فهمت النص؟", small:true, promptSmall:true, items:[
+    {p:"كم مرة مدّت سارة يدها إلى الموبايل في الصباح؟",o:["مرتين","عشر مرات","عشرين مرة"],a:"عشر مرات"},
+    {p:"ماذا فعلت سارة عندما شعرت بالملل؟",o:["نامت","رسمت قطتها","كلمت صاحبتها"],a:"رسمت قطتها"},
+    {p:"ماذا لاحظت سارة عن واجبها؟",o:["أنهته في نصف الوقت","نسيته","كان أصعب من كل يوم"],a:"أنهته في نصف الوقت"},
+    {p:"ماذا قررت سارة في النهاية؟",o:["ترمي الموبايل","ساعة كل يوم بلا موبايل","تحذف كل التطبيقات"],a:"ساعة كل يوم بلا موبايل"}]},
+  {t:"match", id:"u3-vocab", title:"كلمات من النص", pairs:[["تَقْضِيَ يَوْمًا","تعدّي يوم"],["الْمَلَل","الزهق"],["أَنْهَيْتُ","خلّصت"],["قِطَّتَهَا","القطة بتاعتها"]]},
+  {t:"partEnd"}]],
+ ["تحدّي", [
+  {t:"order", id:"u3-order", title:"رتّب الكلمات وكوّن جملة", hint:"دوس على الكلمات بالترتيب الصح.", items:[["قررت","سارة","أن","تقرأ"],["رسمت","سارة","قطتها"],["لعب","الأخوان","في","الحديقة"],["أنهيت","واجبي","بسرعة"]]},
+  {t:"write", id:"u3-plan", title:"قرارك إنت", hint:"زي سارة: إمتى ممكن تعمل نص ساعة بلا موبايل الأسبوع ده؟ وهتعمل فيها إيه؟", ph:"يوم ... الساعة ... هعمل ..."},
+  {t:"rating"},
+  {t:"done"}]]
+]},
+{ n:4, code:"4362", title:"تثبيت عائلة القارب", sub:"ب ت ث ن ي في كلمات كل يوم • نص «الرمية الأخيرة»", parts:[
+ ["تدريبات الواجب", [
+  {t:"choice", id:"u4-miss", title:"أكمل الحرف الناقص", hint:"اختار الحرف، وبعدين اكتب الكلمة كاملة في الكراسة من اليمين.", items:[
+    {p:"بـ..ـت",o:["ي","ب","ن"],a:"ي"},{p:"..ـبات",o:["ث","ن","ت"],a:"ن"},{p:"ثلا..ـة",o:["ت","ث","ب"],a:"ث"},{p:"يـ..ـيم",o:["ت","ن","ث"],a:"ت"},{p:"بـ..ـات",o:["ي","ث","ن"],a:"ن"},{p:"ثا..ـت",o:["ن","ب","ي"],a:"ب"}]},
+  {t:"build", id:"u4-build", title:"ركّب الكلمة", items:[["ب + ن + ا + ت","بنات","الألف شقية: بنا | ت"],["ث + و + ب","ثوب","الواو شقية: ثو | ب"],["ي + ت + ي + م","يتيم","3 سنان ورا بعض: يـ تـ يـ"],["ن + ب + ا + ت","نبات","الألف شقية: نبا | ت"]]},
+  {t:"mirror", id:"u4-mirror", title:"صحّح المراية", words:["بنت","ثوب","يتيم","نبات"]},
+  {t:"partEnd"}]],
+ ["نص القراءة", [
+  {t:"passage", id:"u4-read", title:"الرمية الأخيرة", hint:"اقرأ النص بصوت عالي مرتين، وشغّل التايمر في كل مرة.", tries:2, text:"كَانَتِ النَّتِيجَةُ مُتَعَادِلَةً فِي آخِرِ دَقِيقَةٍ. أَخَذَ يُوسُفُ الْكُرَةَ، وَسَمِعَ الْجُمْهُورَ يَصْرُخُ بِاسْمِهِ. تَذَكَّرَ كَلَامَ مُدَرِّبِهِ: «انْظُرْ إِلَى الْهَدَفِ فَقَطْ».\nأَخَذَ نَفَسًا عَمِيقًا، وَرَكَّزَ عَلَى السَّلَّةِ، ثُمَّ رَمَى الْكُرَةَ... فَدَخَلَتْ!\nقَالَ يُوسُفُ: «لَمْ أَكُنْ أَسْرَعَ لَاعِبٍ، لَكِنِّي رَكَّزْتُ فِي اللَّحْظَةِ الْمُهِمَّةِ»."},
+  {t:"choice", id:"u4-q", title:"فهمت النص؟", small:true, promptSmall:true, items:[
+    {p:"كيف كانت النتيجة قبل الرمية الأخيرة؟",o:["فريق يوسف كسبان","متعادلة","فريق يوسف خسران"],a:"متعادلة"},
+    {p:"ماذا كانت نصيحة المدرب؟",o:["اجرِ بسرعة","انظر إلى الهدف فقط","اسمع الجمهور"],a:"انظر إلى الهدف فقط"},
+    {p:"ماذا فعل يوسف قبل أن يرمي؟",o:["أخذ نفسًا عميقًا وركّز","نظر إلى الجمهور","أعطى الكرة لزميله"],a:"أخذ نفسًا عميقًا وركّز"},
+    {p:"ما الدرس من النص؟",o:["السرعة أهم حاجة","التركيز على الهدف","الجمهور بيساعدك"],a:"التركيز على الهدف"}]},
+  {t:"match", id:"u4-vocab", title:"كلمات من النص", pairs:[["مُتَعَادِلَة","الفريقين نفس النتيجة"],["الْجُمْهُور","الناس اللي بتتفرج"],["يَصْرُخُ","بيزعّق بصوت عالي"],["عَمِيقًا","طويل لجوه"]]},
+  {t:"partEnd"}]],
+ ["تحدّي", [
+  {t:"choice", id:"u4-hunt", title:"صيد حروف القارب في النص", promptSmall:true, items:[
+    {p:"أنهي كلمة من النص فيها حرف ث؟",o:["ثم","رمى","سمع"],a:"ثم"},{p:"أنهي كلمة فيها حرف ي؟",o:["سمع","يوسف","قال"],a:"يوسف"},{p:"أنهي كلمة فيها حرف ن؟",o:["رمى","قال","انظر"],a:"انظر"},{p:"أنهي كلمة فيها حرف ب؟",o:["باسمه","سمع","قال"],a:"باسمه"}]},
+  {t:"order", id:"u4-order", title:"رتّب الكلمات وكوّن جملة", hint:"دوس على الكلمات بالترتيب الصح.", items:[["رمى","يوسف","الكرة"],["دخلت","الكرة","السلة"],["انظر","إلى","الهدف","فقط"]]},
+  {t:"write", id:"u4-write", title:"اكتب جملتين", hint:"في الكراسة: جملة فيها كلمة فيها ث، وجملة فيها كلمة فيها ي. ابدأ كل كلمة من اليمين.", ph:"الجملة الأولى... الجملة التانية..."},
+  {t:"rating"},
+  {t:"done"}]]
+]}
+];
+const SESSIONS = SESSIONS_RAW.map(u => { const steps = []; const parts = u.parts.map(([name, st]) => { const start = steps.length; P(name, st).forEach(s => steps.push(s)); return {name, start, end: steps.length-1}; }); return {n:u.n, code:u.code, title:u.title, sub:u.sub, steps, parts}; });
+const FIRST = SESSIONS[0].n, LAST = SESSIONS[SESSIONS.length-1].n;
+
+/* ===================== storage (per device, best effort) ===================== */
+const KEY = "wones-wajib-v1";
+let SAVE = {};
+try { SAVE = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch(e) { SAVE = {}; }
+function persist(){ try { localStorage.setItem(KEY, JSON.stringify(SAVE)); } catch(e){} }
+function S(n){ SAVE["s"+n] = SAVE["s"+n] || {step:0, data:{}, ideas:[], done:false}; return SAVE["s"+n]; }
+
+/* ===================== helpers ===================== */
+const $ = (sel, el=document) => el.querySelector(sel);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const app = document.getElementById("app");
+let view = {mode:"home", n:null}, isTeacher = false, previewAll = false, timers = [];
+function clearTimers(){ timers.forEach(clearInterval); timers = []; }
+function toast(msg){ const t = document.createElement("div"); t.className="toast"; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(), 2200); }
+/* ---------- read aloud (device Arabic voice) ---------- */
+let SAYS = [], AUTO = true, lastAuto = "", warned = false;
+try { AUTO = localStorage.getItem("wones-auto") !== "0"; } catch(e){}
+const hasTTS = "speechSynthesis" in window && "SpeechSynthesisUtterance" in window;
+function arVoice(){ const vs = hasTTS ? speechSynthesis.getVoices() : []; const ar = vs.filter(v => /^ar/i.test(v.lang)); return ar.find(v => /google|maged|majed|tarik|laila|hoda|naayf|zariyah|hamed|salma|shakir/i.test(v.name)) || ar[0] || null; }
+if (hasTTS) { try { speechSynthesis.getVoices(); speechSynthesis.onvoiceschanged = () => {}; } catch(e){} }
+let CURU = null, VOICES = [];
+function loadVoices(){ try { VOICES = speechSynthesis.getVoices() || []; } catch(e){ VOICES = []; } return VOICES; }
+if (hasTTS){ loadVoices(); try { speechSynthesis.addEventListener("voiceschanged", loadVoices); } catch(e){} setTimeout(loadVoices, 500); setTimeout(loadVoices, 2000); }
+function arVoices(){ return loadVoices().filter(v => /^ar/i.test(v.lang) || /arab|عرب/i.test(v.name)); }
+function speak(text){
+  if (!hasTTS){ if (!warned){ toast("المتصفح ده مش بيدعم القراءة بالصوت"); warned = true; } return; }
+  const go = () => {
+    try {
+      const v = arVoices().find(v => /google|maged|majed|tarik|laila|hoda|naayf|zariyah|hamed|shakir|salma/i.test(v.name)) || arVoices()[0] || null;
+      if (!v && !warned){ toast("الجهاز مفيهوش صوت عربي. دوس «الصوت مش شغال؟» تحت"); warned = true; }
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = v ? v.lang : "ar-SA"; if (v) u.voice = v; u.rate = 0.85; u.volume = 1;
+      CURU = u; /* keep a reference so the browser doesn't drop it */
+      u.onerror = e => { if (e && e.error && e.error !== "interrupted" && e.error !== "canceled") toast("الصوت ما اشتغلش (" + e.error + ")"); };
+      speechSynthesis.resume(); speechSynthesis.speak(u);
+    } catch(e){ toast("الصوت ما اشتغلش على الجهاز ده"); }
+  };
+  try { if (speechSynthesis.speaking || speechSynthesis.pending){ speechSynthesis.cancel(); setTimeout(go, 120); } else go(); } catch(e){ go(); }
+}
+function voiceReport(){
+  if (!hasTTS) return "المتصفح ده مش بيدعم القراءة بالصوت خالص. جرّب Chrome أو Safari.";
+  const all = loadVoices(), ar = arVoices();
+  return `الأصوات على الجهاز: ${all.length} • العربي منها: ${ar.length}` + (ar.length ? ` (${ar.map(v=>v.name).join("، ")})` : "");
+}
+function openVoiceHelp(){
+  closeIdeas();
+  const p = document.createElement("div"); p.className = "ideas"; p.id = "ideas";
+  p.innerHTML = `<div class="in2"><b style="color:var(--terra)">الصوت مش شغال؟</b>
+  <button class="btn" id="vtest">جرّب الصوت: «مرحبًا»</button>
+  <div class="hint" id="vrep">${esc(voiceReport())}</div>
+  <div class="hint">لو العربي منها 0، الجهاز محتاج صوت عربي:<br>• آيفون/آيباد: الإعدادات ← تسهيلات الاستخدام ← المحتوى المنطوق ← الأصوات ← العربية، ونزّل صوت.<br>• أندرويد: الإعدادات ← تحويل النص إلى كلام ← محرّك Google ← تثبيت بيانات الصوت ← العربية.<br>• كمبيوتر ويندوز: الإعدادات ← الوقت واللغة ← الكلام ← إضافة أصوات ← العربية. وبعدين اقفل المتصفح وافتحه تاني.<br>• ماك: إعدادات النظام ← تسهيلات الاستخدام ← المحتوى المنطوق ← صوت النظام ← إدارة الأصوات ← العربية.<br>واتأكد إن صوت الجهاز عالي، والآيفون مش على الوضع الصامت.</div>
+  <div class="actions"><button class="btn ghost" id="vclose">قفل</button></div></div>`;
+  document.body.appendChild(p);
+  $("#vtest").onclick = () => { speak("مَرْحَبًا، هَيَّا نَقْرَأُ مَعًا"); setTimeout(() => { const r = $("#vrep"); if (r) r.textContent = voiceReport(); }, 400); };
+  $("#vclose").onclick = closeIdeas;
+}
+function stopSpeak(){ try { if (hasTTS) speechSynthesis.cancel(); } catch(e){} }
+const SPK = '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M3 9v6h4l5 4V5L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg>';
+function say(text, label){ SAYS.push(text); return `<button class="say" data-say="${SAYS.length-1}" aria-label="اسمع">${SPK}<span>${label||"اسمع"}</span></button>`; }
+let actx = null;
+function chime(){ try { actx = actx || new (window.AudioContext||window.webkitAudioContext)(); const o=actx.createOscillator(), g=actx.createGain(); o.frequency.value=660; g.gain.setValueAtTime(0.15, actx.currentTime); g.gain.exponentialRampToValueAtTime(0.001, actx.currentTime+0.8); o.connect(g).connect(actx.destination); o.start(); o.stop(actx.currentTime+0.8);} catch(e){} }
+const fmt = s => { s = Math.max(0, Math.round(s)); return Math.floor(s/60)+":"+String(s%60).padStart(2,"0"); };
+function shuffle(a, seed){ a = a.slice(); let x = seed || 7; for (let i=a.length-1;i>0;i--){ x=(x*9301+49297)%233280; const j=Math.floor(x/233280*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+const unlocked = () => Math.min(Math.max(STATE.unlocked, SAVE.unlocked||0), LAST);
+const visible = () => SESSIONS.filter(s => previewAll || s.n <= unlocked());
+
+/* ===================== HOME ===================== */
+function renderHome(){
+  clearTimers(); view = {mode:"home", n:null};
+  const vis = visible();
+  const cur = vis.filter(s => s.n <= unlocked()).slice(-1)[0] || vis[0];
+  const prev = vis.filter(s => s.n < cur.n);
+  const st = S(cur.n); st.parts = st.parts || [];
+  const icons = ["✎","📖","★"];
+  let h = `<div class="brand"><b>واجبات رحلة ونس</b><span>رحلة ونس • أ. سالمة سيد</span></div>
+  <div class="hello">أهلًا ${esc(SAVE.name||"")} <button class="rn" id="rename" aria-label="غيّر الاسم">غيّر الاسم</button></div>
+  <div class="hero"><div class="k">واجبك بعد الحصة ${cur.n}</div><h2>${esc(cur.title)}</h2><div class="meta">${esc(cur.sub)}</div>
+  <div class="parts">${cur.parts.map((p,i)=>`<button class="part ${st.parts.includes(i)?'pdone':''}" data-open="${cur.n}" data-part="${i}"><span class="pn">${i+1}</span><span class="pt">${esc(p.name)}</span><span class="ps">${st.parts.includes(i)?'خلص ✓':(p.end-p.start)+' خطوات'}</span></button>`).join("")}</div>
+  <div class="meta">ابدأ بالجزء الأول. كل جزء حوالي 10 دقايق، وممكن تعمل كل جزء في يوم.</div></div>`;
+  if (prev.length){
+    h += `<div class="list"><h3>واجبات قبل كده (للمراجعة)</h3>` + prev.slice().reverse().map(s => { const ps = (S(s.n).parts||[]).length; return `<div class="row"><div><div class="t">بعد الحصة ${s.n}: ${esc(s.title)}</div><div class="s">${ps} من ${s.parts.length} أجزاء خلصت</div></div><button data-open="${s.n}" data-part="0">افتح</button></div>`; }).join("") + `</div>`;
+  }
+  const nextLocked = SESSIONS.find(s => s.n > unlocked());
+  if (nextLocked && !previewAll){
+    h += `<div class="list"><div class="row lock" style="flex-wrap:wrap"><div style="min-width:0"><div class="t">الواجب الجاي مقفول</div><div class="s">المعلّمة هتديك كود بعد الحصة. اكتبه هنا عشان يتفتح.</div></div><div style="display:flex;gap:8px"><input class="in" id="code-in" inputmode="numeric" placeholder="الكود" aria-label="كود الواجب" style="width:110px;text-align:center;font-size:18px"><button id="code-go">افتح</button></div></div></div>`;
+  }
+  if (previewAll){
+    h += `<div class="list"><h3>معاينة المعلّمة: الواجبات الجاهزة المقفولة</h3>` + SESSIONS.filter(s=>s.n>unlocked()).map(s=>`<div class="row lock"><div><div class="t">بعد الحصة ${s.n}: ${esc(s.title)}</div><div class="s">مقفول على سلمى</div></div><button data-open="${s.n}" data-part="0">معاينة</button></div>`).join("") + `</div>`;
+  }
+  app.innerHTML = h;
+  app.querySelectorAll("[data-open]").forEach(b => b.onclick = () => openSession(+b.dataset.open, +(b.dataset.part||0)));
+  const cb = $("#code-go"), ci = $("#code-in");
+  if (cb) { const tryCode = () => { const v = (ci.value||"").replace(/[٠-٩]/g, c => "٠١٢٣٤٥٦٧٨٩".indexOf(c)).trim(); const u = SESSIONS.find(s => s.code === v);
+      if (u && u.n > unlocked()){ SAVE.unlocked = Math.max(SAVE.unlocked||0, u.n); persist(); toast("اتفتح واجب الحصة " + u.n); renderHome(); }
+      else if (u) toast("الواجب ده مفتوح عندك بالفعل"); else toast("الكود مش صح. اتأكد منه مع المعلّمة"); };
+    cb.onclick = tryCode; ci.onkeydown = e => { if (e.key === "Enter") tryCode(); }; }
+  const nb = $("#rename"); if (nb) nb.onclick = askName;
+  scrollTo(0,0);
+}
+
+/* ===================== PLAYER ===================== */
+let CUR = null;
+function openSession(n, part){ CUR = SESSIONS.find(s => s.n === n); const st = S(n); st.parts = st.parts || []; st.step = CUR.parts[part||0].start; persist(); renderStep(); }
+function go(delta){ const st = S(CUR.n); st.step = Math.max(0, Math.min(CUR.steps.length-1, st.step+delta)); persist(); renderStep(); }
+function renderStep(){
+  clearTimers(); stopSpeak(); SAYS = []; view = {mode:"play", n:CUR.n};
+  const st = S(CUR.n), step = CUR.steps[st.step];
+  const blocks = CUR.parts.map(p=>p.name), bi = blocks.indexOf(step.b); st.parts = st.parts || [];
+  const d = st.data;
+  let h = `<div class="top"><button class="home" id="home">الرئيسية</button><div class="st">واجب الحصة ${CUR.n}</div><button class="home auto ${AUTO?'on':''}" id="auto">${SPK}<span>${AUTO?'القراءة التلقائية شغالة':'القراءة التلقائية واقفة'}</span></button><button class="home vhelp" id="vhelp">الصوت مش شغال؟</button></div>
+  <div class="blocks">${blocks.map((b,i)=>`<span class="${i===bi?'on':st.parts.includes(i)?'past':''}">${st.parts.includes(i)?'✓ ':''}${esc(b)}</span>`).join("")}</div>
+  <div class="card" id="card">${body(step, d)}</div>`;
+  app.innerHTML = h;
+  const last = st.step === CUR.steps.length-1;
+  let bar = document.getElementById("bar");
+  if (!bar){ bar = document.createElement("div"); bar.className="bar"; bar.id="bar"; document.body.appendChild(bar); }
+  bar.hidden = false;
+  bar.innerHTML = `<div class="in">${st.step>0?'<button class="back" id="back">السابق</button>':''}<button class="next" id="next">${last?'رجوع للرئيسية':'التالي'}</button><button class="idea" id="idea">فكرة؟</button></div>`;
+  $("#home").onclick = home;
+  if ($("#back")) $("#back").onclick = () => go(-1);
+  $("#next").onclick = () => { if (step.t==="partEnd" && !st.parts.includes(bi)) st.parts.push(bi); if (last){ if (!st.parts.includes(bi)) st.parts.push(bi); st.done = true; persist(); home(); } else go(1); };
+  $("#idea").onclick = openIdeas;
+  wire(step, d);
+  app.querySelectorAll("[data-say]").forEach(b => b.onclick = e => { e.stopPropagation(); speak(SAYS[+b.dataset.say]); });
+  app.querySelectorAll("[data-word]").forEach(b => b.onclick = () => speak(b.dataset.word));
+  $("#vhelp").onclick = openVoiceHelp;
+  $("#auto").onclick = () => { AUTO = !AUTO; try { localStorage.setItem("wones-auto", AUTO?"1":"0"); } catch(e){} if (!AUTO) stopSpeak(); lastAuto = ""; renderStep(); };
+  const auto = app.querySelector("[data-auto]");
+  if (AUTO && auto){ const key = CUR.n + ":" + st.step + ":" + auto.dataset.auto; if (key !== lastAuto){ lastAuto = key; speak(SAYS[+auto.dataset.say]); } }
+  scrollTo(0,0);
+}
+function home(){ const bar = document.getElementById("bar"); if (bar) bar.hidden = true; closeIdeas(); renderHome(); }
+function save(){ persist(); }
+
+/* ---------- step bodies ---------- */
+function body(s, d){
+  switch(s.t){
+  case "check": { const on = d[s.title+"-chk"]||[]; return `<span class="tag">البداية</span><h2>${esc(s.title)}</h2><p class="hint">دوس على كل حاجة بعد ما تعملها فعلًا.</p><div class="checks">${s.items.map((it,i)=>`<button class="chk ${on.includes(i)?'on':''}" data-i="${i}"><span class="box">${on.includes(i)?'✓':''}</span><span>${esc(it)}</span></button>`).join("")}</div>`; }
+  case "goal": return `<span class="tag">البداية</span><h2>هدف النهارده</h2><div class="goal">${esc(s.text)}</div><p class="hint">قول الهدف بصوتك قبل ما نبدأ.</p>`;
+  case "block": return `<div class="blockintro"><div class="num">بلوك ${s.n}</div><h2>${esc(s.name)}</h2><div class="phone">الموبايل: ${esc(s.phone)}</div>${timerHTML(s.mins*60)}<p class="hint">دوس «ابدأ» وإنت اللي تمسك الوقت.</p></div>`;
+  case "rest": return `<div class="restbox"><span class="tag">استراحة</span><div class="big2">استراحة دقيقتين</div><p>قوم من مكانك • اشرب مية • اتمطّط • وارجع لما التايمر يخلص</p>${timerHTML(120)}</div>`;
+  case "verses": return `<span class="tag">${esc(s.b)}</span><h2>${esc(s.title)}</h2>${s.hint?`<p class="hint">${esc(s.hint)}</p>`:''}<div class="verses">${s.lines.map(esc).join("<br>")}</div>`;
+  case "timed": { const tries = s.tries || 3, t = d[s.id] || []; const best = t.length ? Math.min(...t) : null;
+    return `<span class="tag">${esc(s.b)}</span><h2>${esc(s.title)}</h2>${s.hint?`<p class="hint">${esc(s.hint)}</p>`:`<p class="hint">دوس «ابدأ» واقرأ كل الكلمات بصوت، ودوس «خلصت» أول ما تخلص.</p>`}
+    <div class="words" ${s.quran?'style="grid-template-columns:1fr"':''}>${s.words.map(w=>`<button class="w" data-word="${esc(w)}" ${s.quran?'style="font-family:var(--f-quran);font-weight:400"':''}>${esc(w)}</button>`).join("")}</div>
+    <div class="timer" id="sw"><div class="clock" id="swc">0:00</div><button id="swb">ابدأ</button></div>
+    <div class="tries">${Array.from({length:tries},(_,i)=>`<div class="try ${t[i]!=null&&t[i]===best&&t.length>1?'best':''}">المرة ${["الأولى","التانية","التالتة"][i]}<b>${t[i]!=null?fmt(t[i]):'—'}</b></div>`).join("")}</div>
+    ${t.length>1 && t[t.length-1] < t[0] ? `<p class="score">أسرع بـ ${t[0]-t[t.length-1]} ثانية من أول مرة</p>`:''}`; }
+  case "q3": return `<span class="tag">الكتابة</span><h2>الأسئلة الثلاثة</h2><p class="hint">قبل ما تكتب أي حرف، اسأل نفسك:</p><div class="q3"><div><b>الشكل إيه؟</b><span>قارب • حوض • أسنان ...</span></div><div><b>كام نقطة؟</b><span>ولا واحدة • 1 • 2 • 3</span></div><div><b>النقط فين؟</b><span>فوق • تحت • جوه</span></div></div>`;
+  case "lcw": return lcwHTML(s, d);
+  case "build": return buildHTML(s, d);
+  case "info": return `<span class="tag">${esc(s.b)}</span><h2>${esc(s.title)}</h2>${s.html}`;
+  case "mirror": return mirrorHTML(s, d);
+  case "facing": return `<span class="tag">${esc(s.b)}</span><h2>${esc(s.title)}</h2><p class="hint">${esc(s.hint)}</p><div class="facing">${s.letters.map(([c,cue])=>`<div class="face" data-word="${esc(c+". "+cue)}" role="button" tabindex="0"><div class="ch">${c}</div><div class="arr">←</div><div class="cue">${esc(cue)}</div></div>`).join("")}</div>`;
+  case "match": return matchHTML(s, d);
+  case "count": { const a = d[s.id] || {}; return `<span class="tag">${esc(s.b)}</span><h2>${esc(s.title)}</h2><p class="hint">${esc(s.hint||"")}</p><div class="numq">${s.qs.map(([q,ans],i)=>`<div class="r ${a[i]==null?'':(+a[i]===ans?'ok':'no')}" data-i="${i}"><span>${esc(q)}</span><input type="number" inputmode="numeric" id="${s.id}-${i}" value="${a[i]??''}" aria-label="${esc(q)}"></div>`).join("")}</div><div class="fb" id="cfb"></div>`; }
+  case "choice": return choiceHTML(s, d);
+  case "dict": return dictHTML(s, d);
+  case "speed": return speedHTML(s, d);
+  case "reflect": { const r = d[s.id] || {}; return `<span class="tag">مهارة التركيز</span><h2>${esc(s.title)}</h2><div class="numq">${s.items.map((it,i)=>`<div class="r"><b>${esc(it)}</b><div class="actions"><button class="btn ${r[i]===1?'ok':'ghost'}" data-i="${i}" data-v="1">نفع</button><button class="btn ${r[i]===0?'no':'ghost'}" data-i="${i}" data-v="0">ما نفعش</button></div></div>`).join("")}</div><label class="hint" for="${s.id}-use">أنهي أداة هتستخدمها في مذاكرة المدرسة الأسبوع ده؟</label><input class="in" id="${s.id}-use" value="${esc(d[s.id+'-use']||'')}">`; }
+  case "skill": return `<span class="tag">مهارة التركيز</span><h2>${esc(s.name)}</h2><div class="skill"><div><b>إيه هي؟</b>${esc(s.what)}</div><div><b>ليه بتفيد؟</b>${esc(s.why)}</div><div><b>إزاي أستخدمها؟</b>${esc(s.how)}</div></div>`;
+  case "rating": { const r = d.rating; return `<span class="tag">الختام</span><h2>قيّم تركيزك النهارده</h2><div class="rate">${[1,2,3,4,5].map(i=>`<button class="${r===i?'on':''}" data-r="${i}" aria-label="${i} من 5">${i}</button>`).join("")}</div><div class="ends"><span>1 = فصلت أغلب الوقت</span><span>5 = ركزت طول الحصة</span></div><label for="helped">إيه اللي ساعدني أركز؟</label><textarea id="helped">${esc(d.helped||'')}</textarea><label for="distract">إيه اللي شتتني؟</label><textarea id="distract">${esc(d.distract||'')}</textarea>`; }
+  case "homework": return `<span class="tag">الختام</span><h2>واجب البيت</h2><p class="hint">10 دقايق بس. الواجب القصير اللي بيخلص أحسن من الطويل اللي بيتساب.</p><div class="checks">${s.items.map((it,i)=>`<div class="chk"><span class="box" style="border-color:var(--terra)"></span><span>${esc(it)}</span></div>`).join("")}</div>`;
+  case "done": return doneHTML(d);
+  case "partEnd": { const bi = CUR.parts.findIndex(p=>p.name===s.b); const nx = CUR.parts[bi+1]; return `<div class="restbox"><span class="tag">برافو</span><div class="big2">خلصت «${esc(s.b)}» ✓</div>${nx?`<p>الجزء الجاي: <b>${esc(nx.name)}</b>. تقدر تكمّل دلوقتي، أو ترجع له بكرة من الرئيسية.</p>`:''}</div>`; }
+  case "passage": { const tries = s.tries||2, t = d[s.id]||[]; return `<span class="tag">نص القراءة</span><h2>${esc(s.title)}</h2><p class="hint">${esc(s.hint)}</p><div class="actions">${say(s.text.replace(/\n/g," "), "اسمع النص")}</div><div class="passage">${s.text.split("\n").map(p=>`<p>${esc(p)}</p>`).join("")}</div><div class="timer" id="sw"><div class="clock" id="swc">0:00</div><button id="swb">ابدأ</button></div><div class="tries" style="grid-template-columns:repeat(${tries},1fr)">${Array.from({length:tries},(_,i)=>`<div class="try">المرة ${["الأولى","التانية","التالتة"][i]}<b>${t[i]!=null?fmt(t[i]):'—'}</b></div>`).join("")}</div>${t.length>1 && t[1] < t[0] ? `<p class="score">أسرع بـ ${t[0]-t[1]} ثانية في المرة التانية</p>`:''}`; }
+  case "order": return orderHTML(s, d);
+  case "write": return `<span class="tag">${esc(s.b)}</span><h2>${esc(s.title)}</h2><p class="hint">${esc(s.hint)}</p><div class="actions">${say(s.title+". "+s.hint, "اسمع المطلوب")}</div><textarea id="${s.id}" placeholder="${esc(s.ph||'')}" style="min-height:120px;font-size:19px">${esc(d[s.id]||'')}</textarea>`;
+  }
+  return "";
+}
+function timerHTML(secs){ return `<div class="timer" data-secs="${secs}"><div class="clock">${fmt(secs)}</div><button class="tbtn">ابدأ</button></div>`; }
+
+/* look-say-cover-write */
+function lcwHTML(s, d){
+  const r = d[s.id] || {i:0, res:[], phase:0}; const w = s.words[r.i];
+  if (r.i >= s.words.length){ const ok = r.res.filter(x=>x&&x.ok).length, right = r.res.filter(x=>x&&x.r).length;
+    return `<span class="tag">${esc(s.b)}</span><h2>${esc(s.title)}</h2><p class="score">صح ${ok} من ${s.words.length}${s.start?` • بدأت من اليمين ${right} من ${s.words.length}`:''}</p><div class="words">${s.words.map((x,i)=>`<div class="w" style="${r.res[i]&&r.res[i].ok?'border-color:var(--go)':'border-color:var(--bad)'}">${esc(x)}</div>`).join("")}</div><div class="actions"><button class="btn ghost" id="lcw-redo">أعيد التمرين</button></div>`; }
+  const ph = r.phase;
+  let inner;
+  if (ph === 0) inner = `<div class="big">${s.start?'<span class="startdot" style="position:absolute;right:0;top:50%;transform:translateY(-50%)"><i></i></span>':''}${esc(w)}</div><div class="actions">${say(w, "اسمع الكلمة")}</div><p class="hint" style="text-align:center">بص للكلمة وقولها بصوت${s.start?'. لاحظ: بتبدأ من النقطة الخضرا على اليمين':''}.</p><div class="actions"><button class="btn" id="lcw-cover">غطّيها وأنا هكتب</button></div>`;
+  else if (ph === 1) inner = `<div class="cover">اكتب الكلمة في الكراسة دلوقتي${s.start?'<br><b style="color:var(--go)">وابدأ من اليمين ←</b>':''}</div><div class="actions"><button class="btn" id="lcw-show">كتبت، اكشف الكلمة</button></div>`;
+  else inner = `<div class="big">${esc(w)}</div><p class="hint" style="text-align:center">قارن كتابتك: الحروف والنقط وشكل الحرف.</p>${s.start?`<div class="actions"><button class="btn ${r.right?'ok':'ghost'}" id="lcw-right">بدأت من اليمين ✓</button></div>`:''}<div class="actions"><button class="btn ok" id="lcw-ok">كتبتها صح</button><button class="btn no" id="lcw-no">فيها غلطة</button></div>`;
+  return `<span class="tag">${esc(s.b)}</span><h2>${esc(s.title)}</h2><div class="prog">الكلمة ${r.i+1} من ${s.words.length}</div>${inner}`;
+}
+/* build word */
+function buildHTML(s, d){
+  const r = d[s.id] || {i:0, res:[], shown:false};
+  if (r.i >= s.items.length){ const ok = r.res.filter(Boolean).length; return `<span class="tag">توصيل الحروف</span><h2>${esc(s.title)}</h2><p class="score">صح ${ok} من ${s.items.length}</p><div class="words">${s.items.map((it,i)=>`<div class="w" style="${r.res[i]?'border-color:var(--go)':'border-color:var(--bad)'}">${esc(it[1])}</div>`).join("")}</div><div class="actions"><button class="btn ghost" id="b-redo">أعيد التمرين</button></div>`; }
+  const it = s.items[r.i];
+  return `<span class="tag">توصيل الحروف</span><h2>${esc(s.title)}</h2><div class="prog">${r.i+1} من ${s.items.length}</div><p class="hint" style="text-align:center">اكتب الحروف دي متوصلة في الكراسة، وابدأ من اليمين.</p><div class="prompt" style="font-size:40px;letter-spacing:2px">${esc(it[0])}</div>`
+   + (r.shown ? `<div class="big" style="font-size:60px">${esc(it[1])}</div><div class="actions">${say(it[1], "اسمع الكلمة")}</div><p class="hint" style="text-align:center">${esc(it[2])}</p><div class="actions"><button class="btn ok" id="b-ok">كتبتها صح</button><button class="btn no" id="b-no">فيها غلطة</button></div>` : `<div class="actions"><button class="btn" id="b-show">كتبت، اكشف</button></div>`);
+}
+/* mirror */
+function mirrorHTML(s, d){
+  const r = d[s.id] || {i:0, score:0, ans:null};
+  if (r.i >= s.words.length) return `<span class="tag">صحّح المراية</span><h2>${esc(s.title)}</h2><p class="score">صح ${r.score} من ${s.words.length}</p><div class="actions"><button class="btn ghost" id="m-redo">أعيد</button></div>`;
+  const w = s.words[r.i], rightFirst = ((r.i*7+3)%2)===0;
+  const a = `<button class="opt" data-c="1"><span>${esc(w)}</span></button>`, b = `<button class="opt" data-c="0"><span class="mir">${esc(w)}</span></button>`;
+  return `<span class="tag">صحّح المراية</span><h2>${esc(s.title)}</h2><div class="prog">${r.i+1} من ${s.words.length}</div><p class="hint" style="text-align:center">واحدة مكتوبة صح، والتانية مقلوبة زي المراية. دوس على الصح.</p><div class="pair">${rightFirst?a+b:b+a}</div><div class="fb" id="mfb"></div>`;
+}
+/* match */
+function matchHTML(s, d){
+  const r = d[s.id] || {done:[]}; const meanings = shuffle(s.pairs.map(p=>p[1]), 11);
+  return `<span class="tag">${esc(s.b)}</span><h2>${esc(s.title)}</h2><p class="hint">دوس على الكلمة، وبعدين على معناها. كل ما تدوس هتسمعها.</p><div class="actions">${say(s.pairs.map(p=>p[0]).join("، "), "اسمع الكلمات")}${say(s.pairs.map(p=>p[1]).join("، "), "اسمع المعاني")}</div><div class="match"><div class="col">${s.pairs.map((p,i)=>`<button class="mi wordy ${r.done.includes(i)?'done':''}" data-w="${i}">${esc(p[0])}</button>`).join("")}</div><div class="col">${meanings.map(m=>{const i=s.pairs.findIndex(p=>p[1]===m);return `<button class="mi ${r.done.includes(i)?'done':''}" data-m="${i}">${esc(m)}</button>`}).join("")}</div></div><div class="fb ok">${r.done.length===s.pairs.length?'برافو! طابقت الكل':''}</div>`;
+}
+/* choice */
+function choiceHTML(s, d){
+  const r = d[s.id] || {i:0, score:0};
+  if (r.i >= s.items.length) return `<span class="tag">${esc(s.b)}</span><h2>${esc(s.title)}</h2><p class="score">صح ${r.score} من ${s.items.length}</p><div class="actions"><button class="btn ghost" id="c-redo">أعيد</button></div>`;
+  const it = s.items[r.i];
+  return `<span class="tag">${esc(s.b)}</span><h2>${esc(s.title)}</h2>${s.hint?`<p class="hint">${esc(s.hint)}</p>`:''}<div class="prog">${r.i+1} من ${s.items.length}</div>${s.hidePrompt?'':`<div class="prompt ${s.promptSmall?'psm':''}">${esc(it.p)}</div>`}<div class="actions">${say((s.hidePrompt?s.title:(s.promptSmall?it.p:s.title+". "+it.p)) + ". الاختيارات: " + it.o.join("، "), "اسمع السؤال").replace("class=\"say\"", "class=\"say\" data-auto=\"" + r.i + "\"")}</div><div class="choices">${it.o.map(o=>`<button class="opt ${s.small?'small':''}" data-o="${esc(o)}">${esc(o)}</button>`).join("")}</div><div class="fb" id="chfb"></div>`;
+}
+/* order words */
+function orderHTML(s, d){
+  const r = d[s.id] || {i:0, pick:[], score:0};
+  if (r.i >= s.items.length) return `<span class="tag">${esc(s.b)}</span><h2>${esc(s.title)}</h2><p class="score">صح ${r.score} من ${s.items.length}</p><div class="actions"><button class="btn ghost" id="o-redo">أعيد</button></div>`;
+  const words = s.items[r.i], mixed = shuffle(words.map((w,i)=>i), 13 + r.i*5);
+  return `<span class="tag">${esc(s.b)}</span><h2>${esc(s.title)}</h2><p class="hint">${esc(s.hint)}</p><div class="actions">${say(s.hint, "اسمع المطلوب")}</div><div class="prog">${r.i+1} من ${s.items.length}</div><div class="sent">${r.pick.length?r.pick.map(i=>`<span>${esc(words[i])}</span>`).join(" "):'<em>الجملة هتظهر هنا</em>'}</div><div class="chips">${mixed.map(i=>`<button class="chip" data-k="${i}" ${r.pick.includes(i)?'disabled':''}>${esc(words[i])}</button>`).join("")}</div><div class="actions"><button class="btn ghost" id="o-clear">امسح</button></div><div class="fb" id="ofb"></div>`;
+}
+/* dictation */
+function dictHTML(s, d){
+  const r = d[s.id] || {shown:false, ok:[]};
+  if (!r.shown) return `<span class="tag">قياس الأسبوع</span><h2>${esc(s.title)}</h2><p class="hint">${esc(s.hint)}</p><div class="cover">اسمع الكلمة من المعلّمة واكتبها في الكراسة<br>وقبل كل كلمة: الشكل إيه؟ كام نقطة؟ النقط فين؟</div><div class="actions"><button class="btn" id="d-show">خلصت، اكشف الكلمات</button></div>`;
+  return `<span class="tag">قياس الأسبوع</span><h2>${esc(s.title)}</h2><p class="hint">دوس على كل كلمة كتبتها صح.</p><div class="checks">${s.words.map((w,i)=>`<button class="chk ${r.ok.includes(i)?'on':''}" data-i="${i}"><span class="box">${r.ok.includes(i)?'✓':''}</span><span style="font-family:var(--f-word);font-size:24px;font-weight:700">${esc(w)}</span></button>`).join("")}</div><p class="score">${r.ok.length} من ${s.words.length}</p>`;
+}
+/* speed */
+function speedHTML(s, d){
+  const r = d[s.id] || {wins:0, tries:0};
+  return `<span class="tag">مين أسرع؟</span><h2>${esc(s.title)}</h2><p class="hint">دوس «ابدأ» واقرأ الكلمات كلها بصوت قبل ما الـ ${s.secs} ثانية يخلصوا. لو خلصت قبلها دوس «خلصت».</p><div class="words">${s.words.map(w=>`<div class="w">${esc(w)}</div>`).join("")}</div><div class="timer" id="sp"><div class="clock" id="spc">${fmt(s.secs)}</div><button id="spb">ابدأ</button></div><div class="fb" id="spfb">${r.tries?`كسبت ${r.wins} من ${r.tries} محاولات`:''}</div>`;
+}
+/* done */
+function doneHTML(d){
+  const lines = summaryLines(CUR, d);
+  return `<span class="tag">الختام</span><h2>خلصت واجب الحصة ${CUR.n}!</h2><p class="hint">${esc(SAVE.name||"")}، ابعت الملخص ده للمعلّمة.</p><div class="sum">${lines.map(([a,b])=>`<div><span>${esc(a)}</span><b>${esc(b)}</b></div>`).join("")}</div><div class="actions"><button class="btn" id="copy">انسخ الملخص</button></div><pre id="sumtxt" hidden></pre>`;
+}
+function summaryLines(sess, d){
+  const out = [];
+  sess.steps.forEach(s => {
+    const r = d[s.id];
+    if (s.t==="timed" && r && r.length) out.push([s.title.split(":")[0], r.map(fmt).join(" ← ")]);
+    if (s.t==="lcw" && r && r.res) out.push([s.title, `${r.res.filter(x=>x&&x.ok).length}/${s.words.length}` + (s.start?` • بدأت من اليمين ${r.res.filter(x=>x&&x.r).length}/${s.words.length}`:'')]);
+    if (s.t==="build" && r && r.res) out.push([s.title, `${r.res.filter(Boolean).length}/${s.items.length}`]);
+    if (s.t==="mirror" && r) out.push([s.title.split(":")[0], `${r.score}/${s.words.length}`]);
+    if (s.t==="choice" && r) out.push([s.title.split(":")[0], `${r.score}/${s.items.length}`]);
+    if (s.t==="match" && r) out.push([s.title, `${r.done.length}/${s.pairs.length}`]);
+    if (s.t==="passage" && r && r.length) out.push(["قراءة «"+s.title+"»", r.map(fmt).join(" ← ")]);
+    if (s.t==="order" && r) out.push([s.title.split(" ")[0]+" الجمل", `${r.score}/${s.items.length}`]);
+    if (s.t==="write" && d[s.id]) out.push([s.title, d[s.id]]);
+    if (s.t==="dict" && r && r.shown) out.push([s.title.split(":")[0], `${r.ok.length}/${s.words.length}`]);
+  });
+  out.push(["تقييم التركيز", d.rating ? d.rating+" من 5" : "—"]);
+  if (d.helped) out.push(["ساعدني", d.helped]);
+  if (d.distract) out.push(["شتتني", d.distract]);
+  const ideas = S(sess.n).ideas; if (ideas.length) out.push(["ركن الأفكار", ideas.length + " أفكار"]);
+  return out;
+}
+
+/* ---------- wiring ---------- */
+function rerender(){ save(); renderStep(); }
+function wire(s, d){
+  document.querySelectorAll(".timer[data-secs]").forEach(el => {
+    let left = +el.dataset.secs, run = null; const c = $(".clock", el), b = $(".tbtn", el);
+    b.onclick = () => {
+      if (run){ clearInterval(run); timers = timers.filter(t=>t!==run); run = null; b.textContent = "كمّل"; return; }
+      if (left <= 0){ left = +el.dataset.secs; el.classList.remove("end"); }
+      b.textContent = "وقّف";
+      run = setInterval(() => { left--; c.textContent = fmt(left); if (left <= 0){ clearInterval(run); run=null; el.classList.add("end"); c.textContent = "خلص!"; b.textContent = "من الأول"; chime(); } }, 1000);
+      timers.push(run);
+    };
+  });
+  switch(s.t){
+  case "check": app.querySelectorAll(".chk").forEach(b => b.onclick = () => { const k = s.title+"-chk"; const on = d[k] = d[k]||[]; const i=+b.dataset.i; const p = on.indexOf(i); p<0?on.push(i):on.splice(p,1); rerender(); }); break;
+  case "timed": { const b = $("#swb"), c = $("#swc"); let t0 = null, run = null; const tries = s.tries||3;
+    b.onclick = () => { const arr = d[s.id] = d[s.id]||[];
+      if (!run){ if (arr.length >= tries) arr.length = 0; t0 = Date.now(); b.textContent = "خلصت"; run = setInterval(()=>{ c.textContent = fmt((Date.now()-t0)/1000); }, 250); timers.push(run); }
+      else { clearInterval(run); run = null; arr.push(Math.round((Date.now()-t0)/1000)); rerender(); } }; break; }
+  case "lcw": { const r = d[s.id] = d[s.id] || {i:0,res:[],phase:0};
+    const nx = ok => { r.res[r.i] = {ok, r: !!r.right}; r.i++; r.phase = 0; r.right = false; rerender(); };
+    if ($("#lcw-cover")) $("#lcw-cover").onclick = () => { r.phase=1; rerender(); };
+    if ($("#lcw-show")) $("#lcw-show").onclick = () => { r.phase=2; rerender(); };
+    if ($("#lcw-right")) $("#lcw-right").onclick = () => { r.right=!r.right; rerender(); };
+    if ($("#lcw-ok")) $("#lcw-ok").onclick = () => nx(true);
+    if ($("#lcw-no")) $("#lcw-no").onclick = () => nx(false);
+    if ($("#lcw-redo")) $("#lcw-redo").onclick = () => { d[s.id] = {i:0,res:[],phase:0}; rerender(); };
+    break; }
+  case "build": { const r = d[s.id] = d[s.id] || {i:0,res:[],shown:false};
+    if ($("#b-show")) $("#b-show").onclick = () => { r.shown=true; rerender(); };
+    if ($("#b-ok")) $("#b-ok").onclick = () => { r.res[r.i]=true; r.i++; r.shown=false; rerender(); };
+    if ($("#b-no")) $("#b-no").onclick = () => { r.res[r.i]=false; r.i++; r.shown=false; rerender(); };
+    if ($("#b-redo")) $("#b-redo").onclick = () => { d[s.id] = {i:0,res:[],shown:false}; rerender(); };
+    break; }
+  case "mirror": { const r = d[s.id] = d[s.id] || {i:0,score:0};
+    if ($("#m-redo")) { $("#m-redo").onclick = () => { d[s.id]={i:0,score:0}; rerender(); }; break; }
+    let locked = false;
+    app.querySelectorAll(".pair .opt").forEach(b => b.onclick = () => { if (locked) return; locked = true; const ok = b.dataset.c==="1";
+      b.classList.add(ok?"right":"wrong"); if (!ok) app.querySelector('.pair .opt[data-c="1"]').classList.add("right");
+      const fb = $("#mfb"); fb.className = "fb " + (ok?"ok":"no"); fb.textContent = ok ? "صح! دي مكتوبة من اليمين" : "دي المقلوبة. الصح هي اللي باللون الأخضر";
+      if (ok) r.score++; setTimeout(()=>{ r.i++; rerender(); }, ok?900:1700); }); break; }
+  case "match": { const r = d[s.id] = d[s.id] || {done:[]}; let sel = null;
+    app.querySelectorAll("[data-w]").forEach(b => b.onclick = () => { speak(b.textContent); if (r.done.includes(+b.dataset.w)) return; app.querySelectorAll("[data-w]").forEach(x=>x.classList.remove("sel")); b.classList.add("sel"); sel = +b.dataset.w; });
+    app.querySelectorAll("[data-m]").forEach(b => b.onclick = () => { speak(b.textContent); if (sel==null) { toast("دوس على الكلمة الأول"); return; } const m = +b.dataset.m;
+      if (m === sel){ r.done.push(m); rerender(); } else { b.classList.add("shake"); setTimeout(()=>b.classList.remove("shake"), 600); } }); break; }
+  case "count": { const a = d[s.id] = d[s.id] || {};
+    s.qs.forEach(([q,ans],i) => { const inp = $("#"+s.id+"-"+i); inp.onchange = () => { a[i] = inp.value===''?null:+inp.value; const row = inp.closest(".r"); row.classList.remove("ok","no"); if (a[i]!=null) row.classList.add(a[i]===ans?"ok":"no"); const fb=$("#cfb"); fb.className="fb "+(a[i]===ans?"ok":"no"); fb.textContent = a[i]===ans?"صح!":"عُدّ تاني"; save(); }; }); break; }
+  case "choice": { const r = d[s.id] = d[s.id] || {i:0,score:0};
+    if ($("#c-redo")) { $("#c-redo").onclick = () => { d[s.id]={i:0,score:0}; rerender(); }; break; }
+    const it = s.items[r.i]; let locked = false;
+    app.querySelectorAll(".choices .opt").forEach(b => b.onclick = () => { if (locked) return; locked = true; const ok = b.dataset.o === it.a;
+      b.classList.add(ok?"right":"wrong"); if (!ok) app.querySelectorAll(".choices .opt").forEach(x=>{ if (x.dataset.o===it.a) x.classList.add("right"); });
+      const fb=$("#chfb"); fb.className="fb "+(ok?"ok":"no"); fb.textContent = ok?"صح!":"الصح باللون الأخضر"; if (ok) r.score++; setTimeout(()=>{ r.i++; rerender(); }, ok?800:1600); }); break; }
+  case "passage": { const b = $("#swb"), c = $("#swc"); let t0 = null, run = null; const tries = s.tries||2;
+    b.onclick = () => { const arr = d[s.id] = d[s.id]||[];
+      if (!run){ if (arr.length >= tries) arr.length = 0; t0 = Date.now(); b.textContent = "خلصت"; run = setInterval(()=>{ c.textContent = fmt((Date.now()-t0)/1000); }, 250); timers.push(run); }
+      else { clearInterval(run); run = null; arr.push(Math.round((Date.now()-t0)/1000)); rerender(); } }; break; }
+  case "write": { const ta = $("#"+s.id); ta.oninput = () => { d[s.id] = ta.value; save(); }; break; }
+  case "order": { const r = d[s.id] = d[s.id] || {i:0, pick:[], score:0};
+    if ($("#o-redo")) { $("#o-redo").onclick = () => { d[s.id] = {i:0,pick:[],score:0}; rerender(); }; break; }
+    const words = s.items[r.i];
+    $("#o-clear").onclick = () => { r.pick = []; rerender(); };
+    app.querySelectorAll(".chip").forEach(b => b.onclick = () => { r.pick.push(+b.dataset.k);
+      if (r.pick.length === words.length){ const ok = r.pick.every((k,i)=>k===i); save(); renderStep();
+        const fb = $("#ofb"); fb.className = "fb " + (ok?"ok":"no"); fb.textContent = ok ? "صح! جملة مظبوطة" : "الترتيب الصح: " + words.join(" "); speak(words.join(" "));
+        app.querySelectorAll(".chip").forEach(x=>x.disabled=true);
+        setTimeout(()=>{ if (ok) r.score++; r.i++; r.pick = []; rerender(); }, ok?1000:2400); }
+      else rerender(); }); break; }
+  case "dict": { const r = d[s.id] = d[s.id] || {shown:false, ok:[]};
+    if ($("#d-show")) $("#d-show").onclick = () => { r.shown = true; rerender(); };
+    app.querySelectorAll(".chk").forEach(b => b.onclick = () => { const i=+b.dataset.i, p=r.ok.indexOf(i); p<0?r.ok.push(i):r.ok.splice(p,1); rerender(); }); break; }
+  case "speed": { const r = d[s.id] = d[s.id] || {wins:0,tries:0}; const b = $("#spb"), c = $("#spc"), fb = $("#spfb"); let left = s.secs, run = null;
+    b.onclick = () => { if (!run){ left = s.secs; c.textContent = fmt(left); b.textContent = "خلصت"; fb.textContent=""; run = setInterval(()=>{ left--; c.textContent = fmt(left); if (left<=0){ clearInterval(run); run=null; r.tries++; save(); fb.className="fb no"; fb.textContent="الوقت خلص. جرّب تاني!"; b.textContent="جرّب تاني"; chime(); } }, 1000); timers.push(run); }
+      else { clearInterval(run); run=null; r.tries++; r.wins++; save(); fb.className="fb ok"; fb.textContent=`برافو! خلصت وفاضل ${left} ثانية`; b.textContent="جرّب أسرع"; } }; break; }
+  case "reflect": { const r = d[s.id] = d[s.id] || {};
+    app.querySelectorAll("[data-v]").forEach(b => b.onclick = () => { r[+b.dataset.i] = +b.dataset.v; rerender(); });
+    const u = $("#"+s.id+"-use"); u.oninput = () => { d[s.id+"-use"] = u.value; save(); }; break; }
+  case "rating": app.querySelectorAll("[data-r]").forEach(b => b.onclick = () => { d.rating = +b.dataset.r; rerender(); });
+    $("#helped").oninput = e => { d.helped = e.target.value; save(); }; $("#distract").oninput = e => { d.distract = e.target.value; save(); }; break;
+  case "done": $("#copy").onclick = () => { const txt = `${SAVE.name||'الطالب'} • واجب الحصة ${CUR.n}: ${CUR.title}\n` + summaryLines(CUR, d).map(([a,b])=>`${a}: ${b}`).join("\n");
+      const done = () => toast("اتنسخ. ابعته للمعلّمة");
+      try { navigator.clipboard.writeText(txt).then(done, () => fallbackCopy(txt)); } catch(e){ fallbackCopy(txt); } }; break;
+  }
+}
+function fallbackCopy(txt){ const p = $("#sumtxt"); p.hidden = false; p.textContent = txt; p.style.whiteSpace="pre-wrap"; p.style.background="var(--bg)"; p.style.padding="12px"; p.style.borderRadius="12px"; const r = document.createRange(); r.selectNodeContents(p); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); toast("حدد النص وانسخه"); }
+
+/* ---------- ideas parking ---------- */
+function openIdeas(){
+  closeIdeas(); const st = S(CUR.n);
+  const p = document.createElement("div"); p.className = "ideas"; p.id = "ideas";
+  p.innerHTML = `<div class="in2"><b style="color:var(--terra)">ركن الأفكار</b><span class="hint">اكتب الفكرة بكلمة واحدة وارجع لشغلك. هنتكلم فيها آخر الحصة.</span><input class="in" id="idea-in" placeholder="الفكرة..." aria-label="الفكرة"><div class="actions"><button class="btn" id="idea-save">احفظ وارجع</button><button class="btn ghost" id="idea-close">إلغاء</button></div>${st.ideas.length?`<ul>${st.ideas.map(i=>`<li>${esc(i)}</li>`).join("")}</ul>`:''}</div>`;
+  document.body.appendChild(p); const inp = $("#idea-in"); inp.focus();
+  const sv = () => { const v = inp.value.trim(); if (v){ st.ideas.push(v); save(); toast("اتحفظت. يلا نكمّل"); } closeIdeas(); };
+  $("#idea-save").onclick = sv; inp.onkeydown = e => { if (e.key==="Enter") sv(); }; $("#idea-close").onclick = closeIdeas;
+}
+function closeIdeas(){ const p = document.getElementById("ideas"); if (p) p.remove(); }
+
+/* ---------- student name ---------- */
+function askName(){
+  clearTimers(); const bar = document.getElementById("bar"); if (bar) bar.hidden = true;
+  app.innerHTML = `<div class="brand"><b>واجبات رحلة ونس</b><span>رحلة ونس • أ. سالمة سيد</span></div>
+  <div class="card" style="margin-top:30px"><h2>أهلًا بيك!</h2><label for="nm" class="hint">اكتب اسمك عشان يظهر في الملخص اللي بتبعته للمعلّمة.</label>
+  <input class="in" id="nm" style="font-size:22px" value="${esc(SAVE.name||"")}" placeholder="اسمك" autocomplete="given-name">
+  <div class="actions"><button class="btn" id="nm-go">يلا نبدأ</button></div></div>`;
+  const i = $("#nm"), g = () => { const v = i.value.trim(); if (!v) { toast("اكتب اسمك الأول"); return; } SAVE.name = v.slice(0,40); persist(); renderHome(); };
+  $("#nm-go").onclick = g; i.onkeydown = e => { if (e.key==="Enter") g(); }; i.focus();
+}
+/* ---------- boot ---------- */
+if (SAVE.name) renderHome(); else askName();
+})();
+</script>
+
+</body>
+</html>
