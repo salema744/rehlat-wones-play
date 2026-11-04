@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>طلاقة القراءة</title>
+<script data-goatcounter="https://rehlatwones.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@500;700&family=Noto+Naskh+Arabic:wght@400;600&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap">
+<style>
+body{margin:0}[hidden]{display:none!important}
+
+/* Layout: sticky stopwatch strip on top, the reading page as the one big surface, progress below */
+:root{
+  --bg:#FBF8F1; --surface:#FFFFFF; --ink:#2A2A1C; --muted:#6B6A52; --line:#E3DECB;
+  --teal:#64663A; --teal-soft:#ECEDDC; --sun:#C97735; --sun-soft:#F8E7D6;
+  --err:#B4452F; --err-soft:#F7E0DA; --ok:#3B7A4C;
+  --f-display:"Reem Kufi","IBM Plex Sans Arabic",Tahoma,sans-serif;
+  --f-read:"Noto Naskh Arabic","Traditional Arabic","Times New Roman",serif;
+  --f-ui:"IBM Plex Sans Arabic",Tahoma,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#1A1B13; --surface:#24251B; --ink:#EEEBDC; --muted:#AAA88E; --line:#393A2B;
+  --teal:#AEB274; --teal-soft:#31331F; --sun:#E4975E; --sun-soft:#3D2A1A;
+  --err:#EE8B76; --err-soft:#3D221C; --ok:#80C492; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1A1B13; --surface:#24251B; --ink:#EEEBDC; --muted:#AAA88E; --line:#393A2B;
+  --teal:#AEB274; --teal-soft:#31331F; --sun:#E4975E; --sun-soft:#3D2A1A;
+  --err:#EE8B76; --err-soft:#3D221C; --ok:#80C492; color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-ui);font-size:15px;line-height:1.6}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+.wrap{max-width:860px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:18px 28px;display:flex;flex-direction:column;gap:16px}
+h1,h2{font-family:var(--f-display);margin:0;text-wrap:balance}
+h1{font-size:1.6rem;color:var(--teal)}
+h2{font-size:1.15rem}
+button,select,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+.top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px}
+.sub{color:var(--muted);font-size:.9rem;margin:0}
+.student{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.student select,.field{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:7px 10px;min-width:0}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:7px 12px}
+.btn.primary{background:var(--teal);border-color:var(--teal);color:var(--surface);font-weight:600}
+.btn.danger{color:var(--err);border-color:var(--err)}
+.btn.small{padding:4px 9px;font-size:.85rem}
+.levels{display:flex;gap:6px;flex-wrap:wrap}
+.lv{border:1px solid var(--line);background:transparent;border-radius:999px;padding:5px 14px;font-weight:500}
+.lv[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.texts{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}
+.tcard{flex:0 0 auto;text-align:right;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:8px 14px;display:flex;flex-direction:column;gap:2px}
+.tcard b{font-family:var(--f-read);font-weight:600;font-size:1rem}
+.tcard span{color:var(--muted);font-size:.8rem}
+.tcard[aria-pressed="true"]{border-color:var(--teal);box-shadow:inset 0 0 0 1px var(--teal);background:var(--teal-soft)}
+.watch{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px 14px;display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.clock{font-family:var(--f-ui);font-variant-numeric:tabular-nums;font-size:2.3rem;font-weight:600;line-height:1;min-width:5ch;color:var(--ink)}
+.watch.running .clock{color:var(--teal)}
+.watch.pick .clock{color:var(--sun)}
+.go{font-size:1.05rem;padding:10px 22px;border-radius:12px}
+.hint{flex:1 1 200px;color:var(--muted);font-size:.9rem;min-width:0}
+.opts{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.seg button{border:0;background:var(--surface);padding:6px 12px}
+.seg button[aria-pressed="true"]{background:var(--teal);color:var(--surface)}
+.chk{display:inline-flex;gap:6px;align-items:center}
+.page{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px clamp(14px,4vw,34px) 26px}
+.page h2{font-family:var(--f-read);font-size:1.4rem;margin-bottom:12px;color:var(--teal)}
+.reading{font-family:var(--f-read);line-height:2.3;word-spacing:.08em}
+.w{display:inline;padding:1px 3px;border-radius:6px;cursor:pointer;transition:background .15s}
+.w:hover{background:var(--teal-soft)}
+.w.err{background:var(--err-soft);color:var(--err);text-decoration:underline wavy var(--err);text-underline-offset:6px}
+.w.unread{opacity:.32}
+.w.last{background:var(--sun-soft);box-shadow:0 0 0 2px var(--sun)}
+.sep{color:var(--sun);font-weight:600;padding:0 .3em}
+.nochunks .sep{display:none}
+.result{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+@media (max-width:520px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.stat{border:1px solid var(--line);border-radius:12px;padding:10px;display:flex;flex-direction:column;gap:2px}
+.stat span{color:var(--muted);font-size:.8rem}
+.stat b{font-size:1.5rem;font-variant-numeric:tabular-nums}
+.stat.main{background:var(--teal-soft);border-color:var(--teal)}
+.stat.main b{color:var(--teal)}
+.cmp{margin:0;font-weight:500}
+.cmp.up{color:var(--ok)} .cmp.down{color:var(--muted)}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.progress{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.chartbox{overflow-x:auto}
+.chartbox svg{display:block;width:100%;min-width:300px;height:auto}
+.empty{color:var(--muted);margin:0}
+.tbl{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.88rem;font-variant-numeric:tabular-nums}
+th,td{text-align:right;padding:6px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{color:var(--muted);font-weight:500}
+td.k{color:var(--muted)}
+.x{border:0;background:transparent;color:var(--muted);font-size:1rem;padding:2px 6px}
+details{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px 16px}
+summary{cursor:pointer;font-weight:600}
+.form{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+textarea.field{min-height:110px;font-family:var(--f-read);font-size:1.05rem;line-height:1.9}
+.back{background:none;border:1px solid var(--line);border-radius:999px;padding:6px 14px;color:var(--teal);font-weight:500;text-decoration:none;align-self:flex-start}
+.back:hover{background:var(--teal-soft)}
+.credit{text-align:center;color:var(--muted);font-size:.78rem;margin-top:4px}
+.note{font-size:.85rem;color:var(--muted);margin:0}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap" dir="rtl" lang="ar">
+  <a class="back" href="./">→ الرئيسية</a>
+  <header class="top">
+    <div>
+      <h1>تدريب طلاقة القراءة</h1>
+      <p class="sub">اقرأ النص، وسجّل الوقت، واضغط على أي كلمة فيها خطأ.</p>
+    </div>
+    <div class="student" id="studentBox"></div>
+  </header>
+
+  <nav class="levels" id="levels" aria-label="المستويات"></nav>
+  <div class="texts" id="texts"></div>
+
+  <section class="watch" id="watch" aria-live="polite">
+    <div class="clock" id="clock">٠٠:٠٠</div>
+    <button class="btn primary go" id="goBtn">ابدأ</button>
+    <button class="btn" id="resetBtn">إعادة</button>
+    <p class="hint" id="hint"></p>
+  </section>
+
+  <div class="opts">
+    <div class="seg" role="group" aria-label="طريقة القياس">
+      <button id="mFull" aria-pressed="true">النص كامل</button>
+      <button id="mMin" aria-pressed="false">دقيقة واحدة</button>
+    </div>
+    <select class="field" id="kind" aria-label="نوع المحاولة">
+      <option value="first">قراءة أولى</option>
+      <option value="echo">بعد القراءة بالصدى</option>
+      <option value="solo">قراءة مستقلة</option>
+      <option value="expr">قراءة بتعبير</option>
+      <option value="review">مراجعة نص قديم</option>
+    </select>
+    <label class="chk"><input type="checkbox" id="chunks" checked> إظهار التقطيع</label>
+    <div class="seg" role="group" aria-label="حجم الخط">
+      <button id="fMinus" aria-label="تصغير الخط">ا−</button>
+      <button id="fPlus" aria-label="تكبير الخط">ا+</button>
+    </div>
+  </div>
+
+  <article class="page" id="page">
+    <h2 id="tTitle"></h2>
+    <div class="reading" id="reading"></div>
+  </article>
+
+  <section class="result" id="result" hidden></section>
+
+  <section class="progress">
+    <h2>التقدّم في هذا النص</h2>
+    <div id="progress"></div>
+  </section>
+
+  <details id="addBox">
+    <summary>إضافة نص من عندك</summary>
+    <div class="form">
+      <input class="field" id="cTitle" placeholder="عنوان النص">
+      <select class="field" id="cLevel">
+        <option value="1">المستوى ١</option><option value="2">المستوى ٢</option>
+        <option value="3">المستوى ٣</option><option value="4">المستوى ٤</option>
+        <option value="5">المستوى ٥</option><option value="6">المستوى ٦</option>
+      </select>
+      <textarea class="field" id="cBody" placeholder="اكتب النص هنا… وافصل بين العبارات بعلامة / لو عايز تقطيع"></textarea>
+      <div class="row"><button class="btn primary" id="cSave">حفظ النص</button><span class="note" id="cMsg"></span></div>
+    </div>
+  </details>
+
+  <p class="credit">إعداد: رحلة ونس - أ. سالمة سيد</p>
+</div>
+
+<script>
+document.documentElement.lang='ar';
+const KEY='wones-fluency-v1';
+const BUILT=[
+ {id:'t1',level:1,title:'القِطَّةُ الصَّغِيرَةُ',body:'ذَهَبَتْ مَرْيَمُ | إِلَى الحَدِيقَةِ. | رَأَتْ قِطَّةً صَغِيرَةً | تَحْتَ الشَّجَرَةِ. | كَانَتِ القِطَّةُ جَائِعَةً. | أَحْضَرَتْ مَرْيَمُ | قَلِيلًا مِنَ الحَلِيبِ. | شَرِبَتِ القِطَّةُ | وَنَامَتْ سَعِيدَةً.'},
+ {id:'t2',level:1,title:'يَوْمٌ مُمْطِرٌ',body:'اسْتَيْقَظَ يُوسُفُ | فِي الصَّبَاحِ. | نَظَرَ مِنَ النَّافِذَةِ | فَرَأَى المَطَرَ. | لَبِسَ مِعْطَفَهُ | وَأَخَذَ مِظَلَّتَهُ. | مَشَى إِلَى المَدْرَسَةِ | وَهُوَ يُغَنِّي.'},
+ {id:'t3',level:2,title:'فِي السُّوقِ',body:'فِي يَوْمِ الجُمُعَةِ | ذَهَبَتْ لَيْلَى مَعَ أُمِّهَا | إِلَى السُّوقِ. | كَانَ السُّوقُ مُزْدَحِمًا | وَمَلِيئًا بِالأَلْوَانِ. | اشْتَرَتِ الأُمُّ | طَمَاطِمَ حَمْرَاءَ | وَخِيَارًا أَخْضَرَ | وَبُرْتُقَالًا. | سَاعَدَتْ لَيْلَى أُمَّهَا | فِي حَمْلِ الأَكْيَاسِ. | وَفِي طَرِيقِ العَوْدَةِ | اشْتَرَتْ لَهَا الأُمُّ | كُوبًا مِنَ العَصِيرِ.'},
+ {id:'t4',level:2,title:'الصَّدِيقُ الجَدِيدُ',body:'جَاءَ إِلَى فَصْلِنَا | طَالِبٌ جَدِيدٌ | اسْمُهُ آدَمُ. | كَانَ يَجْلِسُ وَحْدَهُ | وَيَبْدُو خَجُولًا. | فِي الفُسْحَةِ | دَعَاهُ عُمَرُ | لِيَلْعَبَ مَعَنَا الكُرَةَ. | ابْتَسَمَ آدَمُ | وَرَكَضَ مَعَنَا فِي المَلْعَبِ. | وَمُنْذُ ذَلِكَ اليَوْمِ | أَصْبَحَ آدَمُ | صَدِيقًا لَنَا جَمِيعًا.'},
+ {id:'t5',level:3,title:'النَّحْلَةُ العَامِلَةُ',body:'تَعِيشُ النَّحْلَةُ | فِي خَلِيَّةٍ كَبِيرَةٍ | مَعَ آلَافِ النَّحَلَاتِ. | تَخْرُجُ كُلَّ صَبَاحٍ | لِتَبْحَثَ عَنِ الأَزْهَارِ. | تَجْمَعُ الرَّحِيقَ | وَتَعُودُ بِهِ إِلَى الخَلِيَّةِ | لِتَصْنَعَ مِنْهُ العَسَلَ. | وَحِينَ تَنْتَقِلُ النَّحْلَةُ | مِنْ زَهْرَةٍ إِلَى أُخْرَى | تَحْمِلُ حُبُوبَ اللِّقَاحِ | فَتُسَاعِدُ النَّبَاتَاتِ | عَلَى النُّمُوِّ. | فَالنَّحْلَةُ صَغِيرَةُ الحَجْمِ | لَكِنَّ فَائِدَتَهَا كَبِيرَةٌ.'},
+ {id:'t6',level:3,title:'رِحْلَةٌ إِلَى البَحْرِ',body:'فِي الصَّيْفِ المَاضِي | سَافَرَتْ عَائِلَتِي | إِلَى مَدِينَةِ الإِسْكَنْدَرِيَّةِ. | كَانَ البَحْرُ أَزْرَقَ صَافِيًا | وَالهَوَاءُ مُنْعِشًا. | بَنَيْتُ مَعَ أَخِي | قَلْعَةً كَبِيرَةً مِنَ الرَّمْلِ | وَزَيَّنَّاهَا بِالأَصْدَافِ. | وَفِي المَسَاءِ | جَلَسْنَا عَلَى الشَّاطِئِ | نُشَاهِدُ غُرُوبَ الشَّمْسِ | وَنَأْكُلُ الذُّرَةَ المَشْوِيَّةَ. | كَانَتْ أَيَّامًا جَمِيلَةً | لَنْ أَنْسَاهَا أَبَدًا.'},
+ {id:'t7',level:4,title:'المَاءُ سِرُّ الحَيَاةِ',body:'المَاءُ أَسَاسُ الحَيَاةِ عَلَى الأَرْضِ، | فَلَا يَسْتَطِيعُ الإِنْسَانُ وَلَا الحَيَوَانُ وَلَا النَّبَاتُ | أَنْ يَعِيشَ بِدُونِهِ. | يُغَطِّي المَاءُ أَكْثَرَ مِنْ ثُلُثَيْ سَطْحِ الأَرْضِ، | لَكِنَّ مُعْظَمَهُ مَالِحٌ | لَا يَصْلُحُ لِلشُّرْبِ. | لِذَلِكَ يَجِبُ عَلَيْنَا | أَنْ نُحَافِظَ عَلَى المَاءِ العَذْبِ | وَلَا نُسْرِفَ فِي اسْتِخْدَامِهِ. | نَسْتَطِيعُ أَنْ نُغْلِقَ الصُّنْبُورَ | أَثْنَاءَ تَنْظِيفِ أَسْنَانِنَا، | وَأَنْ نُصْلِحَ أَيَّ تَسْرِيبٍ فِي البَيْتِ بِسُرْعَةٍ. | هَذِهِ أَفْعَالٌ بَسِيطَةٌ، | لَكِنَّهَا تَصْنَعُ فَرْقًا كَبِيرًا | إِذَا قَامَ بِهَا كُلُّ النَّاسِ.'},
+ {id:'t8',level:4,title:'الصَّبْرُ طَرِيقُ النَّجَاحِ',body:'كَانَ هُنَاكَ شَابٌّ | يَحْلُمُ أَنْ يُصْبِحَ رَسَّامًا مَاهِرًا. | فِي البِدَايَةِ | كَانَتْ رُسُومَاتُهُ بَسِيطَةً، | وَكَانَ بَعْضُ أَصْدِقَائِهِ يَضْحَكُونَ مِنْهَا. | لَكِنَّهُ لَمْ يَسْتَسْلِمْ، | وَظَلَّ يَتَدَرَّبُ كُلَّ يَوْمٍ | سَاعَةً وَاحِدَةً عَلَى الأَقَلِّ. | مَرَّتِ السَّنَوَاتُ، | وَتَحَسَّنَتْ رُسُومَاتُهُ شَيْئًا فَشَيْئًا، | حَتَّى أُقِيمَ لَهُ مَعْرِضٌ كَبِيرٌ | فِي وَسَطِ المَدِينَةِ. | وَقَفَ أَمَامَ لَوْحَاتِهِ مُبْتَسِمًا وَقَالَ: | النَّجَاحُ لَا يَأْتِي فَجْأَةً، | بَلْ يَأْتِي بِالصَّبْرِ وَالتَّدْرِيبِ.'},
+ {id:'t9',level:5,title:'الرِّسَالَةُ القَدِيمَةُ',body:'بَيْنَمَا كَانَتْ نُورُ تُرَتِّبُ خِزَانَةَ جَدَّتِهَا | وَجَدَتْ صُنْدُوقًا خَشَبِيًّا صَغِيرًا | مُغَطًّى بِطَبَقَةٍ رَقِيقَةٍ مِنَ الغُبَارِ. | فَتَحَتْهُ بِحَذَرٍ، | فَوَجَدَتْ بِدَاخِلِهِ رِسَالَةً مَطْوِيَّةً | اصْفَرَّتْ أَطْرَافُهَا مَعَ مُرُورِ السِّنِينَ. | كَانَ الخَطُّ جَمِيلًا وَمَائِلًا قَلِيلًا، | وَفِي أَعْلَى الصَّفْحَةِ تَارِيخٌ قَدِيمٌ | يَعُودُ إِلَى أَكْثَرَ مِنْ خَمْسِينَ عَامًا. | قَرَأَتِ السَّطْرَ الأَوَّلَ بِصَوْتٍ مُنْخَفِضٍ: | «إِلَى صَدِيقَتِي العَزِيزَةِ، لَا تَقْلَقِي، | سَأَعُودُ قَبْلَ أَنْ يَتَفَتَّحَ اليَاسَمِينُ». | رَفَعَتْ نُورُ عَيْنَيْهَا نَحْوَ النَّافِذَةِ، | حَيْثُ كَانَتْ شَجَرَةُ اليَاسَمِينِ فِي الحَدِيقَةِ | تَتَمَايَلُ مَعَ نَسَمَاتِ المَسَاءِ. | تَسَاءَلَتْ فِي نَفْسِهَا: | مَنْ كَتَبَ هَذِهِ الرِّسَالَةَ؟ | وَهَلْ عَادَ حَقًّا كَمَا وَعَدَ؟ | أَعَادَتِ الرِّسَالَةَ إِلَى مَكَانِهَا، | وَقَرَّرَتْ أَنْ تَسْأَلَ جَدَّتَهَا عَنْ سِرِّهَا فِي الصَّبَاحِ.'},
+ {id:'t10',level:5,title:'لَيْلَةُ العَاصِفَةِ',body:'اشْتَدَّتِ الرِّيَاحُ فَجْأَةً، | وَبَدَأَتْ قَطَرَاتُ المَطَرِ الثَّقِيلَةُ | تَضْرِبُ زُجَاجَ النَّوَافِذِ بِعُنْفٍ. | انْقَطَعَتِ الكَهْرَبَاءُ عَنِ البَيْتِ كُلِّهِ، | فَسَادَ ظَلَامٌ دَامِسٌ | لَا يَقْطَعُهُ إِلَّا ضَوْءُ البَرْقِ بَيْنَ الحِينِ وَالآخَرِ. | تَجَمَّعَ الإِخْوَةُ الثَّلَاثَةُ فِي غُرْفَةِ المَعِيشَةِ، | وَأَشْعَلَ أَكْبَرُهُمْ شَمْعَةً صَغِيرَةً | وَضَعَهَا فِي مُنْتَصَفِ الطَّاوِلَةِ. | قَالَ أَصْغَرُهُمْ بِصَوْتٍ مُرْتَجِفٍ: | «هَلْ سَمِعْتُمْ هَذَا الصَّوْتَ؟». | أَنْصَتَ الجَمِيعُ فِي صَمْتٍ، | فَإِذَا بِطَرَقَاتٍ خَفِيفَةٍ مُتَقَطِّعَةٍ | تَأْتِي مِنْ جِهَةِ البَابِ الخَلْفِيِّ. | تَبَادَلُوا النَّظَرَاتِ القَلِقَةَ، | ثُمَّ نَهَضَ أَوْسَطُهُمْ مُمْسِكًا بِالمِصْبَاحِ اليَدَوِيِّ، | وَتَقَدَّمَ بِخُطُوَاتٍ بَطِيئَةٍ نَحْوَ البَابِ. | فَتَحَهُ بِبُطْءٍ شَدِيدٍ، | فَوَجَدَ قِطًّا مُبَلَّلًا يَرْتَجِفُ مِنَ البَرْدِ، | يَنْظُرُ إِلَيْهِ بِعَيْنَيْنِ وَاسِعَتَيْنِ | كَأَنَّهُ يَطْلُبُ الإِذْنَ بِالدُّخُولِ.'},
+ {id:'t11',level:6,title:'بَيْتُ الجَدَّةِ',body:'لَمْ يَكُنْ بَيْتُ جَدَّتِي مُجَرَّدَ جُدْرَانٍ وَسَقْفٍ، | بَلْ كَانَ عَالَمًا كَامِلًا | تَسْكُنُهُ الحِكَايَاتُ وَالرَّوَائِحُ وَالأَصْوَاتُ. | مَا زِلْتُ أَذْكُرُ رَائِحَةَ الخُبْزِ السَّاخِنِ | الَّتِي كَانَتْ تَتَسَلَّلُ مِنَ المَطْبَخِ مَعَ أُولَى خُيُوطِ الفَجْرِ، | وَصَوْتَ المِذْيَاعِ القَدِيمِ | وَهُوَ يَبُثُّ أُغْنِيَاتٍ لَا أَعْرِفُ أَسْمَاءَهَا | لَكِنَّنِي أَحْفَظُ أَلْحَانَهَا عَنْ ظَهْرِ قَلْبٍ. | كَانَتْ جَدَّتِي تَجْلِسُ كُلَّ مَسَاءٍ | عَلَى كُرْسِيِّهَا الخَشَبِيِّ فِي الشُّرْفَةِ، | تُرَاقِبُ المَارَّةَ وَتُحَيِّيهِمْ بِأَسْمَائِهِمْ، | كَأَنَّ الحَيَّ كُلَّهُ عَائِلَتُهَا الكَبِيرَةُ. | وَحِينَ كُنَّا نَلْتَفُّ حَوْلَهَا، | كَانَتْ تَبْدَأُ حِكَايَاتِهَا بِجُمْلَةٍ وَاحِدَةٍ لَا تَتَغَيَّرُ، | ثُمَّ تَأْخُذُنَا إِلَى أَزْمِنَةٍ بَعِيدَةٍ | وَأَمَاكِنَ لَمْ نَرَهَا قَطُّ. | كَبِرْتُ الآنَ، | وَتَغَيَّرَتْ مَلَامِحُ الحَيِّ، | وَأُغْلِقَ البَيْتُ مُنْذُ سَنَوَاتٍ. | لَكِنَّنِي كُلَّمَا شَمَمْتُ رَائِحَةَ خُبْزٍ سَاخِنٍ | أَوْ سَمِعْتُ لَحْنًا قَدِيمًا، | عُدْتُ طِفْلًا صَغِيرًا | يَجْلِسُ عِنْدَ قَدَمَيْهَا | مُنْتَظِرًا أَنْ تَبْدَأَ الحِكَايَةُ.'},
+ {id:'t12',level:6,title:'المَكْتَبَةُ المَهْجُورَةُ',body:'فِي آخِرِ الشَّارِعِ القَدِيمِ | كَانَتْ هُنَاكَ مَكْتَبَةٌ مَهْجُورَةٌ | أَغْلَقَتْ أَبْوَابَهَا مُنْذُ زَمَنٍ طَوِيلٍ، | وَصَارَتْ نَوَافِذُهَا المُغْبَرَّةُ | تَعْكِسُ ضَوْءَ الشَّمْسِ بِلَوْنٍ بَاهِتٍ. | كَانَ أَهْلُ الحَيِّ يَتَحَاشَوْنَ المُرُورَ أَمَامَهَا، | وَيَتَنَاقَلُونَ عَنْهَا قِصَصًا غَرِيبَةً | لَا يَعْرِفُ أَحَدٌ مَصْدَرَهَا. | أَمَّا سَلِيمٌ فَلَمْ يَكُنْ يُصَدِّقُ تِلْكَ القِصَصَ، | وَكَانَ الفُضُولُ يَدْفَعُهُ كُلَّ يَوْمٍ | إِلَى الوُقُوفِ أَمَامَ بَابِهَا الحَدِيدِيِّ لِدَقَائِقَ. | وَفِي صَبَاحِ أَحَدِ الأَيَّامِ | لَاحَظَ أَنَّ البَابَ مَفْتُوحٌ قَلِيلًا. | تَرَدَّدَ لَحْظَةً، | ثُمَّ دَفَعَهُ بِيَدِهِ فَانْفَتَحَ بِصَرِيرٍ طَوِيلٍ. | وَجَدَ الرُّفُوفَ مُمْتَلِئَةً بِالكُتُبِ | مُرَتَّبَةً تَرْتِيبًا دَقِيقًا، | وَكَأَنَّ أَحَدًا يَعْتَنِي بِهَا كُلَّ يَوْمٍ. | وَعَلَى الطَّاوِلَةِ الكَبِيرَةِ فِي المُنْتَصَفِ | كَانَ هُنَاكَ كِتَابٌ مَفْتُوحٌ، | وَبِجَانِبِهِ فِنْجَانُ شَايٍ | مَا زَالَ البُخَارُ يَتَصَاعَدُ مِنْهُ. | شَعَرَ سَلِيمٌ بِقُشَعْرِيرَةٍ تَسْرِي فِي جَسَدِهِ، | لَكِنَّهُ اقْتَرَبَ مِنَ الكِتَابِ رَغْمَ خَوْفِهِ، | فَقَرَأَ فِي أَعْلَى الصَّفْحَةِ | اسْمَهُ مَكْتُوبًا بِخَطٍّ أَنِيقٍ.'},
+ {id:'t13',level:1,title:'العُصْفُورُ',body:'عَلَى الشُّبَّاكِ | عُصْفُورٌ صَغِيرٌ. | لَوْنُهُ أَصْفَرُ جَمِيلٌ. | يُغَرِّدُ كُلَّ صَبَاحٍ. | وَضَعَ عَلِيٌّ لَهُ | حَبَّاتٍ مِنَ القَمْحِ. | أَكَلَ العُصْفُورُ | وَطَارَ فَرْحَانَ.'},
+ {id:'t14',level:1,title:'حَدِيقَةُ البَيْتِ',body:'فِي بَيْتِنَا | حَدِيقَةٌ صَغِيرَةٌ. | فِيهَا وَرْدٌ أَحْمَرُ | وَشَجَرَةُ لَيْمُونٍ. | تَسْقِي هِنْدُ الوَرْدَ | كُلَّ يَوْمٍ. | وَأَنَا أَجْمَعُ اللَّيْمُونَ | مَعَ أَبِي.'},
+ {id:'t15',level:1,title:'الكُرَةُ الحَمْرَاءُ',body:'لَعِبَ سَامِي | بِالكُرَةِ الحَمْرَاءِ. | رَمَى الكُرَةَ عَالِيًا | فَوَقَعَتْ فَوْقَ الشَّجَرَةِ. | حَزِنَ سَامِي كَثِيرًا. | جَاءَ أَخُوهُ الكَبِيرُ | وَأَنْزَلَ الكُرَةَ. | شَكَرَهُ سَامِي | وَعَادَ يَلْعَبُ.'},
+ {id:'t16',level:2,title:'عِيدُ مِيلَادِ جَدِّي',body:'اليَوْمَ عِيدُ مِيلَادِ جَدِّي. | صَنَعَتْ أُمِّي | كَعْكَةً كَبِيرَةً بِالشُّوكُولَاتَةِ. | وَرَسَمَتْ أُخْتِي سَارَةُ | بِطَاقَةً مُلَوَّنَةً. | أَمَّا أَنَا | فَكَتَبْتُ لَهُ رِسَالَةً قَصِيرَةً | أَقُولُ فِيهَا: | أُحِبُّكَ يَا جَدِّي. | فِي المَسَاءِ | اجْتَمَعَتِ العَائِلَةُ حَوْلَهُ، | وَغَنَّيْنَا لَهُ مَعًا. | ضَحِكَ جَدِّي | وَقَالَ: أَنْتُمْ أَجْمَلُ هَدِيَّةٍ.'},
+ {id:'t17',level:2,title:'الطَّبِيبُ الصَّغِيرُ',body:'يُحِبُّ كَرِيمٌ | أَنْ يَصِيرَ طَبِيبًا. | عِنْدَهُ حَقِيبَةٌ صَغِيرَةٌ | فِيهَا سَمَّاعَةٌ وَمِيزَانُ حَرَارَةٍ. | كُلَّ يَوْمٍ | يَفْحَصُ دُمْيَةَ أُخْتِهِ | وَيَقُولُ لَهَا: | لَا تَخَافِي، | سَتَكُونِينَ بِخَيْرٍ. | وَحِينَ مَرِضَتْ جَدَّتُهُ | جَلَسَ بِجَانِبِهَا | وَأَحْضَرَ لَهَا كُوبَ مَاءٍ. | ابْتَسَمَتِ الجَدَّةُ | وَقَالَتْ: أَنْتَ أَحْسَنُ طَبِيبٍ.'},
+ {id:'t18',level:2,title:'فِي المَكْتَبَةِ',body:'ذَهَبَ فَصْلُنَا | إِلَى مَكْتَبَةِ المَدْرَسَةِ. | كَانَتِ المَكْتَبَةُ هَادِئَةً | وَمَلِيئَةً بِالكُتُبِ المُلَوَّنَةِ. | اخْتَارَتْ رِيمُ | كِتَابًا عَنِ الحَيَوَانَاتِ، | وَاخْتَارَ زِيَادٌ | قِصَّةً عَنِ الفَضَاءِ. | جَلَسْنَا نَقْرَأُ بِصَمْتٍ | حَتَّى انْتَهَتِ الحِصَّةُ. | قَالَتِ المُعَلِّمَةُ: | الكِتَابُ صَدِيقٌ | لَا يَتْرُكُكَ أَبَدًا.'},
+ {id:'t19',level:3,title:'الجَمَلُ سَفِينَةُ الصَّحْرَاءِ',body:'يَعِيشُ الجَمَلُ فِي الصَّحْرَاءِ | حَيْثُ الحَرُّ الشَّدِيدُ | وَالمَاءُ القَلِيلُ. | وَقَدْ مَنَحَهُ اللَّهُ صِفَاتٍ | تُسَاعِدُهُ عَلَى الحَيَاةِ هُنَاكَ. | فَلَهُ سَنَامٌ | يُخَزِّنُ فِيهِ الدُّهُونَ | لِيَسْتَخْدِمَهَا حِينَ يَقِلُّ الطَّعَامُ. | وَلَهُ رُمُوشٌ طَوِيلَةٌ | تَحْمِي عَيْنَيْهِ مِنَ الرِّمَالِ. | وَيَسْتَطِيعُ أَنْ يَمْشِيَ أَيَّامًا | دُونَ أَنْ يَشْرَبَ. | لِذَلِكَ اسْتَخْدَمَهُ النَّاسُ قَدِيمًا | فِي السَّفَرِ وَنَقْلِ البَضَائِعِ، | وَسَمَّوْهُ سَفِينَةَ الصَّحْرَاءِ.'},
+ {id:'t20',level:3,title:'شَجَرَةُ جَدِّي',body:'فِي حَدِيقَةِ بَيْتِنَا | شَجَرَةُ مَانْجُو كَبِيرَةٌ | زَرَعَهَا جَدِّي | قَبْلَ أَنْ أُولَدَ. | كَانَ جَدِّي يَسْقِيهَا كُلَّ صَبَاحٍ | وَيَقُولُ لِي: | نَحْنُ نَزْرَعُ اليَوْمَ | لِيَأْكُلَ غَيْرُنَا غَدًا. | لَمْ أَفْهَمْ كَلَامَهُ فِي البِدَايَةِ. | وَفِي الصَّيْفِ المَاضِي | امْتَلَأَتِ الشَّجَرَةُ بِالثِّمَارِ، | فَجَمَعْنَا مِنْهَا الكَثِيرَ | وَوَزَّعْنَاهُ عَلَى الجِيرَانِ. | عِنْدَهَا فَهِمْتُ | مَا كَانَ يَقْصِدُهُ جَدِّي.'},
+ {id:'t21',level:3,title:'المُبَارَاةُ النِّهَائِيَّةُ',body:'كَانَ فَرِيقُ مَدْرَسَتِنَا | يَلْعَبُ المُبَارَاةَ النِّهَائِيَّةَ. | امْتَلَأَ المَلْعَبُ بِالطُّلَّابِ | وَالأَهَالِي وَالمُعَلِّمِينَ. | فِي الشَّوْطِ الأَوَّلِ | سَجَّلَ الفَرِيقُ المُنَافِسُ هَدَفًا، | فَحَزِنَ الجَمِيعُ. | لَكِنَّ المُدَرِّبَ شَجَّعَ اللَّاعِبِينَ | وَقَالَ لَهُمْ: | لَا تَسْتَسْلِمُوا، | الْعَبُوا مَعًا كَفَرِيقٍ وَاحِدٍ. | وَفِي الشَّوْطِ الثَّانِي | سَجَّلَ فَرِيقُنَا هَدَفَيْنِ رَائِعَيْنِ. | وَحِينَ انْتَهَتِ المُبَارَاةُ | رَفَعَ اللَّاعِبُونَ الكَأْسَ عَالِيًا | وَسَطَ هُتَافِ الجُمْهُورِ.'},
+ {id:'t22',level:4,title:'نَهْرُ النِّيلِ',body:'يُعَدُّ نَهْرُ النِّيلِ | مِنْ أَطْوَلِ أَنْهَارِ العَالَمِ، | إِذْ يَجْرِي مَسَافَةً تَزِيدُ عَلَى سِتَّةِ آلَافِ كِيلُومِتْرٍ. | يَنْبُعُ مِنْ قَلْبِ إِفْرِيقِيَا، | وَيَمُرُّ بِعِدَّةِ دُوَلٍ | حَتَّى يَصِلَ إِلَى مِصْرَ، | ثُمَّ يَصُبُّ فِي البَحْرِ المُتَوَسِّطِ. | وَقَدْ قَامَتْ عَلَى ضِفَافِهِ | حَضَارَةُ المِصْرِيِّينَ القُدَمَاءِ، | فَزَرَعُوا الأَرْضَ حَوْلَهُ، | وَبَنَوْا المُدُنَ وَالمَعَابِدَ. | وَمَا زَالَ النِّيلُ حَتَّى اليَوْمِ | المَصْدَرَ الرَّئِيسِيَّ لِلْمِيَاهِ فِي مِصْرَ، | يَشْرَبُ مِنْهُ النَّاسُ | وَيَسْقُونَ بِهِ زُرُوعَهُمْ. | لِذَلِكَ قِيلَ قَدِيمًا: | مِصْرُ هِبَةُ النِّيلِ.'},
+ {id:'t23',level:4,title:'الأَمَانَةُ',body:'خَرَجَ حَمْزَةُ مِنَ المَدْرَسَةِ | فَوَجَدَ عَلَى الرَّصِيفِ | مِحْفَظَةً بُنِّيَّةً صَغِيرَةً. | فَتَحَهَا فَوَجَدَ فِيهَا مَالًا كَثِيرًا | وَبِطَاقَةً عَلَيْهَا اسْمُ صَاحِبِهَا وَعُنْوَانُهُ. | فَكَّرَ قَلِيلًا، | ثُمَّ قَرَّرَ أَنْ يُعِيدَهَا بِنَفْسِهِ. | سَارَ إِلَى العُنْوَانِ | وَطَرَقَ البَابَ، | فَفَتَحَ لَهُ رَجُلٌ عَجُوزٌ | يَبْدُو عَلَيْهِ القَلَقُ. | وَحِينَ رَأَى المِحْفَظَةَ | تَهَلَّلَ وَجْهُهُ فَرَحًا، | وَقَالَ: | فِيهَا ثَمَنُ دَوَائِي لِهَذَا الشَّهْرِ. | شَكَرَهُ الرَّجُلُ كَثِيرًا، | وَعَادَ حَمْزَةُ إِلَى بَيْتِهِ | وَقَلْبُهُ مَلِيءٌ بِالسَّعَادَةِ.'},
+ {id:'t24',level:4,title:'الرَّحَّالَةُ ابْنُ بَطُّوطَةَ',body:'وُلِدَ ابْنُ بَطُّوطَةَ | فِي مَدِينَةِ طَنْجَةَ بِالمَغْرِبِ | قَبْلَ نَحْوِ سَبْعِمِائَةِ عَامٍ. | وَحِينَ بَلَغَ الحَادِيَةَ وَالعِشْرِينَ | خَرَجَ لِأَدَاءِ فَرِيضَةِ الحَجِّ، | لَكِنَّ رِحْلَتَهُ لَمْ تَنْتَهِ هُنَاكَ. | فَقَدْ ظَلَّ يَتَنَقَّلُ بَيْنَ البِلَادِ | نَحْوَ ثَلَاثِينَ عَامًا، | فَزَارَ مِصْرَ وَالشَّامَ وَالعِرَاقَ، | وَوَصَلَ إِلَى الهِنْدِ وَالصِّينِ. | وَكَانَ فِي كُلِّ مَكَانٍ | يُرَاقِبُ عَادَاتِ النَّاسِ | وَطَعَامَهُمْ وَمَلَابِسَهُمْ. | وَعِنْدَمَا عَادَ إِلَى بَلَدِهِ | رَوَى مَا رَآهُ، | فَدُوِّنَتْ حِكَايَاتُهُ فِي كِتَابٍ | مَا زَالَ النَّاسُ يَقْرَؤُونَهُ حَتَّى اليَوْمِ.'},
+ {id:'t25',level:5,title:'السَّاعَةُ المُتَوَقِّفَةُ',body:'فِي غُرْفَةِ الجُلُوسِ | كَانَتْ هُنَاكَ سَاعَةُ حَائِطٍ قَدِيمَةٌ | تَوَقَّفَتْ عَقَارِبُهَا | عِنْدَ الثَّالِثَةِ وَالرُّبْعِ تَمَامًا. | لَمْ يُحَاوِلْ أَحَدٌ فِي البَيْتِ إِصْلَاحَهَا، | وَكُلَّمَا سَأَلَتْ هَنَاءُ أَبَاهَا عَنْهَا | ابْتَسَمَ وَغَيَّرَ الحَدِيثَ. | وَذَاتَ يَوْمٍ | قَرَّرَتْ أَنْ تَكْتَشِفَ السِّرَّ بِنَفْسِهَا. | أَحْضَرَتْ كُرْسِيًّا، | وَوَقَفَتْ عَلَيْهِ بِحَذَرٍ، | ثُمَّ أَنْزَلَتِ السَّاعَةَ عَنِ الحَائِطِ. | فِي ظَهْرِهَا | وَجَدَتْ وَرَقَةً صَغِيرَةً مُلْصَقَةً | كُتِبَ عَلَيْهَا بِخَطٍّ دَقِيقٍ: | «فِي هَذِهِ السَّاعَةِ | وُلِدَتِ ابْنَتِي الأُولَى». | شَعَرَتْ هَنَاءُ بِدِفْءٍ يَمْلَأُ قَلْبَهَا، | فَقَدْ كَانَتْ تَعْرِفُ جَيِّدًا | أَنَّهَا هِيَ الابْنَةُ الأُولَى. | أَعَادَتِ السَّاعَةَ إِلَى مَكَانِهَا بِرِفْقٍ، | وَفَهِمَتْ أَخِيرًا | لِمَاذَا لَمْ يُصْلِحْهَا أَبُوهَا أَبَدًا.'},
+ {id:'t26',level:5,title:'الطَّائِرَةُ الوَرَقِيَّةُ',body:'كَانَ مَازِنٌ يَقْضِي عُطْلَتَهُ | فِي قَرْيَةِ جَدِّهِ الصَّغِيرَةِ، | وَكَانَ يَشْعُرُ بِالمَلَلِ | لِأَنَّهُ لَا يَعْرِفُ أَحَدًا هُنَاكَ. | فِي صَبَاحِ يَوْمٍ مُشْمِسٍ | رَأَى فِي السَّمَاءِ | طَائِرَةً وَرَقِيَّةً مُلَوَّنَةً | تَرْتَفِعُ وَتَنْخَفِضُ مَعَ الرِّيحِ. | تَتَبَّعَ خَيْطَهَا بِعَيْنَيْهِ | حَتَّى وَصَلَ إِلَى صَبِيٍّ | يَقِفُ عَلَى تَلَّةٍ قَرِيبَةٍ. | اقْتَرَبَ مِنْهُ بِخَجَلٍ | وَسَأَلَهُ: كَيْفَ صَنَعْتَهَا؟ | ضَحِكَ الصَّبِيُّ وَقَالَ: | تَعَالَ غَدًا، | وَسَأُعَلِّمُكَ كَيْفَ تَصْنَعُ وَاحِدَةً. | فِي اليَوْمِ التَّالِي | جَلَسَ الاثْنَانِ تَحْتَ شَجَرَةِ تُوتٍ | يَقُصَّانِ الوَرَقَ | وَيَرْبِطَانِ العِيدَانَ الرَّفِيعَةَ. | وَقَبْلَ الغُرُوبِ | كَانَتْ طَائِرَتَانِ تُحَلِّقَانِ جَنْبًا إِلَى جَنْبٍ، | وَمَعَهُمَا صَدَاقَةٌ جَدِيدَةٌ | بَدَأَتْ تَكْبُرُ فِي قَلْبِ مَازِنٍ.'},
+ {id:'t27',level:5,title:'الجَزِيرَةُ المَجْهُولَةُ',body:'بَعْدَ ثَلَاثَةِ أَيَّامٍ فِي عُرْضِ البَحْرِ | لَاحَ لِلْبَحَّارَةِ فِي الأُفُقِ | خَطٌّ أَخْضَرُ رَفِيعٌ. | صَاحَ الفَتَى الوَاقِفُ عَلَى السَّارِيَةِ: | «أَرْضٌ! أَرْضٌ أَمَامَنَا!». | اقْتَرَبَتِ السَّفِينَةُ بِبُطْءٍ، | فَظَهَرَتْ جَزِيرَةٌ صَغِيرَةٌ | تُغَطِّيهَا أَشْجَارُ النَّخِيلِ، | وَتُحِيطُ بِهَا رِمَالٌ بَيْضَاءُ نَاعِمَةٌ. | نَزَلَ القُبْطَانُ وَمَعَهُ ثَلَاثَةٌ مِنَ البَحَّارَةِ | فِي قَارِبٍ صَغِيرٍ، | وَمَا إِنْ وَطِئَتْ أَقْدَامُهُمُ الشَّاطِئَ | حَتَّى لَاحَظُوا آثَارَ أَقْدَامٍ | تَتَّجِهُ نَحْوَ الغَابَةِ. | تَبَادَلُوا النَّظَرَاتِ فِي صَمْتٍ؛ | فَالخَرَائِطُ كُلُّهَا تَقُولُ | إِنَّ هَذِهِ الجَزِيرَةَ غَيْرُ مَأْهُولَةٍ. | تَقَدَّمَ القُبْطَانُ بِحَذَرٍ | وَتَبِعَهُ الآخَرُونَ، | وَكُلَّمَا تَوَغَّلُوا بَيْنَ الأَشْجَارِ | ازْدَادَتْ أَصْوَاتُ الطُّيُورِ ارْتِفَاعًا، | حَتَّى وَصَلُوا إِلَى كُوخٍ خَشَبِيٍّ | يَتَصَاعَدُ مِنْ مِدْخَنَتِهِ دُخَانٌ رَمَادِيٌّ.'},
+ {id:'t28',level:6,title:'دَفْتَرُ أَبِي',body:'بَعْدَ أَعْوَامٍ طَوِيلَةٍ | عَثَرْتُ فِي دُرْجِ المَكْتَبِ القَدِيمِ | عَلَى دَفْتَرٍ جِلْدِيٍّ | تَآكَلَتْ أَطْرَافُهُ | وَبَهَتَ لَوْنُ غِلَافِهِ. | فَتَحْتُهُ بِيَدٍ مُتَرَدِّدَةٍ، | فَإِذَا هُوَ دَفْتَرُ أَبِي، | يُدَوِّنُ فِيهِ يَوْمِيَّاتِهِ | مُنْذُ كَانَ شَابًّا فِي مِثْلِ عُمْرِي. | قَرَأْتُ عَنْ أَحْلَامِهِ الأُولَى، | وَعَنْ خَوْفِهِ يَوْمَ سَافَرَ وَحِيدًا | إِلَى مَدِينَةٍ لَا يَعْرِفُ فِيهَا أَحَدًا، | وَعَنْ فَرْحَتِهِ الغَامِرَةِ | حِينَ حَصَلَ عَلَى عَمَلِهِ الأَوَّلِ. | كَانَتِ الكَلِمَاتُ بَسِيطَةً، | لَكِنَّهَا كَشَفَتْ لِي وَجْهًا آخَرَ | لِلرَّجُلِ الَّذِي ظَنَنْتُ أَنَّنِي أَعْرِفُهُ جَيِّدًا. | لَمْ يَكُنْ ذَلِكَ الأَبَ الصَّارِمَ القَوِيَّ دَائِمًا، | بَلْ كَانَ إِنْسَانًا يَتَرَدَّدُ وَيَخَافُ وَيَحْلُمُ، | تَمَامًا كَمَا أَفْعَلُ أَنَا الآنَ. | أَغْلَقْتُ الدَّفْتَرَ بِهُدُوءٍ، | وَقَرَّرْتُ أَنْ أَبْدَأَ دَفْتَرِي الخَاصَّ، | لَعَلَّ أَحَدًا يَقْرَؤُهُ يَوْمًا | فَيَفْهَمَنِي كَمَا فَهِمْتُ أَبِي.'},
+ {id:'t29',level:6,title:'القِطَارُ الأَخِيرُ',body:'وَصَلَتْ لَيْلَى إِلَى المَحَطَّةِ | وَعَقَارِبُ السَّاعَةِ تُشِيرُ إِلَى الحَادِيَةَ عَشْرَةَ لَيْلًا، | فَوَجَدَتِ الرَّصِيفَ خَالِيًا إِلَّا مِنْ رَجُلٍ عَجُوزٍ | يَجْلِسُ عَلَى مَقْعَدٍ خَشَبِيٍّ | وَقَدْ وَضَعَ حَقِيبَتَهُ الجِلْدِيَّةَ عَلَى رُكْبَتَيْهِ. | كَانَ القِطَارُ الأَخِيرُ قَدْ تَأَخَّرَ، | وَالبَرْدُ يَتَسَلَّلُ إِلَى عِظَامِهَا | رَغْمَ مِعْطَفِهَا الثَّقِيلِ. | جَلَسَتْ عَلَى طَرَفِ المَقْعَدِ، | فَالْتَفَتَ إِلَيْهَا العَجُوزُ وَقَالَ بِصَوْتٍ هَادِئٍ: | «أَتَعْلَمِينَ أَنَّنِي أَنْتَظِرُ هَذَا القِطَارَ | مُنْذُ أَرْبَعِينَ عَامًا؟». | ظَنَّتْ أَنَّهُ يَمْزَحُ، | لَكِنَّ عَيْنَيْهِ كَانَتَا جَادَّتَيْنِ تَمَامًا. | أَخْبَرَهَا أَنَّهُ وَدَّعَ أَخَاهُ فِي هَذِهِ المَحَطَّةِ | وَهُمَا شَابَّانِ، | وَوَعَدَهُ أَخُوهُ أَنْ يَعُودَ فِي القِطَارِ الأَخِيرِ | مِنْ لَيْلَةٍ شِتْوِيَّةٍ كَهَذِهِ. | وَمُنْذُ ذَلِكَ الحِينِ | يَأْتِي كُلَّ عَامٍ فِي اللَّيْلَةِ نَفْسِهَا، | وَيَجْلِسُ فِي المَكَانِ نَفْسِهِ. | وَفِي تِلْكَ اللَّحْظَةِ | سُمِعَ صَفِيرُ القِطَارِ مِنْ بَعِيدٍ، | فَوَقَفَ العَجُوزُ مُمْسِكًا بِحَقِيبَتِهِ، | وَقَدْ لَمَعَ فِي عَيْنَيْهِ أَمَلٌ | لَمْ تَرَ لَيْلَى مِثْلَهُ مِنْ قَبْلُ.'},
+ {id:'t30',level:6,title:'البَحْرُ وَالصَّخْرَةُ',body:'عَلَى شَاطِئٍ بَعِيدٍ | كَانَتْ تَقِفُ صَخْرَةٌ ضَخْمَةٌ | تَتَحَدَّى أَمْوَاجَ البَحْرِ مُنْذُ آلَافِ السِّنِينَ. | كَانَتِ الأَمْوَاجُ تَأْتِي كُلَّ يَوْمٍ | فَتَضْرِبُهَا بِقُوَّةٍ ثُمَّ تَعُودُ، | وَكَانَتِ الصَّخْرَةُ تَضْحَكُ مِنْهَا | وَتَقُولُ بِغُرُورٍ: | «لَنْ تَسْتَطِيعِي أَنْ تُحَرِّكِينِي شِبْرًا وَاحِدًا». | لَمْ تَكُنِ الأَمْوَاجُ تُجِيبُ، | بَلْ كَانَتْ تَعُودُ فِي اليَوْمِ التَّالِي | بِالهُدُوءِ نَفْسِهِ وَالإِصْرَارِ نَفْسِهِ. | مَرَّتِ السِّنُونَ، | وَبَدَأَتْ شُقُوقٌ صَغِيرَةٌ | تَظْهَرُ عَلَى جَسَدِ الصَّخْرَةِ، | ثُمَّ أَخَذَتْ حَوَافُّهَا الحَادَّةُ تَسْتَدِيرُ وَتَنْعُمُ، | حَتَّى صَارَتْ مَلْسَاءَ | كَأَنَّ يَدًا خَفِيَّةً صَقَلَتْهَا. | وَذَاتَ صَبَاحٍ | نَظَرَتِ الصَّخْرَةُ إِلَى نَفْسِهَا فِي المَاءِ، | فَلَمْ تَعْرِفْ صُورَتَهَا. | عِنْدَئِذٍ أَدْرَكَتْ | أَنَّ القُوَّةَ لَيْسَتْ فِي الشِّدَّةِ وَالعُنْفِ، | بَلْ فِي الصَّبْرِ وَالاسْتِمْرَارِ؛ | فَالقَطْرَةُ الَّتِي لَا تَتَوَقَّفُ | تَصْنَعُ مَا لَا تَصْنَعُهُ العَاصِفَةُ.'}
+];
+const KINDS={first:'قراءة أولى',echo:'بعد الصدى',solo:'مستقلة',expr:'بتعبير',review:'مراجعة'};
+const n=x=>Number(x).toLocaleString('ar-EG');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt=s=>{s=Math.floor(s);const m=Math.floor(s/60),r=s%60;return n(String(m).padStart(2,'0')).replace(/٬/g,'')+':'+(r<10?'٠':'')+n(r)};
+
+function seed(){
+  const d=Date.now();
+  return {students:['مثال'],current:'مثال',custom:[],attempts:[
+    {id:1,student:'مثال',textId:'t1',mode:'full',kind:'first',date:d-6*864e5,seconds:58,read:24,errors:3,wcpm:22,acc:88},
+    {id:2,student:'مثال',textId:'t1',mode:'full',kind:'echo',date:d-4*864e5,seconds:44,read:24,errors:1,wcpm:31,acc:96},
+    {id:3,student:'مثال',textId:'t1',mode:'full',kind:'solo',date:d-2*864e5,seconds:35,read:24,errors:0,wcpm:41,acc:100}]};
+}
+function load(){try{const r=localStorage.getItem(KEY);if(r)return JSON.parse(r)}catch(e){}return seed()}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+let S=load();
+let ui={level:1,textId:'t1',mode:'full',size:28,chunks:true,adding:false,delConfirm:false};
+try{const u=JSON.parse(localStorage.getItem(KEY+'-ui')||'null');if(u)Object.assign(ui,u,{adding:false,delConfirm:false})}catch(e){}
+const saveUi=()=>{try{localStorage.setItem(KEY+'-ui',JSON.stringify(ui))}catch(e){}};
+let run={state:'idle',t0:0,el:0,errs:new Set(),last:-1,iv:null,saved:false};
+
+const allTexts=()=>BUILT.concat(S.custom||[]);
+const curText=()=>allTexts().find(t=>t.id===ui.textId)||BUILT[0];
+function parse(t){return t.body.split(/[|\/]/).map(c=>c.trim()).filter(Boolean).map(c=>c.split(/\s+/))}
+const wordCount=t=>parse(t).flat().length;
+const $=id=>document.getElementById(id);
+
+function renderStudents(){
+  const b=$('studentBox');
+  if(ui.adding){
+    b.innerHTML=`<input class="field" id="newSt" placeholder="اسم الطالب" style="width:150px"><button class="btn primary small" id="addSt">إضافة</button><button class="btn small" id="cancelSt">إلغاء</button>`;
+    $('newSt').focus();
+    const add=()=>{const v=$('newSt').value.trim();if(v){if(!S.students.includes(v))S.students.push(v);S.current=v;save()}ui.adding=false;renderAll()};
+    $('addSt').onclick=add;$('newSt').onkeydown=e=>{if(e.key==='Enter')add()};
+    $('cancelSt').onclick=()=>{ui.adding=false;renderStudents()};
+    return;
+  }
+  const opts=S.students.map(s=>`<option ${s===S.current?'selected':''}>${esc(s)}</option>`).join('');
+  b.innerHTML=`<label for="stSel" class="sub">الطالب:</label><select id="stSel">${opts||'<option value="">لا يوجد</option>'}</select>
+   <button class="btn small" id="plusSt" aria-label="إضافة طالب">＋ طالب</button>
+   ${S.current?`<button class="btn small ${ui.delConfirm?'danger':''}" id="delSt">${ui.delConfirm?'تأكيد الحذف':'حذف'}</button>`:''}`;
+  $('stSel').onchange=e=>{S.current=e.target.value;ui.delConfirm=false;save();renderAll()};
+  $('plusSt').onclick=()=>{ui.adding=true;renderStudents()};
+  if($('delSt'))$('delSt').onclick=()=>{
+    if(!ui.delConfirm){ui.delConfirm=true;renderStudents();return}
+    S.attempts=S.attempts.filter(a=>a.student!==S.current);
+    S.students=S.students.filter(s=>s!==S.current);S.current=S.students[0]||'';ui.delConfirm=false;save();renderAll()};
+}
+function renderLevels(){
+  $('levels').innerHTML=[1,2,3,4,5,6].map(l=>`<button class="lv" data-l="${l}" aria-pressed="${ui.level===l}">المستوى ${n(l)}${l>=5?' · روايات':''}</button>`).join('');
+  document.querySelectorAll('.lv').forEach(b=>b.onclick=()=>{ui.level=+b.dataset.l;const f=allTexts().find(t=>t.level===ui.level);if(f)ui.textId=f.id;saveUi();resetRun();renderAll()});
+  const list=allTexts().filter(t=>t.level===ui.level);
+  $('texts').innerHTML=list.map(t=>`<button class="tcard" data-id="${t.id}" aria-pressed="${t.id===ui.textId}"><b>${esc(t.title)}</b><span>${n(wordCount(t))} كلمة${t.custom?' · نص مضاف':''}</span></button>`).join('');
+  document.querySelectorAll('.tcard').forEach(b=>b.onclick=()=>{ui.textId=b.dataset.id;saveUi();resetRun();renderAll()});
+}
+function renderReader(){
+  const t=curText();$('tTitle').textContent=t.title;
+  const r=$('reading');r.style.fontSize=ui.size+'px';
+  $('page').classList.toggle('nochunks',!ui.chunks);
+  let i=0;const readTo=run.state==='done'&&ui.mode==='min'?run.last:Infinity;
+  r.innerHTML=parse(t).map((ch,ci,arr)=>ch.map(w=>{const k=i++;let c='w';if(run.errs.has(k))c+=' err';if(k>readTo)c+=' unread';if(k===run.last&&ui.mode==='min')c+=' last';return `<span class="${c}" data-i="${k}" role="button" tabindex="0">${esc(w)}</span>`}).join(' ')+(ci<arr.length-1?' <span class="sep" aria-hidden="true">/</span> ':'')).join('');
+  r.querySelectorAll('.w').forEach(el=>{el.onclick=()=>tapWord(+el.dataset.i);el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();tapWord(+el.dataset.i)}}});
+  if(t.custom){/* delete custom */}
+}
+function renderWatch(){
+  const w=$('watch');w.className='watch'+(run.state==='running'?' running':run.state==='pick'?' pick':'');
+  const shown=ui.mode==='min'&&run.state==='running'?Math.max(0,60-run.el):run.el;
+  $('clock').textContent=fmt(ui.mode==='min'&&run.state==='idle'?60:shown);
+  const g=$('goBtn');
+  const H={idle:ui.mode==='min'?'عند الضغط على «ابدأ» يبدأ عدّ تنازلي لمدة دقيقة. اضغط على أي كلمة يخطئ فيها الطالب.':'اضغط «ابدأ» مع أول كلمة، و«توقف» بعد آخر كلمة. اضغط على أي كلمة فيها خطأ.',
+    running:'جارٍ القراءة… اضغط على الكلمة اللي فيها خطأ.',
+    pick:'انتهى الوقت! اضغط على آخر كلمة وصل لها الطالب.',
+    done:run.saved?'اتحفظت المحاولة. اضغط «إعادة» لمحاولة جديدة.':'تقدر تعدّل الأخطاء بالضغط على الكلمات، وبعدين احفظ.'};
+  $('hint').textContent=H[run.state];
+  g.hidden=run.state==='pick'||run.state==='done';
+  g.textContent=run.state==='running'?'توقف':'ابدأ';
+  $('mFull').setAttribute('aria-pressed',ui.mode==='full');$('mMin').setAttribute('aria-pressed',ui.mode==='min');
+  $('mFull').disabled=$('mMin').disabled=run.state!=='idle';
+}
+function calc(){
+  const total=wordCount(curText());
+  const read=ui.mode==='full'?total:run.last+1;
+  let e=0;run.errs.forEach(k=>{if(k<read)e++});
+  const secs=Math.max(run.el,0.1);
+  return {read,errors:e,seconds:Math.round(run.el*10)/10,wcpm:Math.round((read-e)*60/secs),acc:read?Math.round((read-e)/read*100):0};
+}
+function prevAttempt(){return S.attempts.filter(a=>a.student===S.current&&a.textId===ui.textId&&a.mode===ui.mode).sort((a,b)=>b.date-a.date)[0]}
+function renderResult(){
+  const box=$('result');
+  if(run.state!=='done'){box.hidden=true;return}
+  box.hidden=false;const r=calc();const p=run.saved?run.prev:prevAttempt();
+  let cmp='';
+  if(p){
+    const dw=r.wcpm-p.wcpm;
+    if(ui.mode==='full'){const ds=Math.round(p.seconds-r.seconds);
+      cmp=ds>0?`<p class="cmp up">أسرع بـ ${n(ds)} ثانية من المرة اللي فاتت 🎉</p>`:ds<0?`<p class="cmp down">أبطأ بـ ${n(-ds)} ثانية من المرة اللي فاتت. مفيش مشكلة، نكمل تدريب.</p>`:`<p class="cmp">نفس وقت المرة اللي فاتت.</p>`;}
+    else cmp=dw>0?`<p class="cmp up">زاد ${n(dw)} كلمة في الدقيقة عن المرة اللي فاتت 🎉</p>`:`<p class="cmp down">المرة اللي فاتت: ${n(p.wcpm)} كلمة في الدقيقة.</p>`;
+  }else cmp='<p class="cmp">أول محاولة على النص ده، هتبقى المقياس اللي نقارن بيه.</p>';
+  box.innerHTML=`<h2>النتيجة</h2>
+   <div class="stats">
+    <div class="stat main"><span>كلمة صحيحة في الدقيقة</span><b>${n(r.wcpm)}</b></div>
+    <div class="stat"><span>الوقت</span><b>${fmt(r.seconds)}</b></div>
+    <div class="stat"><span>الكلمات المقروءة</span><b>${n(r.read)}</b></div>
+    <div class="stat"><span>الأخطاء · الدقة</span><b>${n(r.errors)} · ${n(r.acc)}٪</b></div>
+   </div>${cmp}
+   <div class="row">${run.saved?'<button class="btn primary" id="again">محاولة جديدة</button>':`<button class="btn primary" id="saveA" ${S.current?'':'disabled'}>حفظ المحاولة</button>`}
+   ${S.current?'':'<span class="note">أضف اسم الطالب من فوق عشان تحفظ.</span>'}</div>`;
+  if($('saveA'))$('saveA').onclick=()=>{
+    run.prev=prevAttempt();
+    S.attempts.push(Object.assign({id:Date.now(),student:S.current,textId:ui.textId,mode:ui.mode,kind:$('kind').value,date:Date.now()},calc()));
+    run.saved=true;save();renderAll();
+  };
+  if($('again'))$('again').onclick=()=>{resetRun();renderAll()};
+}
+function renderProgress(){
+  const list=S.attempts.filter(a=>a.student===S.current&&a.textId===ui.textId).sort((a,b)=>a.date-b.date);
+  const box=$('progress');
+  if(!S.current){box.innerHTML='<p class="empty">أضف طالب عشان تظهر محاولاته هنا.</p>';return}
+  if(!list.length){box.innerHTML=`<p class="empty">لسه مفيش محاولات محفوظة لـ «${esc(S.current)}» على النص ده. ابدأ أول قراءة من فوق.</p>`;return}
+  const pts=list.slice(-10);const max=Math.max(...pts.map(a=>a.wcpm),10);const top=Math.ceil(max/10)*10;
+  const W=560,H=210,pl=10,pr=34,pt=24,pb=30,bw=(W-pl-pr)/pts.length;
+  const y=v=>pt+(H-pt-pb)*(1-v/top);
+  let grid='';for(let g=0;g<=top;g+=top/2){grid+=`<line x1="${pl}" x2="${W-pr}" y1="${y(g)}" y2="${y(g)}" stroke="var(--line)"/><text x="${W-pr+6}" y="${y(g)+4}" font-size="11" fill="var(--muted)">${n(g)}</text>`}
+  const bars=pts.map((a,i)=>{const x=W-pr-(i+1)*bw+bw*0.2,w=bw*0.6,last=i===pts.length-1;
+    return `<rect x="${x}" y="${y(a.wcpm)}" width="${w}" height="${y(0)-y(a.wcpm)}" rx="5" fill="${last?'var(--teal)':'var(--teal-soft)'}" stroke="var(--teal)" stroke-width="1"/>
+    <text x="${x+w/2}" y="${y(a.wcpm)-6}" text-anchor="middle" font-size="12" font-weight="600" fill="var(--ink)">${n(a.wcpm)}</text>
+    <text x="${x+w/2}" y="${H-10}" text-anchor="middle" font-size="11" fill="var(--muted)">${n(list.length-pts.length+i+1)}</text>`}).join('');
+  const rows=list.slice().reverse().map(a=>`<tr><td>${new Date(a.date).toLocaleDateString('ar-EG',{day:'numeric',month:'short'})}</td><td class="k">${KINDS[a.kind]||''}</td><td class="k">${a.mode==='min'?'دقيقة':'كامل'}</td><td>${fmt(a.seconds)}</td><td>${n(a.errors)}</td><td><b>${n(a.wcpm)}</b></td><td><button class="x" data-del="${a.id}" aria-label="حذف المحاولة">×</button></td></tr>`).join('');
+  box.innerHTML=`<p class="note">كلمة صحيحة في الدقيقة لكل محاولة${S.current==='مثال'?' (بيانات مثال)':''}</p>
+   <div class="chartbox"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="رسم بياني للتقدم">${grid}${bars}</svg></div>
+   <div class="tbl"><table><thead><tr><th>التاريخ</th><th>النوع</th><th>القياس</th><th>الوقت</th><th>أخطاء</th><th>ك/د</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>`;
+  box.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{S.attempts=S.attempts.filter(a=>String(a.id)!==b.dataset.del);save();renderProgress()});
+}
+function renderAll(){renderStudents();renderLevels();renderReader();renderWatch();renderResult();renderProgress()}
+
+function tapWord(i){
+  if(run.state==='pick'){run.last=i;run.state='done';renderAll();return}
+  if(run.state==='running'||(run.state==='done'&&!run.saved)){run.errs.has(i)?run.errs.delete(i):run.errs.add(i);renderReader();if(run.state==='done')renderResult()}
+}
+let wake=null;
+async function lockOn(){try{wake=await navigator.wakeLock.request('screen')}catch(e){}}
+function lockOff(){try{wake&&wake.release()}catch(e){}wake=null}
+function beep(){try{const c=new (window.AudioContext||window.webkitAudioContext)();const o=c.createOscillator(),g=c.createGain();o.frequency.value=880;g.gain.value=.15;o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+.35)}catch(e){}}
+function start(){
+  run={state:'running',t0:performance.now(),el:0,errs:new Set(),last:-1,iv:null,saved:false};lockOn();
+  run.iv=setInterval(()=>{run.el=(performance.now()-run.t0)/1000;
+    if(ui.mode==='min'&&run.el>=60){run.el=60;stop()}else renderWatch()},100);
+  renderAll();
+}
+function stop(){
+  clearInterval(run.iv);lockOff();
+  if(ui.mode==='min'){run.state='pick';beep()}else run.state='done';
+  renderAll();
+}
+function resetRun(){clearInterval(run.iv);lockOff();run={state:'idle',t0:0,el:0,errs:new Set(),last:-1,iv:null,saved:false}}
+
+$('goBtn').onclick=()=>run.state==='running'?stop():start();
+$('resetBtn').onclick=()=>{resetRun();renderAll()};
+$('mFull').onclick=()=>{ui.mode='full';saveUi();resetRun();renderAll()};
+$('mMin').onclick=()=>{ui.mode='min';saveUi();resetRun();renderAll()};
+$('chunks').checked=ui.chunks;
+$('chunks').onchange=e=>{ui.chunks=e.target.checked;saveUi();renderReader()};
+$('fMinus').onclick=()=>{ui.size=Math.max(18,ui.size-3);saveUi();renderReader()};
+$('fPlus').onclick=()=>{ui.size=Math.min(48,ui.size+3);saveUi();renderReader()};
+$('cSave').onclick=()=>{
+  const title=$('cTitle').value.trim(),body=$('cBody').value.trim(),level=+$('cLevel').value;
+  if(!title||!body){$('cMsg').textContent='اكتب العنوان والنص الأول.';return}
+  const t={id:'c'+Date.now(),level,title,body,custom:true};S.custom=(S.custom||[]).concat(t);save();
+  ui.level=level;ui.textId=t.id;saveUi();resetRun();
+  $('cTitle').value=$('cBody').value='';$('cMsg').textContent='اتحفظ النص وظهر في المستوى '+n(level)+'.';renderAll();
+};
+renderAll();
+</script>
+</body>
+</html>
